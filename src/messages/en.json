@@ -1,0 +1,17 @@
+{
+    "common" : {
+        "openMenu": "Open menu",
+        "switchToVietnamese": "Switch to Vietnamese",
+        "switchToEnglish": "Switch to English",
+        "toggleTheme": "Toggle theme"
+    },
+    "navigation": {
+        "services": "Services",
+        "about": "About Us",
+        "works": "Our Work",
+        "faq": "FAQ"
+    },
+    "contact": {
+        "contact_us":"Contact Us"
+    }
+}

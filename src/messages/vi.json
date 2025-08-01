@@ -1,0 +1,17 @@
+{
+    "common": {
+        "openMenu": "Mở menu",
+        "switchToVietnamese": "Chuyển sang tiếng Việt",
+        "switchToEnglish": "Chuyển sang tiếng Anh",
+        "toggleTheme": "Chuyển đổi giao diện"
+    },
+    "navigation": {
+        "services": "Dịch vụ",
+        "about": "Về Chúng Tôi",
+        "works": "Dự Án",
+        "faq": "Hỏi Đáp"
+    },
+    "contact": {
+        "contact_us": "Liên Hệ"
+    }
+}
