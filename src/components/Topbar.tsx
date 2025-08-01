@@ -1,5 +1,4 @@
 
-import { section } from "framer-motion/client";
 import { RiFacebookFill, RiInstagramFill, RiLinkedinFill, RiTwitterFill, RiMailFill, RiPhoneFill } from "react-icons/ri";
 
 const Topbar = () => {
@@ -21,16 +20,16 @@ const Topbar = () => {
 
           {/* social media links */}
           <div className='flex items-center gap-4 mx-auto lg:mx-0'>
-            <a href="#" aria-label="Facebook" className='text-primary hover:text-secondary-foreground transition-colors border-1'>
+            <a href="#" aria-label="Facebook" className='text-primary hover:text-secondary-foreground transition-colors border'>
               <RiFacebookFill size={16} />
             </a>
-            <a href="#" aria-label="Twitter" className='text-primary hover:text-secondary-foreground transition-colors border-1'>
+            <a href="#" aria-label="Twitter" className='text-primary hover:text-secondary-foreground transition-colors border'>
               <RiTwitterFill size={16} />
             </a>
-            <a href="#" aria-label="Instagram" className='text-primary hover:text-secondary-foreground transition-colors border-1'>
+            <a href="#" aria-label="Instagram" className='text-primary hover:text-secondary-foreground transition-colors border'>
               <RiInstagramFill size={16} />
             </a>
-            <a href="#" aria-label="LinkedIn" className='text-primary hover:text-secondary-foreground transition-colors border-1'>
+            <a href="#" aria-label="LinkedIn" className='text-primary hover:text-secondary-foreground transition-colors border'>
               <RiLinkedinFill size={16} />
             </a>
           </div>

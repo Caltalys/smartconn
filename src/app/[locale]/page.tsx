@@ -14,11 +14,9 @@ export default function Page() {
   return (
     <>
       <div className="relative">
-        <div className="fixed top-0 left-0 right-0 z-50">
-          <Topbar />
-          <Header />
-        </div>
-        <main className="pt-28"> {/* Adjust padding-top based on Topbar + Header height */}
+        <Topbar />
+        <Header />
+        <main>
           <Hero />
           <Services />
           <Stats />
