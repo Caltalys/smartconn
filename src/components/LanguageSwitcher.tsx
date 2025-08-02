@@ -16,11 +16,11 @@ export default function LanguageSwitcher() {
     };
     
     return (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
             <Button
-                variant={locale === 'vi' ? 'secondary' : 'outline'}
+                variant={locale === 'vi' ? 'accent' : 'outline'}
                 size="icon"
-                className="size-8"
+                className="size-6"
                 onClick={() => handleLocaleChange('vi')}
                 aria-label={t('switchToVietnamese')}
                 aria-current={locale === 'vi' ? 'page' : undefined}
@@ -28,9 +28,9 @@ export default function LanguageSwitcher() {
                 VN
             </Button>
             <Button
-                variant={locale === 'en' ? 'secondary' : 'outline'}
+                variant={locale === 'en' ? 'accent' : 'outline'}
                 size="icon"
-                className="size-8"
+                className="size-6"
                 onClick={() => handleLocaleChange('en')}
                 aria-label={t('switchToEnglish')}
                 aria-current={locale === 'en' ? 'page' : undefined}

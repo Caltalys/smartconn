@@ -1,6 +1,6 @@
 const Faq = () => {
   return (
-    <section className='h-screen'>Faq</section>
+    <section id="faq" className='h-screen'>Faq</section>
   )
 }
 

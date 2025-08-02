@@ -35,7 +35,7 @@
   --sidebar-border: oklch(0.9288 0.0126 255.5078);
   --sidebar-ring: oklch(0.6051 0.1350 240.6466);
   --font-sans: Montserrat, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Noto Serif, ui-serif, serif;
+  --font-serif: Lato Serif, ui-serif, serif;
   --font-mono: Google Sans Code, ui-monospace, monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 2px 4px 0px hsl(220 8.9362% 46.0784% / 0.05);
@@ -93,7 +93,7 @@
   --sidebar-border: oklch(0.2795 0.0368 260.0310);
   --sidebar-ring: oklch(0.6231 0.1880 259.8145);
   --font-sans: Montserrat, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Noto Serif, ui-serif, serif;
+  --font-serif: Lato Serif, ui-serif, serif;
   --font-mono: Google Sans Code, ui-monospace, monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 2px 4px 0px hsl(0 0% 0% / 0.05);
@@ -148,7 +148,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: Roboto, ui-sans-serif, sans-serif, system-ui;
+  --font-sans: Lato, ui-sans-serif, sans-serif, system-ui;
   --font-mono: Google Sans Code, ui-monospace, monospace;
   --font-serif: Noto Serif, ui-serif, serif;
 
