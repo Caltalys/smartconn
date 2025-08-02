@@ -18,9 +18,9 @@ export default function Page() {
         <Header />
         <main>
           <Hero />
+          <About />
           <Services />
           <Stats />
-          <About />
           <Works />
           <Testimotional />
           <Faq />

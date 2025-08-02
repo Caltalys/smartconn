@@ -6,6 +6,7 @@
         "toggleTheme": "Chuyển đổi giao diện"
     },
     "navigation": {
+        "home": "Trang Chủ",
         "services": "Dịch vụ",
         "about": "Về Chúng Tôi",
         "works": "Dự Án",
@@ -13,5 +14,17 @@
     },
     "contact": {
         "contact_us": "Liên Hệ"
+    },
+    "hero": {
+        "title": "Giải Pháp Toàn Diện Cho Doanh Nghiệp Của Bạn",
+        "title_1": "Chiến Lược - Đào tạo - Vận Hành",
+        "subtitle": "Chúng tôi cung cấp các khóa học chuyên sâu, mentoring 1-1 cùng chuyên gia, không gian làm việc sáng tạo và cộng đồng doanh nghiệp kết nối.",
+        "services": "Khám phá các dịch vụ",
+        "contact_us": "Liên hệ"
+    },
+    "about_us": {
+        "title": "Vể chúng tôi",
+        "subtitle": "Dẫn Dắt Bởi Các Chuyên Gia Đầu Ngành",
+        "description": "Đội ngũ cố vấn, giảng viên giàu kinh nghiệm thực chiến, sẵn sàng đồng hành cùng bạn trên con đường phát triển."
     }
 }

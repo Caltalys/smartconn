@@ -15,6 +15,7 @@ const Header = () => {
   const tContact = useTranslations('contact');
 
   const navLinks = [
+    { href: '#home', id: "home" },
     { href: '#services', id: "services" },
     { href: '#about', id: "about" },
     { href: '#works', id: "works" },

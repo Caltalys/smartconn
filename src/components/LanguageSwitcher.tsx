@@ -18,6 +18,7 @@ export default function LanguageSwitcher() {
     return (
         <div className="flex items-center gap-2">
             <Button
+                type="button"
                 variant={locale === 'vi' ? 'accent' : 'outline'}
                 size="icon"
                 className="size-6"
@@ -28,6 +29,7 @@ export default function LanguageSwitcher() {
                 VN
             </Button>
             <Button
+                type="button"
                 variant={locale === 'en' ? 'accent' : 'outline'}
                 size="icon"
                 className="size-6"
