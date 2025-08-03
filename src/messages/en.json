@@ -157,27 +157,34 @@
         "title": "News & Articles",
         "subtitle": "Stay Updated with the Latest Insights and Trends",
         "read_more": "Read More",
+        "back_to_blog": "Back to all articles",
         "items": [
             {
                 "image": "/blog/post-1.jpg",
                 "category": "Strategy",
                 "date": "July 15, 2024",
+                "slug": "5-ai-trends-that-will-shape-business",
                 "title": "5 AI Trends That Will Shape Business in the Coming Year",
-                "description": "Discover how artificial intelligence is changing the game and how you can leverage it to create a competitive edge."
+                "description": "Discover how artificial intelligence is changing the game and how you can leverage it to create a competitive edge.",
+                "content": "Discover how artificial intelligence is changing the game and how you can leverage it to create a competitive edge. In this article, we explore the top five trends, from generative AI to AI-driven cybersecurity, and provide actionable insights for business leaders.\n\nThe future is now, and understanding these trends is crucial for staying ahead in a rapidly evolving digital landscape."
             },
             {
                 "image": "/blog/post-2.jpg",
                 "category": "Marketing",
                 "date": "July 10, 2024",
+                "slug": "building-an-effective-b2b-marketing-funnel",
                 "title": "Building an Effective Marketing Funnel for B2B Products",
-                "description": "A step-by-step guide to creating a high-converting marketing funnel that attracts and nurtures leads for B2B businesses."
+                "description": "A step-by-step guide to creating a high-converting marketing funnel that attracts and nurtures leads for B2B businesses.",
+                "content": "A step-by-step guide to creating a high-converting marketing funnel that attracts and nurtures leads for B2B businesses. We cover everything from top-of-funnel awareness campaigns using content marketing to bottom-of-funnel conversion tactics like personalized demos and case studies.\n\nLearn how to map your customer journey and optimize each stage for maximum impact."
             },
             {
                 "image": "/blog/post-3.jpg",
                 "category": "Technology",
                 "date": "July 05, 2024",
+                "slug": "cybersecurity-for-smes-what-you-need-to-know",
                 "title": "Cybersecurity for SMEs: What You Need to Know",
-                "description": "In the digital world, security is not an option. Learn the essential steps to protect your business's digital assets."
+                "description": "In the digital world, security is not an option. Learn the essential steps to protect your business's digital assets.",
+                "content": "In the digital world, security is not an option. Learn the essential steps to protect your business's digital assets. This guide breaks down complex cybersecurity concepts into manageable actions for Small and Medium-sized Enterprises (SMEs).\n\nWe discuss risk assessment, employee training, data encryption, and incident response planning to build a resilient security posture."
             }
         ]
     }

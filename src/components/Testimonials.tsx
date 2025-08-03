@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/carousel';
 import Image from 'next/image';
 import Pretitle from './Pretitle';
+import { motion } from 'framer-motion';
 
 // Define the type for a testimonial item
 type TestimonialItem = {
@@ -25,7 +26,13 @@ const Testimonials = () => {
     const items: TestimonialItem[] = t.raw('items');
 
     return (
-        <section id="testimonials" className="py-16 xl:py-32 bg-primary/5">
+        <motion.section
+            id="testimonials"
+            className="py-16 xl:py-32 bg-primary/5"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}>
             <div className="container mx-auto px-6">
                 {/* Title */}
                 <div className="text-center mb-12">
@@ -63,7 +70,7 @@ const Testimonials = () => {
                     <CarouselNext className="hidden lg:flex" />
                 </Carousel>
             </div>
-        </section>
+        </motion.section>
     );
 }
 

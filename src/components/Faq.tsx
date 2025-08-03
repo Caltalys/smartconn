@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import Pretitle from './Pretitle';
+import { motion } from 'framer-motion';
 
 // Define the type for a FAQ item for better type safety
 type FaqItem = {
@@ -20,7 +21,13 @@ const Faq = () => {
   const items: FaqItem[] = t.raw('items');
 
   return (
-    <section id="faq" className="py-16 xl:py-32">
+    <motion.section
+      id="faq"
+      className="py-16 xl:py-32"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}>
       <div className="container mx-auto px-6">
         {/* Title */}
         <div className="text-center mb-12">
@@ -44,7 +51,7 @@ const Faq = () => {
           </Accordion>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

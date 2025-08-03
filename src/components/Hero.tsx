@@ -78,9 +78,9 @@ const Hero = () => {
           >
             <div className="relative w-full max-w-sm sm:max-w-md xl:max-w-lg aspect-square">
               {/* Decorative blob/circle */}
-              <div className="w-full h-full bg-secondary/10 absolute -top-4 -right-4 -z-10 rounded-full"></div>
+              <div className="w-full h-full bg-secondary absolute -top-4 -right-4 -z-10 rounded-md"></div>
               {/* Image container */}
-              <div className="relative w-full h-full rounded-full overflow-hidden shadow-2xl">
+              <div className="relative w-full h-full rounded-md overflow-hidden shadow-2xl">
                 <Image
                   src={"/hero.jpg"}
                   alt={t('subtitle')}

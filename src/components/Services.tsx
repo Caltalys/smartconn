@@ -1,8 +1,11 @@
+'use client';
+
 import { useTranslations } from "next-intl";
 import Pretitle from "./Pretitle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import SmartButton from "./SmartButton";
+import { motion } from "framer-motion";
 
 const Services = () => {
   const t = useTranslations('services');
@@ -12,7 +15,7 @@ const Services = () => {
 
   if (!items || items.length === 0) {
     return (
-      <section id="services" className="py-16 xl:py-32">
+      <section id="services" className="py-16 xl:py-32 bg-primary/5">
         <div className="container mx-auto px-6 text-center">
           <p>No services available at the moment.</p>
         </div>
@@ -21,7 +24,13 @@ const Services = () => {
   }
 
   return (
-    <section id="services" className="py-16 xl:py-32">
+    <motion.section
+      id="services"
+      className="py-16 xl:py-32 bg-primary/5"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}>
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <Pretitle text={t('title')} center={true} />
@@ -77,7 +86,7 @@ const Services = () => {
 
         </Tabs>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

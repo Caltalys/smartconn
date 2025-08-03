@@ -41,7 +41,13 @@ const Works = () => {
   };
 
   return (
-    <section id="works" className="py-16 xl:py-32">
+    <motion.section
+      id="works"
+      className="py-16 xl:py-32"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}>
       <div className="container mx-auto px-6">
         {/* Title */}
         <div className="text-center mb-12">
@@ -97,7 +103,7 @@ const Works = () => {
           </AnimatePresence>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

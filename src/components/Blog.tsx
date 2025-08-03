@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card'
 import Image from 'next/image';
 import { Button } from './ui/button';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 // Define the type for a blog post item
 type BlogPost = {
@@ -14,6 +15,7 @@ type BlogPost = {
     date: string;
     title: string;
     description: string;
+    slug: string;
 };
 
 const Blog = () => {
@@ -21,7 +23,13 @@ const Blog = () => {
     const items: BlogPost[] = t.raw('items');
 
     return (
-        <section id="blog" className="py-16 xl:py-32">
+        <motion.section
+            id="blog"
+            className="py-16 xl:py-32"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}>
             <div className="container mx-auto px-6">
                 {/* Title */}
                 <div className="text-center mb-12">
@@ -56,7 +64,7 @@ const Blog = () => {
                                 </p>
                             </CardContent>
                             <CardFooter className="p-6 pt-0">
-                                <Link href="#" className="w-full">
+                                <Link href={`/blog/${post.slug}`} className="w-full">
                                     <Button variant="outline" className="w-full hover:bg-accent hover:text-accent-foreground">
                                         {t('read_more')}
                                     </Button>
@@ -66,7 +74,7 @@ const Blog = () => {
                     ))}
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 };
 
