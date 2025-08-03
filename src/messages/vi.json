@@ -42,27 +42,37 @@
             {
                 "id": "ai_apps",
                 "title": "Thực chiến ứng dụng AI",
-                "description": "Áp dụng trí tuệ nhân tạo vào thực tế để tối ưu hóa quy trình và tạo ra lợi thế cạnh tranh."
-            },
-            {
-                "id": "training",
-                "title": "Đào tạo & Huấn luyện Doanh nghiệp",
-                "description": "Các khóa đào tạo và huấn luyện chuyên sâu, giúp nâng cao năng lực đội ngũ và hiệu quả hoạt động."
-            },
-            {
-                "id": "it_solutions",
-                "title": "Giải pháp & Thiết bị CNTT",
-                "description": "Tư vấn và triển khai các giải pháp công nghệ, cung cấp thiết bị IT toàn diện cho doanh nghiệp."
-            },
-            {
-                "id": "digital_marketing",
-                "title": "Digital Marketing",
-                "description": "Xây dựng và thực thi các chiến lược marketing số, giúp doanh nghiệp tiếp cận khách hàng hiệu quả."
+                "description": "Áp dụng trí tuệ nhân tạo vào thực tế để tối ưu hóa quy trình và tạo ra lợi thế cạnh tranh.",
+                "image": "/services/ai.jpg",
+                "url": "/services/ai-apps"
             },
             {
                 "id": "laptops",
                 "title": "Laptop chính hãng",
-                "description": "Cung cấp các dòng laptop chính hãng, cấu hình mạnh mẽ, phù hợp cho nhu cầu công việc và doanh nghiệp."
+                "description": "Cung cấp các dòng laptop chính hãng, cấu hình mạnh mẽ, phù hợp cho nhu cầu công việc và doanh nghiệp.",
+                "image": "/services/laptop.jpg",
+                "url": "/services/laptops"
+            },
+            {
+                "id": "training",
+                "title": "Đào tạo & Huấn luyện Doanh nghiệp",
+                "description": "Các khóa đào tạo và huấn luyện chuyên sâu, giúp nâng cao năng lực đội ngũ và hiệu quả hoạt động.",
+                "image": "/services/training.jpg",
+                "url": "/services/training"
+            },
+            {
+                "id": "it_solutions",
+                "title": "Giải pháp & Thiết bị CNTT",
+                "description": "Tư vấn và triển khai các giải pháp công nghệ, cung cấp thiết bị IT toàn diện cho doanh nghiệp.",
+                "image": "/services/it.jpg",
+                "url": "/services/it-solutions"
+            },
+            {
+                "id": "digital_marketing",
+                "title": "Digital Marketing",
+                "description": "Xây dựng và thực thi các chiến lược marketing số, giúp doanh nghiệp tiếp cận khách hàng hiệu quả.",
+                "image": "/services/marketing.jpg",
+                "url": "/services/digital-marketing"
             }
         ]
     },
@@ -72,25 +82,93 @@
         "filter_all": "Tất cả",
         "filter_consulting": "Tư vấn",
         "filter_training": "Đào tạo",
+        "filter_operations": "Vận hành",
         "items": [
             {
+                "category": "consulting",
+                "image": "/works/consulting.jpg",
                 "title": "Tư Vấn Chiến Lược",
                 "description": "Chúng tôi cung cấp hướng dẫn chuyên môn để giúp bạn vượt qua sự phức tạp của thị trường và đạt được tăng trưởng bền vững."
             },
             {
+                "category": "training",
+                "image": "/works/training.jpg",
                 "title": "Đào Tạo Doanh Nghiệp",
                 "description": "Nâng cao kỹ năng cho đội ngũ của bạn với các chương trình đào tạo chuyên biệt được thiết kế cho những thách thức kinh doanh hiện đại."
             },
             {
+                "category": "operations",
+                "image": "/works/operations.jpg",
                 "title": "Hỗ Trợ Vận Hành",
                 "description": "Tối ưu hóa hoạt động hàng ngày của bạn với sự hỗ trợ thực tế và các giải pháp cải tiến quy trình của chúng tôi."
+            },
+            {
+                "category": "consulting",
+                "image": "/works/consulting-2.jpg",
+                "title": "Phân Tích Thị Trường",
+                "description": "Cung cấp các báo cáo phân tích sâu sắc về thị trường và đối thủ cạnh tranh để bạn đưa ra quyết định sáng suốt."
+            },
+            {
+                "category": "training",
+                "image": "/works/training-2.jpg",
+                "title": "Huấn Luyện Kỹ Năng Mềm",
+                "description": "Các khóa học phát triển kỹ năng giao tiếp, lãnh đạo và làm việc nhóm cho nhân viên ở mọi cấp độ."
+            }
+        ]
+    },
+    "testimonials": {
+        "title": "Câu Chuyện Thành Công Của Khách Hàng",
+        "subtitle": "Đối Tác Nói Gì Về Chúng Tôi",
+        "items": [
+            {
+                "quote": "Sự hướng dẫn chiến lược của SmartConn đã thay đổi cuộc chơi cho công ty chúng tôi. Những phân tích sâu sắc của họ đã giúp chúng tôi vượt qua thị trường phức tạp và đạt được tăng trưởng kỷ lục.",
+                "name": "Sarah L.",
+                "title": "CEO, Tech Innovators",
+                "image": "/testimonials/avatar-1.jpg"
+            },
+            {
+                "quote": "Chương trình đào tạo doanh nghiệp thật sự xuất sắc. Đội ngũ của chúng tôi đã trở nên lành nghề và có động lực hơn bao giờ hết. Lợi tức đầu tư đến ngay lập tức và rất đáng kể.",
+                "name": "Michael B.",
+                "title": "Giám đốc Nhân sự, Global Corp",
+                "image": "/testimonials/avatar-2.jpg"
+            },
+            {
+                "quote": "Giải pháp CNTT của họ đã tối ưu hóa toàn bộ hoạt động của chúng tôi. Chúng tôi đã thấy hiệu quả tăng lên đáng kể và chi phí vận hành giảm. Một đối tác thực sự đáng tin cậy.",
+                "name": "Jessica T.",
+                "title": "COO, Creative Minds",
+                "image": "/testimonials/avatar-3.jpg"
             }
         ]
     },
     "faq": {
         "title": "Các Câu Hỏi Thường Gặp",
         "subtitle": "Câu Trả Lời Cho Các Thắc Mắc Phổ Biến",
-        "question_1": "Bạn chuyên về những ngành nào?",
-        "answer_1": "Chúng tôi làm việc với nhiều ngành công nghiệp đa dạng, bao gồm công nghệ, tài chính, bán lẻ và sản xuất, cung cấp các giải pháp phù hợp cho từng ngành."
+        "items": [
+            {
+                "question": "Bạn chuyên về những ngành nào?",
+                "answer": "Chúng tôi làm việc với nhiều ngành công nghiệp đa dạng, bao gồm công nghệ, tài chính, bán lẻ và sản xuất, cung cấp các giải pháp phù hợp cho từng ngành."
+            },
+            {
+                "question": "Làm thế nào để bắt đầu một dự án với bạn?",
+                "answer": "Để bắt đầu, chỉ cần liên hệ với chúng tôi qua biểu mẫu trên trang web hoặc gọi điện trực tiếp. Chúng tôi sẽ sắp xếp một buổi tư vấn miễn phí để thảo luận về nhu cầu của bạn và cách chúng tôi có thể giúp đỡ."
+            },
+            {
+                "question": "Thời gian hoàn thành một dự án trung bình là bao lâu?",
+                "answer": "Thời gian hoàn thành dự án phụ thuộc vào quy mô và độ phức tạp. Sau buổi tư vấn ban đầu, chúng tôi sẽ cung cấp cho bạn một lộ trình chi tiết với các mốc thời gian cụ thể."
+            },
+            {
+                "question": "Bạn có cung cấp hỗ trợ sau khi dự án kết thúc không?",
+                "answer": "Có, chúng tôi cung cấp các gói hỗ trợ và bảo trì liên tục để đảm bảo giải pháp của bạn luôn hoạt động trơn tru và hiệu quả. Chúng tôi tin vào việc xây dựng mối quan hệ đối tác lâu dài."
+            }
+        ]
+    },
+    "footer": {
+        "description": "Kết nối, đổi mới và phát triển cùng các giải pháp công nghệ hàng đầu.",
+        "quick_links": "Liên kết nhanh",
+        "contact_info": "Thông tin liên hệ",
+        "address": "123 Đường ABC, Quận 1, TP. Hồ Chí Minh",
+        "phone": "+84 123 456 789",
+        "email": "lienhe@smartconn.vn",
+        "copyright": "© {year} SmartConn. Đã đăng ký bản quyền."
     }
 }

@@ -42,27 +42,37 @@
             {
                 "id": "ai_apps",
                 "title": "Practical AI Applications",
-                "description": "Apply artificial intelligence in practice to optimize processes and create a competitive advantage."
-            },
-            {
-                "id": "training",
-                "title": "Corporate Training & Coaching",
-                "description": "In-depth training and coaching courses to help improve team capacity and operational efficiency."
-            },
-            {
-                "id": "it_solutions",
-                "title": "IT Solutions & Equipment",
-                "description": "Consulting and implementing technology solutions, providing comprehensive IT equipment for businesses."
-            },
-            {
-                "id": "digital_marketing",
-                "title": "Digital Marketing",
-                "description": "Building and executing digital marketing strategies to help businesses reach customers effectively."
+                "description": "Apply artificial intelligence in practice to optimize processes and create a competitive advantage.",
+                "image": "/services/ai.jpg",
+                "url": "/services/ai-apps"
             },
             {
                 "id": "laptops",
                 "title": "Genuine Laptops",
-                "description": "Providing genuine laptops with powerful configurations, suitable for work and business needs."
+                "description": "Providing genuine laptops with powerful configurations, suitable for work and business needs.",
+                "image": "/services/laptop.jpg",
+                "url": "/services/laptops"
+            },
+            {
+                "id": "training",
+                "title": "Corporate Training & Coaching",
+                "description": "In-depth training and coaching courses to help improve team capacity and operational efficiency.",
+                "image": "/services/training.jpg",
+                "url": "/services/training"
+            },
+            {
+                "id": "it_solutions",
+                "title": "IT Solutions & Equipment",
+                "description": "Consulting and implementing technology solutions, providing comprehensive IT equipment for businesses.",
+                "image": "/services/it.jpg",
+                "url": "/services/it-solutions"
+            },
+            {
+                "id": "digital_marketing",
+                "title": "Digital Marketing",
+                "description": "Building and executing digital marketing strategies to help businesses reach customers effectively.",
+                "image": "/services/marketing.jpg",
+                "url": "/services/digital-marketing"
             }
         ]
     },
@@ -87,10 +97,59 @@
             }
         ]
     },
+    "testimonials": {
+        "title": "Client Success Stories",
+        "subtitle": "What Our Partners Say About Us",
+        "items": [
+            {
+                "quote": "SmartConn's strategic guidance was a game-changer for our company. Their insights helped us navigate a complex market and achieve record growth.",
+                "name": "Sarah L.",
+                "title": "CEO, Tech Innovators",
+                "image": "/testimonials/avatar-1.jpg"
+            },
+            {
+                "quote": "The corporate training program was exceptional. Our team is more skilled and motivated than ever. The ROI was immediate and substantial.",
+                "name": "Michael B.",
+                "title": "HR Director, Global Corp",
+                "image": "/testimonials/avatar-2.jpg"
+            },
+            {
+                "quote": "Their IT solutions streamlined our entire operation. We've seen a significant increase in efficiency and a reduction in overhead costs. A truly reliable partner.",
+                "name": "Jessica T.",
+                "title": "COO, Creative Minds",
+                "image": "/testimonials/avatar-3.jpg"
+            }
+        ]
+    },
     "faq": {
         "title": "Frequently Asked Questions",
         "subtitle": "Answers to Common Inquiries",
-        "question_1": "What industries do you specialize in?",
-        "answer_1": "We work with a diverse range of industries, including technology, finance, retail, and manufacturing, providing tailored solutions for each."
+        "items": [
+            {
+                "question": "What industries do you specialize in?",
+                "answer": "We work with a diverse range of industries, including technology, finance, retail, and manufacturing, providing tailored solutions for each."
+            },
+            {
+                "question": "How do I start a project with you?",
+                "answer": "To get started, simply contact us through the form on our website or give us a call. We'll schedule a free consultation to discuss your needs and how we can help."
+            },
+            {
+                "question": "What is the average project timeline?",
+                "answer": "Project timelines vary depending on the scope and complexity. After our initial consultation, we will provide you with a detailed roadmap and specific milestones."
+            },
+            {
+                "question": "Do you offer support after the project is completed?",
+                "answer": "Yes, we offer ongoing support and maintenance packages to ensure your solution remains robust and effective. We believe in building long-term partnerships."
+            }
+        ]
+    },
+    "footer": {
+        "description": "Connect, innovate, and grow with leading technology solutions.",
+        "quick_links": "Quick Links",
+        "contact_info": "Contact Info",
+        "address": "123 ABC Street, District 1, Ho Chi Minh City",
+        "phone": "+84 123 456 789",
+        "email": "contact@smartconn.vn",
+        "copyright": "© {year} SmartConn. All Rights Reserved."
     }
 }
