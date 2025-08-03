@@ -1,5 +1,6 @@
 import About from "@/components/About"
 import Faq from "@/components/Faq"
+import BackToTopButton from "@/components/BackToTopButton"
 import Blog from "@/components/Blog"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
@@ -27,6 +28,7 @@ export default function Page() {
           <Blog />
         </main>
         <Footer />
+        <BackToTopButton />
       </div>
     </>
   )

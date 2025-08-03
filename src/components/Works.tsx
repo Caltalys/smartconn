@@ -74,7 +74,7 @@ const Works = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.3 }}
-                className="bg-primary/10 rounded-lg overflow-hidden shadow-lg group"
+                className="bg-primary/5 rounded-lg overflow-hidden shadow-lg group border border-primary/10"
               >
                 <div className="relative w-full h-60">
                   <Image

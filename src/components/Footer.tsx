@@ -27,18 +27,18 @@ const Footer = () => {
     ];
 
     return (
-        <footer id="footer" className="bg-primary/10 text-primary pt-16 pb-8">
+        <footer id="footer" className="bg-primary/5 text-primary pt-16 pb-8">
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                     {/* Column 1: Logo and Socials */}
                     <div className="flex flex-col gap-6 items-center md:items-start">
                         <Logo />
-                        <p className="text-sm text-center md:text-left text-primary">
+                        <p className="text-sm text-center md:text-left text-muted-foreground">
                             {t('description')}
                         </p>
                         <Social
                             containerStyle="flex items-center gap-4"
-                            iconStyle="text-primary hover:text-accent transition-colors border border-primary-foreground/20 p-2 rounded-full flex items-center justify-center"
+                            iconStyle="text-primary hover:text-accent transition-colors border border-primary/20 p-2 rounded-full flex items-center justify-center"
                         />
                     </div>
 
@@ -71,11 +71,11 @@ const Footer = () => {
                                 <li key={index} className="flex items-start gap-4">
                                     <div className="text-accent text-xl mt-1">{item.icon}</div>
                                     {item.href ? (
-                                        <a href={item.href} className="text-sm text-primary hover:text-accent transition-colors">
+                                        <a href={item.href} className="text-sm text-muted-foreground hover:text-accent transition-colors">
                                             {item.text}
                                         </a>
                                     ) : (
-                                        <p className="text-sm text-primary">{item.text}</p>
+                                        <p className="text-sm text-muted-foreground">{item.text}</p>
                                     )}
                                 </li>
                             ))}
@@ -88,7 +88,7 @@ const Footer = () => {
                 </div>
 
                 {/* Copyright */}
-                <div className="border-t border-primary-foreground/20 pt-8 text-center text-sm text-primary-foreground/60">
+                <div className="border-t border-primary/10 pt-8 text-center text-sm text-muted-foreground">
                     <p>{t('copyright', { year: currentYear })}</p>
                 </div>
             </div>
