@@ -11,6 +11,7 @@
         "services": "Services",
         "about": "About Us",
         "works": "Our Work",
+        "testimonials": "Testimonials",
         "faq": "FAQ",
         "blog": "Blog",
         "services_submenu": {
@@ -124,7 +125,7 @@
     },
     "faq": {
         "title": "Frequently Asked Questions",
-        "subtitle": "Answers to Common Inquiries",
+        "subtitle": "",
         "items": [
             {
                 "question": "What industries do you specialize in?",

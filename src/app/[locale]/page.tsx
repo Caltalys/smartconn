@@ -9,7 +9,6 @@ import Services from "@/components/Services"
 import Testimonials from "@/components/Testimonials"
 import Topbar from "@/components/Topbar"
 import Works from "@/components/Works"
-import {getTranslations} from 'next-intl/server';
 
 export default function Page() {
   return (

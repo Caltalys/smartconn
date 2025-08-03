@@ -5,10 +5,8 @@ import Link from 'next/link';
 import { RiArrowLeftLine } from 'react-icons/ri';
 
 type Props = {
-    params: {
-        slug: string;
-        locale: string;
-    };
+    slug: string;
+    locale: string;
 };
 
 // Define the type for a blog post item to ensure type safety
@@ -26,7 +24,8 @@ type BlogPost = {
  * Generates metadata for the blog post page, enhancing SEO.
  * It fetches the specific post by its slug and sets the page title and description.
  */
-export async function generateMetadata({ params: { slug, locale } }: Props) {
+export async function generateMetadata({ params }: {params: Promise<Props>}) {
+    const { slug, locale } = await params;
     const t = await getTranslations({ locale, namespace: 'blog' });
     const items: BlogPost[] = t.raw('items');
     const post = items.find((item) => item.slug === slug);
@@ -47,7 +46,8 @@ export async function generateMetadata({ params: { slug, locale } }: Props) {
  * The main component for displaying a single blog post.
  * It fetches the post data based on the slug from the URL parameters.
  */
-export default async function BlogPostPage({ params: { slug, locale } }: Props) {
+export default async function BlogPostPage({ params }: {params: Promise<Props>}) {
+    const { slug, locale } = await params;
     // Enable static rendering for i18n
     setRequestLocale(locale);
 
@@ -95,4 +95,3 @@ export default async function BlogPostPage({ params: { slug, locale } }: Props) 
         </main>
     );
 }
-

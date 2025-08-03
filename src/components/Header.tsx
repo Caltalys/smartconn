@@ -9,7 +9,6 @@ import NavMobileMenu from "./NavMobileMenu";
 
 const Header = () => {
   const t = useTranslations('navigation');
-  const tContact = useTranslations('contact');
 
   const servicesSubMenu = [
     { id: "ai_apps", href: "#service-ai_apps" },
@@ -24,6 +23,7 @@ const Header = () => {
     { href: '#about', id: "about" },
     { href: '#services', id: "services", submenu: servicesSubMenu },
     { href: '#works', id: "works" },
+    { href: '#testimonials', id: "testimonials" },
     { href: '#faq', id: "faq" },
     { href: '#blog', id: "blog" },
   ];

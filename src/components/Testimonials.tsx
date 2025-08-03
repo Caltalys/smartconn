@@ -53,7 +53,7 @@ const Testimonials = () => {
                             <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                                 <Card className="h-full flex flex-col justify-between p-6 shadow-lg">
                                     <CardContent className="p-0 mb-6">
-                                        <p className="text-muted-foreground italic">"{item.quote}"</p>
+                                        <p className="text-muted-foreground italic">{item.quote}</p>
                                     </CardContent>
                                     <CardHeader className="p-0 flex flex-row items-center gap-4">
                                         <Image src={item.image} alt={item.name} width={56} height={56} className="rounded-full border-2 border-accent" />

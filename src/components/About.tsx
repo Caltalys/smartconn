@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 
 const About = () => {
   const t = useTranslations('about_us');
-  const tCommon = useTranslations('common');
   const tContact = useTranslations('contact');
 
   return (
