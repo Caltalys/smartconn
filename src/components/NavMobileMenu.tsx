@@ -1,20 +1,26 @@
 'use client';
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from '@/components/ui/button';
 import LanguageSwitcher from './LanguageSwitcher';
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
-import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { RiMenu3Fill } from "react-icons/ri";
+import { RiMenu3Fill, RiArrowDownSLine } from "react-icons/ri";
 import Social from "./Social";
-import { buttonVariants } from "./ui/button";
+
+const servicesSubMenu = [
+    { id: "ai_apps", href: "#service-ai_apps" },
+    { id: "laptops", href: "#service-laptops" },
+    { id: "training", href: "#service-training" },
+    { id: "it_solutions", href: "#service-it_solutions" },
+    { id: "digital_marketing", href: "#service-digital_marketing" },
+];
 
 const navLinks = [
     { href: '#home', id: "home" },
-    { href: '#services', id: "services" },
+    { href: '#services', id: "services", submenu: servicesSubMenu },
     { href: '#about', id: "about" },
     { href: '#works', id: "works" },
     { href: '#faq', id: "faq" },
@@ -22,9 +28,8 @@ const navLinks = [
 
 const NavMobileMenu = () => {
     const t = useTranslations('navigation');
-    const tContact = useTranslations('contact');
     const [isOpen, setIsOpen] = useState(false);
-
+    const [isServicesOpen, setServicesOpen] = useState(false);
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -42,21 +47,57 @@ const NavMobileMenu = () => {
                 {/* This nav section now correctly fills the available space and centers the links. */}
                 <nav className="flex-1 flex flex-col items-center justify-center">
                     <ul className="flex flex-col items-center gap-10">
-                    {navLinks.map((link) => (
-                        <li key={link.id}
-                            className="text-sm uppercase font-semibold tracking-[1.2px]">
-                            <ScrollLink
-                                spy={true}
-                                smooth={true}
-                                to={link.id} offset={-64}
-                                duration={500}
-                                className="cursor-pointer"
-                                activeClass="text-accent"
-                                onClick={() => setIsOpen(false)}>
-                                {t(link.id)}
-                            </ScrollLink>
-                        </li>
-                    ))}
+                        {navLinks.map((link) => (
+                            link.submenu ? (
+                                <li key={link.id} className="flex flex-col items-center gap-4">
+                                    <div
+                                        className="text-sm uppercase font-semibold tracking-[1.2px] flex items-center gap-2 cursor-pointer"
+                                        onClick={() => setServicesOpen(!isServicesOpen)}
+                                    >
+                                        <span>{t(link.id)}</span>
+                                        <RiArrowDownSLine className={`transition-transform duration-300 ${isServicesOpen ? 'rotate-180' : ''}`} />
+                                    </div>
+                                    <AnimatePresence>
+                                        {isServicesOpen && (
+                                            <motion.ul
+                                                initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                animate={{ height: 'auto', opacity: 1, marginTop: '0.5rem' }}
+                                                exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                                                className="overflow-hidden flex flex-col items-center gap-4"
+                                            >
+                                                {link.submenu.map(subLink => (
+                                                    <li key={subLink.id} className="text-xs normal-case font-medium">
+                                                        <ScrollLink
+                                                            spy={true}
+                                                            smooth={true}
+                                                            to={subLink.href.substring(1)} offset={-64}
+                                                            duration={500}
+                                                            className="cursor-pointer"
+                                                            activeClass="text-accent"
+                                                            onClick={() => setIsOpen(false)}>
+                                                            {t(`services_submenu.${subLink.id}`)}
+                                                        </ScrollLink>
+                                                    </li>
+                                                ))}
+                                            </motion.ul>
+                                        )}
+                                    </AnimatePresence>
+                                </li>
+                            ) : (
+                                <li key={link.id} className="text-sm uppercase font-semibold tracking-[1.2px]">
+                                    <ScrollLink
+                                        spy={true}
+                                        smooth={true}
+                                        to={link.id} offset={-64}
+                                        duration={500}
+                                        className="cursor-pointer"
+                                        activeClass="text-accent"
+                                        onClick={() => setIsOpen(false)}>
+                                        {t(link.id)}
+                                    </ScrollLink>
+                                </li>
+                            )
+                        ))}
                     </ul>
                 </nav>
                 <SheetFooter>

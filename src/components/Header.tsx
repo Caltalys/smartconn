@@ -1,10 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { ChevronDown } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
@@ -14,9 +11,17 @@ const Header = () => {
   const t = useTranslations('navigation');
   const tContact = useTranslations('contact');
 
+  const servicesSubMenu = [
+    { id: "ai_apps", href: "#service-ai_apps" },
+    { id: "laptops", href: "#service-laptops" },
+    { id: "training", href: "#service-training" },
+    { id: "it_solutions", href: "#service-it_solutions" },
+    { id: "digital_marketing", href: "#service-digital_marketing" },
+  ];
+
   const navLinks = [
     { href: '#home', id: "home" },
-    { href: '#services', id: "services" },
+    { href: '#services', id: "services", submenu: servicesSubMenu },
     { href: '#about', id: "about" },
     { href: '#works', id: "works" },
     { href: '#faq', id: "faq" },
@@ -30,36 +35,58 @@ const Header = () => {
         
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8">
-          <ul className="flex">
+          <ul className="flex items-center">
             {navLinks.map((link) => (
-              <li key={link.id}
-                className="text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
-                <ScrollLink
-                  spy={true}
-                  smooth={true}
-                  to={link.id} offset={-64}
-                  duration={500}
-                  className="cursor-pointer"
-                  activeClass="text-accent">
-                  {t(link.id)}
-                </ScrollLink>
-              </li>
+              link.submenu ? (
+                <li key={link.id} className="relative group text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
+                  <div className="flex items-center gap-1 cursor-pointer">
+                    <ScrollLink
+                      spy={true}
+                      smooth={true}
+                      to={link.id} offset={-64}
+                      duration={500}
+                      activeClass="text-accent"
+                    >
+                      {t(link.id)}
+                    </ScrollLink>
+                    <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
+                  </div>
+                  {/* Dropdown menu */}
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-72 bg-white shadow-lg rounded-md p-2 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50">
+                    <ul className="space-y-1">
+                      {link.submenu.map(subLink => (
+                        <li key={subLink.id}>
+                          <ScrollLink
+                            spy={true}
+                            smooth={true}
+                            to={subLink.href.substring(1)} offset={-64}
+                            duration={500}
+                            className="block px-4 py-2 text-sm text-primary hover:bg-gray-100 rounded-md cursor-pointer normal-case font-medium"
+                          >
+                            {t(`services_submenu.${subLink.id}`)}
+                          </ScrollLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ) : (
+                <li key={link.id} className="text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
+                  <ScrollLink
+                    spy={true}
+                    smooth={true}
+                    to={link.id} offset={-64}
+                    duration={500}
+                    className="cursor-pointer"
+                    activeClass="text-accent">
+                    {t(link.id)}
+                  </ScrollLink>
+                </li>
+              )
             ))}
           </ul>
           {/* Right side actions */}
           <div className="flex items-center gap-4">
-            {/* <Button asChild className="px-5 py-2 text-sm bg-primary text-white hover:shadow-lg hover:shadow-purple-500/25 transform hover:-translate-y-0.5 transition-all duration-300">
-              <ScrollLink
-                to="footer"
-                spy={true}
-                smooth={true}
-                offset={-64}
-                duration={500}
-                className="font-semibold cursor-pointer"
-              >
-                {tContact('contact_us')}
-              </ScrollLink>
-            </Button> */}
             <LanguageSwitcher />
           </div>
         </nav>
@@ -67,14 +94,9 @@ const Header = () => {
         {/* Mobile Menu Button */}
         <div className="lg:hidden">
           <NavMobileMenu />
-          {/* <button onClick={toggleMobileMenu} aria-label="Toggle menu" className="text-foreground">
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button> */}
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      
     </header>
   );
 };

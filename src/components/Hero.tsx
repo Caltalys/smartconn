@@ -33,10 +33,10 @@ const Hero = () => {
           </h1>
           {/* Chúng ta có thể dễ dàng ghi đè các style cơ bản khi cần thiết, như tiêu đề đặc biệt này */}
           <h1 className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.6)] text-secondary text-4xl sm:text-6xl lg:text-7xl">
-            {t('title_1')}
+            {t('subtitle')}
           </h1>
           <p className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.6)] max-w-xl lg:text-xl xl:max-w-2xl xl:text-left">
-            {t('subtitle')}
+            {t('description')}
           </p>
           <div className="flex flex-col lg:flex-row items-center justify-center xl:justify-start gap-4">
             <SmartButton text={t('services')} href="#services" />

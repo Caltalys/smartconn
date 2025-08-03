@@ -3,28 +3,94 @@
         "openMenu": "Mở menu",
         "switchToVietnamese": "Chuyển sang tiếng Việt",
         "switchToEnglish": "Chuyển sang tiếng Anh",
-        "toggleTheme": "Chuyển đổi giao diện"
+        "toggleTheme": "Chuyển đổi giao diện",
+        "more": "Tìm hiểu thêm"
     },
     "navigation": {
         "home": "Trang Chủ",
         "services": "Dịch vụ",
         "about": "Về Chúng Tôi",
         "works": "Dự Án",
-        "faq": "Hỏi Đáp"
+        "faq": "Hỏi Đáp",
+        "services_submenu": {
+            "ai_apps": "Thực chiến ứng dụng AI",
+            "training": "Đào tạo & Huấn luyện Doanh nghiệp",
+            "it_solutions": "Giải pháp & Thiết bị CNTT",
+            "digital_marketing": "Digital Marketing",
+            "laptops": "Laptop chính hãng"
+        }
     },
     "contact": {
         "contact_us": "Liên Hệ"
     },
     "hero": {
         "title": "Giải Pháp Toàn Diện Cho Doanh Nghiệp Của Bạn",
-        "title_1": "Chiến Lược - Đào tạo - Vận Hành",
-        "subtitle": "Chúng tôi cung cấp các khóa học chuyên sâu, mentoring 1-1 cùng chuyên gia, không gian làm việc sáng tạo và cộng đồng doanh nghiệp kết nối.",
+        "subtitle": "Chiến Lược - Đào tạo - Vận Hành",
+        "description": "Chúng tôi cung cấp các khóa học chuyên sâu, mentoring 1-1 cùng chuyên gia, không gian làm việc sáng tạo và cộng đồng doanh nghiệp kết nối.",
         "services": "Khám phá các dịch vụ",
         "contact_us": "Liên hệ"
     },
     "about_us": {
-        "title": "Vể chúng tôi",
+        "title": "Về chúng tôi",
         "subtitle": "Dẫn Dắt Bởi Các Chuyên Gia Đầu Ngành",
         "description": "Đội ngũ cố vấn, giảng viên giàu kinh nghiệm thực chiến, sẵn sàng đồng hành cùng bạn trên con đường phát triển."
+    },
+    "services": {
+        "title": "Dịch Vụ Của Chúng Tôi",
+        "subtitle": "Giải Pháp Được Thiết Kế Riêng Cho Doanh Nghiệp Của Bạn",
+        "items": [
+            {
+                "id": "ai_apps",
+                "title": "Thực chiến ứng dụng AI",
+                "description": "Áp dụng trí tuệ nhân tạo vào thực tế để tối ưu hóa quy trình và tạo ra lợi thế cạnh tranh."
+            },
+            {
+                "id": "training",
+                "title": "Đào tạo & Huấn luyện Doanh nghiệp",
+                "description": "Các khóa đào tạo và huấn luyện chuyên sâu, giúp nâng cao năng lực đội ngũ và hiệu quả hoạt động."
+            },
+            {
+                "id": "it_solutions",
+                "title": "Giải pháp & Thiết bị CNTT",
+                "description": "Tư vấn và triển khai các giải pháp công nghệ, cung cấp thiết bị IT toàn diện cho doanh nghiệp."
+            },
+            {
+                "id": "digital_marketing",
+                "title": "Digital Marketing",
+                "description": "Xây dựng và thực thi các chiến lược marketing số, giúp doanh nghiệp tiếp cận khách hàng hiệu quả."
+            },
+            {
+                "id": "laptops",
+                "title": "Laptop chính hãng",
+                "description": "Cung cấp các dòng laptop chính hãng, cấu hình mạnh mẽ, phù hợp cho nhu cầu công việc và doanh nghiệp."
+            }
+        ]
+    },
+    "works": {
+        "title": "Dự Án Của Chúng Tôi",
+        "subtitle": "Một Vài Nét Về Các Hợp Tác Thành Công",
+        "filter_all": "Tất cả",
+        "filter_consulting": "Tư vấn",
+        "filter_training": "Đào tạo",
+        "items": [
+            {
+                "title": "Tư Vấn Chiến Lược",
+                "description": "Chúng tôi cung cấp hướng dẫn chuyên môn để giúp bạn vượt qua sự phức tạp của thị trường và đạt được tăng trưởng bền vững."
+            },
+            {
+                "title": "Đào Tạo Doanh Nghiệp",
+                "description": "Nâng cao kỹ năng cho đội ngũ của bạn với các chương trình đào tạo chuyên biệt được thiết kế cho những thách thức kinh doanh hiện đại."
+            },
+            {
+                "title": "Hỗ Trợ Vận Hành",
+                "description": "Tối ưu hóa hoạt động hàng ngày của bạn với sự hỗ trợ thực tế và các giải pháp cải tiến quy trình của chúng tôi."
+            }
+        ]
+    },
+    "faq": {
+        "title": "Các Câu Hỏi Thường Gặp",
+        "subtitle": "Câu Trả Lời Cho Các Thắc Mắc Phổ Biến",
+        "question_1": "Bạn chuyên về những ngành nào?",
+        "answer_1": "Chúng tôi làm việc với nhiều ngành công nghiệp đa dạng, bao gồm công nghệ, tài chính, bán lẻ và sản xuất, cung cấp các giải pháp phù hợp cho từng ngành."
     }
 }
