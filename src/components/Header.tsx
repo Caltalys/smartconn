@@ -25,6 +25,7 @@ const Header = () => {
     { href: '#about', id: "about" },
     { href: '#works', id: "works" },
     { href: '#faq', id: "faq" },
+    { href: '#blog', id: "blog" },
   ];
 
   return (
@@ -38,19 +39,18 @@ const Header = () => {
           <ul className="flex items-center">
             {navLinks.map((link) => (
               link.submenu ? (
-                <li key={link.id} className="relative group text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
-                  <div className="flex items-center gap-1 cursor-pointer">
-                    <ScrollLink
-                      spy={true}
-                      smooth={true}
-                      to={link.id} offset={-64}
-                      duration={500}
-                      activeClass="text-accent"
-                    >
-                      {t(link.id)}
-                    </ScrollLink>
-                    <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
-                  </div>
+                <li key={link.id} className="relative group flex items-center gap-1 cursor-pointer text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
+                  <ScrollLink
+                    spy={true}
+                    smooth={true}
+                    to={link.id} offset={-64}
+                    duration={500}
+                    className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left [&.is-active]:after:scale-x-100"
+                    activeClass="text-accent is-active"
+                  >
+                    {t(link.id)}
+                  </ScrollLink>
+                  <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
                   {/* Dropdown menu */}
                   <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-72 bg-white shadow-lg rounded-md p-2 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50">
                     <ul className="space-y-1">
@@ -77,8 +77,8 @@ const Header = () => {
                     smooth={true}
                     to={link.id} offset={-64}
                     duration={500}
-                    className="cursor-pointer"
-                    activeClass="text-accent">
+                    className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left [&.is-active]:after:scale-x-100"
+                    activeClass="text-accent is-active">
                     {t(link.id)}
                   </ScrollLink>
                 </li>

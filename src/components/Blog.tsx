@@ -1,0 +1,73 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+import Pretitle from './Pretitle';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
+import Image from 'next/image';
+import { Button } from './ui/button';
+import Link from 'next/link';
+
+// Define the type for a blog post item
+type BlogPost = {
+    image: string;
+    category: string;
+    date: string;
+    title: string;
+    description: string;
+};
+
+const Blog = () => {
+    const t = useTranslations('blog');
+    const items: BlogPost[] = t.raw('items');
+
+    return (
+        <section id="blog" className="py-16 xl:py-32">
+            <div className="container mx-auto px-6">
+                {/* Title */}
+                <div className="text-center mb-12">
+                    <Pretitle text={t('title')} center={true} />
+                    <h2 className="mb-4">{t('subtitle')}</h2>
+                </div>
+
+                {/* Blog Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {items.map((post, index) => (
+                        <Card key={index} className="overflow-hidden shadow-lg flex flex-col group bg-primary/5 border-primary/10">
+                            <CardHeader className="p-0">
+                                <div className="relative w-full h-60">
+                                    <Image
+                                        src={post.image}
+                                        alt={post.title}
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    />
+                                </div>
+                            </CardHeader>
+                            <CardContent className="p-6 flex-grow">
+                                <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
+                                    <span className="text-accent font-semibold">{post.category}</span>
+                                    <span>&bull;</span>
+                                    <span>{post.date}</span>
+                                </div>
+                                <CardTitle className="text-xl mb-2 line-clamp-2">{post.title}</CardTitle>
+                                <p className="text-muted-foreground text-sm line-clamp-3">
+                                    {post.description}
+                                </p>
+                            </CardContent>
+                            <CardFooter className="p-6 pt-0">
+                                <Link href="#" className="w-full">
+                                    <Button variant="outline" className="w-full hover:bg-accent hover:text-accent-foreground">
+                                        {t('read_more')}
+                                    </Button>
+                                </Link>
+                            </CardFooter>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default Blog;

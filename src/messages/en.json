@@ -12,6 +12,7 @@
         "about": "About Us",
         "works": "Our Work",
         "faq": "FAQ",
+        "blog": "Blog",
         "services_submenu": {
             "ai_apps": "Practical AI Applications",
             "training": "Corporate Training & Coaching",
@@ -151,5 +152,33 @@
         "phone": "+84 123 456 789",
         "email": "contact@smartconn.vn",
         "copyright": "© {year} SmartConn. All Rights Reserved."
+    },
+    "blog": {
+        "title": "News & Articles",
+        "subtitle": "Stay Updated with the Latest Insights and Trends",
+        "read_more": "Read More",
+        "items": [
+            {
+                "image": "/blog/post-1.jpg",
+                "category": "Strategy",
+                "date": "July 15, 2024",
+                "title": "5 AI Trends That Will Shape Business in the Coming Year",
+                "description": "Discover how artificial intelligence is changing the game and how you can leverage it to create a competitive edge."
+            },
+            {
+                "image": "/blog/post-2.jpg",
+                "category": "Marketing",
+                "date": "July 10, 2024",
+                "title": "Building an Effective Marketing Funnel for B2B Products",
+                "description": "A step-by-step guide to creating a high-converting marketing funnel that attracts and nurtures leads for B2B businesses."
+            },
+            {
+                "image": "/blog/post-3.jpg",
+                "category": "Technology",
+                "date": "July 05, 2024",
+                "title": "Cybersecurity for SMEs: What You Need to Know",
+                "description": "In the digital world, security is not an option. Learn the essential steps to protect your business's digital assets."
+            }
+        ]
     }
 }

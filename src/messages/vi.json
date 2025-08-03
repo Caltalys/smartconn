@@ -12,6 +12,7 @@
         "about": "Về Chúng Tôi",
         "works": "Dự Án",
         "faq": "Hỏi Đáp",
+        "blog": "Bài viết",
         "services_submenu": {
             "ai_apps": "Thực chiến ứng dụng AI",
             "training": "Đào tạo & Huấn luyện Doanh nghiệp",
@@ -170,5 +171,33 @@
         "phone": "+84 123 456 789",
         "email": "lienhe@smartconn.vn",
         "copyright": "© {year} SmartConn. Đã đăng ký bản quyền."
+    },
+    "blog": {
+        "title": "Tin Tức & Bài Viết",
+        "subtitle": "Cập Nhật Những Phân Tích Và Xu Hướng Mới Nhất",
+        "read_more": "Đọc thêm",
+        "items": [
+            {
+                "image": "/blog/post-1.jpg",
+                "category": "Chiến lược",
+                "date": "15 tháng 7, 2024",
+                "title": "5 Xu Hướng AI Sẽ Định Hình Doanh Nghiệp Trong Năm Tới",
+                "description": "Khám phá cách trí tuệ nhân tạo đang thay đổi cuộc chơi và làm thế nào bạn có thể tận dụng nó để tạo ra lợi thế cạnh tranh."
+            },
+            {
+                "image": "/blog/post-2.jpg",
+                "category": "Marketing",
+                "date": "10 tháng 7, 2024",
+                "title": "Xây Dựng Phễu Marketing Hiệu Quả Cho Sản Phẩm B2B",
+                "description": "Hướng dẫn từng bước để tạo ra một phễu marketing chuyển đổi cao, thu hút và nuôi dưỡng khách hàng tiềm năng cho doanh nghiệp B2B."
+            },
+            {
+                "image": "/blog/post-3.jpg",
+                "category": "Công nghệ",
+                "date": "05 tháng 7, 2024",
+                "title": "An Ninh Mạng Cho Doanh Nghiệp Vừa Và Nhỏ: Những Điều Cần Biết",
+                "description": "Trong thế giới số, bảo mật không còn là một lựa chọn. Tìm hiểu các bước thiết yếu để bảo vệ tài sản số của doanh nghiệp bạn."
+            }
+        ]
     }
 }

@@ -34,7 +34,7 @@ const About = () => {
             {/* Container ảnh giờ sẽ rộng hơn trên mobile để tận dụng không gian */}
             <div className="relative w-full max-w-md xl:w-full xl:max-w-none aspect-[4/3]">
               {/* Khối trang trí nền */}
-              <div className="flex w-full h-full bg-secondary absolute -top-3 -left-3 -z-10"></div>
+              <div className="flex w-full h-full bg-secondary absolute -top-3 -left-3 -z-10 rounded-md"></div>
               <Image
                 src={"/about.jpg"}
                 alt={t('subtitle')}

@@ -24,6 +24,7 @@ const navLinks = [
     { href: '#about', id: "about" },
     { href: '#works', id: "works" },
     { href: '#faq', id: "faq" },
+    { href: '#blog', id: "blog" },
 ];
 
 const NavMobileMenu = () => {

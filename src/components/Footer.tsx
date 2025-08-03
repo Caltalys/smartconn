@@ -17,6 +17,7 @@ const Footer = () => {
         { href: 'services', id: "services" },
         { href: 'works', id: "works" },
         { href: 'faq', id: "faq" },
+        { href: 'blog', id: "blog" },
     ];
 
     const contactItems = [
