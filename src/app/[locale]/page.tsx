@@ -9,6 +9,7 @@ import Services from "@/components/Services"
 import Testimonials from "@/components/Testimonials"
 import Topbar from "@/components/Topbar"
 import Works from "@/components/Works"
+import Gallery from "@/components/Gallery"
 
 export default function Page() {
   return (
@@ -21,10 +22,11 @@ export default function Page() {
           <About />
           <Services />
           {/* <Stats /> */}
-          <Works />
-          <Testimonials />
+          {/* <Works /> */}
+          {/* <Testimonials /> */}
           <Faq />
           <Blog />
+          <Gallery />
         </main>
         <Footer />
         <BackToTopButton />

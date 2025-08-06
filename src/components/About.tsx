@@ -30,7 +30,7 @@ const About = () => {
               {/* Khối trang trí nền */}
               <div className="flex w-full h-full bg-secondary absolute -top-3 -left-3 -z-10 rounded-md"></div>
               <Image
-                src={"/about.jpg"}
+                src={"/shark-ana.jpg"}
                 alt={t('subtitle')}
                 fill
                 sizes="(max-width: 768px) 90vw, (max-width: 1279px) 448px, 40vw"

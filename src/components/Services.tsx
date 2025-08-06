@@ -42,48 +42,41 @@ const Services = () => {
             <TabsList className="flex flex-col w-full h-auto bg-transparent gap-4 rounded-none overflow-hidden">
               {items.map((item) => (
                 <TabsTrigger key={item.id} value={item.id}
-                  // Thêm whitespace-normal để cho phép văn bản xuống dòng, điều chỉnh padding và chiều cao để linh hoạt hơn.
-                  className="flex w-full p-4 sm:p-6 border border-primary/20 bg-primary/10 data-[state=active]:bg-secondary/80 data-[state=active]:border-2 data-[state=active]:border-secondary transition-all duration-300 rounded-none whitespace-normal">
+                  className="flex w-full p-4 sm:p-6 data-[state=active]:bg-secondary/80 transition-all duration-300 rounded-none whitespace-normal shadow-lg">
                   <div className="w-full h-full flex items-center justify-center lg:justify-start">
-                    {/* Căn chỉnh lại văn bản và làm cho font chữ responsive hơn */}
                     <p className="text-sm sm:text-base font-bold text-primary uppercase text-center lg:text-left">{item.title}</p>
                   </div>
                 </TabsTrigger>
               ))}
             </TabsList>
           </div>
-
           {/* Phần hiển thị chi tiết dịch vụ */}
           <div className="w-full lg:w-2/3">
             {items.map((item) => (
               <TabsContent value={item.id} key={item.id} className="w-full m-0">
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-center h-full">
-                  {/* Hình ảnh */}
-                  <div className="relative w-full h-[300px] xl:h-[460px]">
-                    <Image
-                      src={item.image}
-                      fill
-                      alt={item.title}
-                      className="object-cover rounded-lg shadow-lg"
-                      sizes="(max-width: 1279px) 90vw, 45vw"
-                    />
-                  </div>
-                  {/* Văn bản */}
-                  <div className="text-center xl:text-left">
-                    <h3 className="text-2xl xl:text-3xl font-bold mb-4">{item.title}</h3>
-                    <p className="text-base xl:text-lg text-muted-foreground mb-6">{item.description}</p>
-                    {/* button */}
-                    <div className="w-full flex xl:items-center justify-center xl:justify-start gap-4">
+                <div className="relative w-full h-[460px] rounded-lg overflow-hidden shadow-lg group">
+                  <Image
+                    src={item.image}
+                    fill
+                    alt={item.title}
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 1279px) 90vw, 66vw"
+                  />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+
+                  {/* Content */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-end text-center p-8 md:p-12">
+                    <div className="max-w-md text-white">
+                      <h3 className="text-2xl xl:text-4xl font-bold mb-4 drop-shadow-lg">{item.title}</h3>
+                      <p className="text-base xl:text-lg mb-8 drop-shadow-md">{item.description}</p>
                       <SmartButton text={tCommon('more')} href={item.url} />
                     </div>
                   </div>
-
                 </div>
               </TabsContent>
             ))}
           </div>
-
-
         </Tabs>
       </div>
     </motion.section>

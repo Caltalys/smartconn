@@ -15,19 +15,17 @@
         "faq": "Hỏi Đáp",
         "blog": "Bài viết",
         "services_submenu": {
-            "ai_apps": "Thực chiến ứng dụng AI",
             "training": "Đào tạo & Huấn luyện Doanh nghiệp",
-            "it_solutions": "Giải pháp & Thiết bị CNTT",
-            "digital_marketing": "Digital Marketing",
-            "laptops": "Laptop chính hãng"
+            "it_solutions": "Tư vấn Giải pháp & Thiết bị CNTT",
+            "digital_marketing": "Quảng cáo & Marketing trọn gói bằng AI"
         }
     },
     "contact": {
         "contact_us": "Liên Hệ"
     },
     "hero": {
-        "title": "Giải Pháp Toàn Diện Cho Doanh Nghiệp Của Bạn",
-        "subtitle": "Chiến Lược - Đào tạo - Vận Hành",
+        "title": "Smartcom Solutions: Bệ Phóng Khởi Nghiệp",
+        "subtitle": "Tối Ưu Chi Phí, Tối Đa Thành Công",
         "description": "Chúng tôi cung cấp các khóa học chuyên sâu, mentoring 1-1 cùng chuyên gia, không gian làm việc sáng tạo và cộng đồng doanh nghiệp kết nối.",
         "services": "Khám phá các dịch vụ",
         "contact_us": "Liên hệ"
@@ -42,37 +40,23 @@
         "subtitle": "Giải Pháp Được Thiết Kế Riêng Cho Doanh Nghiệp Của Bạn",
         "items": [
             {
-                "id": "ai_apps",
-                "title": "Thực chiến ứng dụng AI",
-                "description": "Áp dụng trí tuệ nhân tạo vào thực tế để tối ưu hóa quy trình và tạo ra lợi thế cạnh tranh.",
-                "image": "/services/ai.jpg",
-                "url": "/services/ai-apps"
-            },
-            {
-                "id": "laptops",
-                "title": "Laptop chính hãng",
-                "description": "Cung cấp các dòng laptop chính hãng, cấu hình mạnh mẽ, phù hợp cho nhu cầu công việc và doanh nghiệp.",
-                "image": "/services/laptop.jpg",
-                "url": "/services/laptops"
-            },
-            {
                 "id": "training",
                 "title": "Đào tạo & Huấn luyện Doanh nghiệp",
-                "description": "Các khóa đào tạo và huấn luyện chuyên sâu, giúp nâng cao năng lực đội ngũ và hiệu quả hoạt động.",
+                "description": "Ứng dụng AI nâng cao năng lực đội ngũ",
                 "image": "/services/training.jpg",
                 "url": "/services/training"
             },
             {
                 "id": "it_solutions",
-                "title": "Giải pháp & Thiết bị CNTT",
-                "description": "Tư vấn và triển khai các giải pháp công nghệ, cung cấp thiết bị IT toàn diện cho doanh nghiệp.",
+                "title": "Tư vấn Giải pháp & Thiết bị CNTT",
+                "description": "Nền tảng vững chắc cho chuyển đổi số",
                 "image": "/services/it.jpg",
                 "url": "/services/it-solutions"
             },
             {
                 "id": "digital_marketing",
-                "title": "Digital Marketing",
-                "description": "Xây dựng và thực thi các chiến lược marketing số, giúp doanh nghiệp tiếp cận khách hàng hiệu quả.",
+                "title": "Quảng cáo & Marketing trọn gói bằng AI",
+                "description": "Tối ưu chiến dịch, tiếp cận đúng khách hàng mục tiêu.",
                 "image": "/services/marketing.jpg",
                 "url": "/services/digital-marketing"
             }
@@ -171,7 +155,7 @@
         "address": "123 Đường ABC, Quận 1, TP. Hồ Chí Minh",
         "phone": "+84 123 456 789",
         "email": "lienhe@smartconn.vn",
-        "copyright": "© {year} SmartConn. Đã đăng ký bản quyền."
+        "copyright": "© {year} SmartCom. Đã đăng ký bản quyền."
     },
     "blog": {
         "title": "Tin Tức & Bài Viết",
@@ -207,5 +191,8 @@
                 "content": "Trong thế giới số, bảo mật không còn là một lựa chọn. Tìm hiểu các bước thiết yếu để bảo vệ tài sản số của doanh nghiệp bạn. Hướng dẫn này phân tích các khái niệm an ninh mạng phức tạp thành các hành động có thể quản lý được cho các Doanh nghiệp Vừa và Nhỏ (SME).\n\nChúng tôi thảo luận về đánh giá rủi ro, đào tạo nhân viên, mã hóa dữ liệu và lập kế hoạch ứng phó sự cố để xây dựng một hệ thống bảo mật vững chắc."
             }
         ]
+    },
+    "gallery": {
+        "title": "Thư viện ảnh"
     }
 }

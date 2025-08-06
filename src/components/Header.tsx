@@ -11,8 +11,6 @@ const Header = () => {
   const t = useTranslations('navigation');
 
   const servicesSubMenu = [
-    { id: "ai_apps", href: "#service-ai_apps" },
-    { id: "laptops", href: "#service-laptops" },
     { id: "training", href: "#service-training" },
     { id: "it_solutions", href: "#service-it_solutions" },
     { id: "digital_marketing", href: "#service-digital_marketing" },
@@ -52,7 +50,7 @@ const Header = () => {
                   </ScrollLink>
                   <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
                   {/* Dropdown menu */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-72 bg-white shadow-lg rounded-md p-2 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50">
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-100 bg-white shadow-lg rounded-md p-2 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50">
                     <ul className="space-y-1">
                       {link.submenu.map(subLink => (
                         <li key={subLink.id}>

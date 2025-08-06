@@ -15,20 +15,18 @@
         "faq": "FAQ",
         "blog": "Blog",
         "services_submenu": {
-            "ai_apps": "Practical AI Applications",
             "training": "Corporate Training & Coaching",
-            "it_solutions": "IT Solutions & Equipment",
-            "digital_marketing": "Digital Marketing",
-            "laptops": "Genuine Laptops"
+            "it_solutions": "IT Solutions & Equipment Consulting",
+            "digital_marketing": "AI-Powered Full-Service Advertising & Marketing"
         }
     },
     "contact": {
         "contact_us": "Contact Us"
     },
     "hero": {
-        "title": "Comprehensive Solutions for Business Growth",
-        "subtitle": "Strategy - Training - Operation",
-        "description": "We help businesses leverage technology to innovate, optimize, and grow. Discover our cutting-edge solutions tailored for your success.",
+        "title": "Smartcom Solutions: Startup Launchpad",
+        "subtitle": "Optimize Cost, Maximize Success",
+        "description": "We provide in-depth courses, 1-on-1 mentoring with experts, creative workspaces, and a connected business community.",
         "services": "Services",
         "contact_us": "Contact Us"
     },
@@ -42,37 +40,23 @@
         "subtitle": "Solutions Tailored for Your Business",
         "items": [
             {
-                "id": "ai_apps",
-                "title": "Practical AI Applications",
-                "description": "Apply artificial intelligence in practice to optimize processes and create a competitive advantage.",
-                "image": "/services/ai.jpg",
-                "url": "/services/ai-apps"
-            },
-            {
-                "id": "laptops",
-                "title": "Genuine Laptops",
-                "description": "Providing genuine laptops with powerful configurations, suitable for work and business needs.",
-                "image": "/services/laptop.jpg",
-                "url": "/services/laptops"
-            },
-            {
                 "id": "training",
                 "title": "Corporate Training & Coaching",
-                "description": "In-depth training and coaching courses to help improve team capacity and operational efficiency.",
+                "description": "Applying AI to enhance team capabilities.",
                 "image": "/services/training.jpg",
                 "url": "/services/training"
             },
             {
                 "id": "it_solutions",
-                "title": "IT Solutions & Equipment",
-                "description": "Consulting and implementing technology solutions, providing comprehensive IT equipment for businesses.",
+                "title": "IT Solutions & Equipment Consulting",
+                "description": "A solid foundation for digital transformation.",
                 "image": "/services/it.jpg",
                 "url": "/services/it-solutions"
             },
             {
                 "id": "digital_marketing",
-                "title": "Digital Marketing",
-                "description": "Building and executing digital marketing strategies to help businesses reach customers effectively.",
+                "title": "AI-Powered Full-Service Advertising & Marketing",
+                "description": "Optimize campaigns and reach the right target audience.",
                 "image": "/services/marketing.jpg",
                 "url": "/services/digital-marketing"
             }
@@ -84,6 +68,7 @@
         "filter_all": "All",
         "filter_consulting": "Consulting",
         "filter_training": "Training",
+        "filter_operations": "Operations",
         "items": [
             {
                 "title": "Strategic Consulting",
@@ -152,7 +137,7 @@
         "address": "123 ABC Street, District 1, Ho Chi Minh City",
         "phone": "+84 123 456 789",
         "email": "contact@smartconn.vn",
-        "copyright": "© {year} SmartConn. All Rights Reserved."
+        "copyright": "© {year} SmartCom. All Rights Reserved."
     },
     "blog": {
         "title": "News & Articles",
@@ -188,5 +173,8 @@
                 "content": "In the digital world, security is not an option. Learn the essential steps to protect your business's digital assets. This guide breaks down complex cybersecurity concepts into manageable actions for Small and Medium-sized Enterprises (SMEs).\n\nWe discuss risk assessment, employee training, data encryption, and incident response planning to build a resilient security posture."
             }
         ]
+    },
+    "gallery": {
+        "title": "Gallery"
     }
 }

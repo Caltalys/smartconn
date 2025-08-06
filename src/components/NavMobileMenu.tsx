@@ -11,8 +11,6 @@ import { RiMenu3Fill, RiArrowDownSLine } from "react-icons/ri";
 import Social from "./Social";
 
 const servicesSubMenu = [
-    { id: "ai_apps", href: "#service-ai_apps" },
-    { id: "laptops", href: "#service-laptops" },
     { id: "training", href: "#service-training" },
     { id: "it_solutions", href: "#service-it_solutions" },
     { id: "digital_marketing", href: "#service-digital_marketing" },
