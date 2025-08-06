@@ -13,7 +13,7 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: "SmartConn",
+  title: "SmartCom Solution",
   description: "Your partner in digital transformation.",
 };
 
