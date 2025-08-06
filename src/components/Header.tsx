@@ -1,29 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ChevronDown } from 'lucide-react';
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
 import NavMobileMenu from "./NavMobileMenu";
+import { navLinks } from "@/config/navigation";
+import { useServiceContext } from "@/context/ServiceContext";
 
 const Header = () => {
   const t = useTranslations('navigation');
-
-  const servicesSubMenu = [
-    { id: "it_solutions", href: "#services" },
-    { id: "training", href: "#services" },
-    { id: "digital_marketing", href: "#services" },
-  ];
-
-  const navLinks = [
-    { href: '#home', id: "home" },
-    { href: '/about', id: "about" },
-    { href: '#services', id: "services", submenu: servicesSubMenu },
-    // { href: '#works', id: "works" },
-    // { href: '#testimonials', id: "testimonials" },
-    // { href: '#faq', id: "faq" },
-    // { href: '#blog', id: "blog" },
-  ];
+  const { setActiveService } = useServiceContext();
 
   return (
     <header className="bg-white backdrop-blur-sm sticky top-0 z-40 shadow-lg">
@@ -40,7 +28,7 @@ const Header = () => {
                   <ScrollLink
                     spy={true}
                     smooth={true}
-                    to={link.id} offset={-64}
+                    to={link.href} offset={-64}
                     duration={500}
                     className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left [&.is-active]:after:scale-x-100"
                     activeClass="text-accent is-active"
@@ -56,9 +44,10 @@ const Header = () => {
                           <ScrollLink
                             spy={true}
                             smooth={true}
-                            to={subLink.href.substring(1)} offset={-64}
+                            to={subLink.href} offset={-64}
                             duration={500}
                             className="block px-4 py-2 text-sm text-primary hover:bg-gray-100 rounded-md cursor-pointer normal-case font-medium"
+                            onClick={() => setActiveService(subLink.id)}
                           >
                             {t(`services_submenu.${subLink.id}`)}
                           </ScrollLink>
@@ -68,17 +57,23 @@ const Header = () => {
                   </div>
                 </li>
               ) : (
-                <li key={link.id} className="text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
-                  <ScrollLink
-                    spy={true}
-                    smooth={true}
-                    to={link.id} offset={-64}
-                    duration={500}
-                    className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left [&.is-active]:after:scale-x-100"
-                    activeClass="text-accent is-active">
-                    {t(link.id)}
-                  </ScrollLink>
-                </li>
+                  <li key={link.id} className="text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
+                    {link.href.startsWith('/') ? (
+                      <Link href={link.href} className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+                        {t(link.id)}
+                      </Link>
+                    ) : (
+                      <ScrollLink
+                        spy={true}
+                        smooth={true}
+                        to={link.href} offset={-64}
+                        duration={500}
+                        className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left [&.is-active]:after:scale-x-100"
+                        activeClass="text-accent is-active">
+                        {t(link.id)}
+                      </ScrollLink>
+                    )}
+                  </li>
               )
             ))}
           </ul>

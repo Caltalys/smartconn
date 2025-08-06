@@ -7,6 +7,7 @@ import {
 } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { ServiceProvider } from "@/context/ServiceContext";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -38,7 +39,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={`antialiased bg-background text-foreground`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <ServiceProvider>{children}</ServiceProvider>
         </NextIntlClientProvider>
       </body>
     </html>

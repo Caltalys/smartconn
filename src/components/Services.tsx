@@ -6,12 +6,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import SmartButton from "./SmartButton";
 import { motion } from "framer-motion";
+import { useServiceContext } from "@/context/ServiceContext";
 
 const Services = () => {
   const t = useTranslations('services');
   const tCommon = useTranslations('common');
+  const { activeService, setActiveService } = useServiceContext();
 
   const items = t.raw('items') as { id: string; title: string; description: string; image: string, url: string }[];
+
+  const defaultTabId = items.length > 0 ? items[0].id : '';
+  const tabValue = activeService && items.some(i => i.id === activeService) ? activeService : defaultTabId;
 
   if (!items || items.length === 0) {
     return (
@@ -36,7 +41,11 @@ const Services = () => {
           <Pretitle text={t('title')} center={true} />
           <h2 className="mb-4">{t('subtitle')}</h2>
         </div>
-        <Tabs defaultValue={items[0].id} className="w-full flex flex-col lg:flex-row items-start gap-12">
+        <Tabs
+          value={tabValue}
+          onValueChange={setActiveService}
+          className="w-full flex flex-col lg:flex-row items-start gap-12"
+        >
           {/* Danh sách các thẻ dịch vụ */}
           <div className="w-full lg:w-1/3">
             <TabsList className="flex flex-col w-full h-auto bg-transparent gap-4 rounded-none overflow-hidden">

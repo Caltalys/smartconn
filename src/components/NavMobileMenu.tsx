@@ -1,5 +1,6 @@
 'use client';
 
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
@@ -8,27 +9,14 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RiMenu3Fill, RiArrowDownSLine } from "react-icons/ri";
 import Social from "./Social";
-
-const servicesSubMenu = [
-    { id: "it_solutions", href: "#services" },
-    { id: "training", href: "#services" },
-    { id: "digital_marketing", href: "#services" },
-];
-
-const navLinks = [
-    { href: '#home', id: "home" },
-    { href: '/about', id: "about" },
-    { href: '#services', id: "services", submenu: servicesSubMenu },
-    // { href: '#works', id: "works" },
-    // { href: '#testimonials', id: "testimonials" },
-    // { href: '#faq', id: "faq" },
-    // { href: '#blog', id: "blog" },
-];
+import { navLinks } from "@/config/navigation";
+import { useServiceContext } from "@/context/ServiceContext";
 
 const NavMobileMenu = () => {
     const t = useTranslations('navigation');
     const [isOpen, setIsOpen] = useState(false);
     const [isServicesOpen, setServicesOpen] = useState(false);
+    const { setActiveService } = useServiceContext();
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -69,11 +57,14 @@ const NavMobileMenu = () => {
                                                         <ScrollLink
                                                             spy={true}
                                                             smooth={true}
-                                                            to={subLink.href.substring(1)} offset={-64}
+                                                            to={subLink.href} offset={-64}
                                                             duration={500}
                                                             className="cursor-pointer"
                                                             activeClass="text-accent"
-                                                            onClick={() => setIsOpen(false)}>
+                                                            onClick={() => {
+                                                                setActiveService(subLink.id);
+                                                                setIsOpen(false);
+                                                            }}>
                                                             {t(`services_submenu.${subLink.id}`)}
                                                         </ScrollLink>
                                                     </li>
@@ -84,16 +75,26 @@ const NavMobileMenu = () => {
                                 </li>
                             ) : (
                                 <li key={link.id} className="text-sm uppercase font-semibold tracking-[1.2px]">
-                                    <ScrollLink
-                                        spy={true}
-                                        smooth={true}
-                                        to={link.id} offset={-64}
-                                        duration={500}
-                                        className="cursor-pointer"
-                                        activeClass="text-accent"
-                                        onClick={() => setIsOpen(false)}>
-                                        {t(link.id)}
-                                    </ScrollLink>
+                                    {link.href.startsWith('/') ? (
+                                        <Link
+                                            href={link.href}
+                                            className="cursor-pointer"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            {t(link.id)}
+                                        </Link>
+                                    ) : (
+                                        <ScrollLink
+                                            spy={true}
+                                            smooth={true}
+                                            to={link.href} offset={-64}
+                                            duration={500}
+                                            className="cursor-pointer"
+                                            activeClass="text-accent"
+                                            onClick={() => setIsOpen(false)}>
+                                            {t(link.id)}
+                                        </ScrollLink>
+                                    )}
                                 </li>
                             )
                         ))}
