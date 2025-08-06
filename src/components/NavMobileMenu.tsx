@@ -11,17 +11,17 @@ import { RiMenu3Fill, RiArrowDownSLine } from "react-icons/ri";
 import Social from "./Social";
 
 const servicesSubMenu = [
-    { id: "training", href: "#service-training" },
     { id: "it_solutions", href: "#service-it_solutions" },
+    { id: "training", href: "#service-training" },
     { id: "digital_marketing", href: "#service-digital_marketing" },
 ];
 
 const navLinks = [
     { href: '#home', id: "home" },
-    { href: '#about', id: "about" },
+    { href: '/about', id: "about" },
     { href: '#services', id: "services", submenu: servicesSubMenu },
-    { href: '#works', id: "works" },
-    { href: '#testimonials', id: "testimonials" },
+    // { href: '#works', id: "works" },
+    // { href: '#testimonials', id: "testimonials" },
     { href: '#faq', id: "faq" },
     { href: '#blog', id: "blog" },
 ];

@@ -41,8 +41,7 @@ const Services = () => {
           <div className="w-full lg:w-1/3">
             <TabsList className="flex flex-col w-full h-auto bg-transparent gap-4 rounded-none overflow-hidden">
               {items.map((item) => (
-                <TabsTrigger key={item.id} value={item.id}
-                  className="flex w-full p-4 sm:p-6 data-[state=active]:bg-secondary/80 transition-all duration-300 rounded-none whitespace-normal shadow-lg">
+                <TabsTrigger key={item.id} value={item.id} className="flex w-full p-4 sm:p-6 border bg-primary/5 border-transparent data-[state=active]:bg-white data-[state=active]:border-primary/20 data-[state=active]:shadow-lg transition-all duration-300 rounded-lg whitespace-normal">
                   <div className="w-full h-full flex items-center justify-center lg:justify-start">
                     <p className="text-sm sm:text-base font-bold text-primary uppercase text-center lg:text-left">{item.title}</p>
                   </div>
@@ -54,22 +53,24 @@ const Services = () => {
           <div className="w-full lg:w-2/3">
             {items.map((item) => (
               <TabsContent value={item.id} key={item.id} className="w-full m-0">
-                <div className="relative w-full h-[460px] rounded-lg overflow-hidden shadow-lg group">
-                  <Image
-                    src={item.image}
-                    fill
-                    alt={item.title}
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 1279px) 90vw, 66vw"
-                  />
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
-
-                  {/* Content */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-end text-center p-8 md:p-12">
-                    <div className="max-w-md text-white">
-                      <h3 className="text-2xl xl:text-4xl font-bold mb-4 drop-shadow-lg">{item.title}</h3>
-                      <p className="text-base xl:text-lg mb-8 drop-shadow-md">{item.description}</p>
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-center h-full bg-white p-8 rounded-lg shadow-lg border border-primary/10">
+                  {/* Image */}
+                  <div className="relative w-full h-[300px] xl:h-full min-h-[300px] rounded-lg overflow-hidden">
+                    <Image
+                      src={item.image}
+                      fill
+                      alt={item.title}
+                      className="object-cover"
+                      sizes="(max-width: 1279px) 90vw, 45vw"
+                    />
+                  </div>
+                  {/* Text */}
+                  <div className="text-center xl:text-left">
+                    <h3 className="text-2xl xl:text-3xl font-bold mb-4">{item.title}</h3>
+                    <p className="text-base text-muted-foreground mb-6 whitespace-pre-line">
+                      {item.description}
+                    </p>
+                    <div className="w-full flex xl:items-center justify-center xl:justify-start gap-4">
                       <SmartButton text={tCommon('more')} href={item.url} />
                     </div>
                   </div>
@@ -83,4 +84,4 @@ const Services = () => {
   )
 }
 
-export default Services
+export default Services;

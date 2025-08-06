@@ -6,22 +6,25 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
 import NavMobileMenu from "./NavMobileMenu";
+import Link from "next/link";
+import { usePathname } from "@/i18n/navigation";
 
 const Header = () => {
   const t = useTranslations('navigation');
+  const pathname = usePathname();
 
   const servicesSubMenu = [
-    { id: "training", href: "#service-training" },
     { id: "it_solutions", href: "#service-it_solutions" },
+    { id: "training", href: "#service-training" },
     { id: "digital_marketing", href: "#service-digital_marketing" },
   ];
 
   const navLinks = [
     { href: '#home', id: "home" },
-    { href: '#about', id: "about" },
+    { href: '/about', id: "about" },
     { href: '#services', id: "services", submenu: servicesSubMenu },
-    { href: '#works', id: "works" },
-    { href: '#testimonials', id: "testimonials" },
+    // { href: '#works', id: "works" },
+    // { href: '#testimonials', id: "testimonials" },
     { href: '#faq', id: "faq" },
     { href: '#blog', id: "blog" },
   ];

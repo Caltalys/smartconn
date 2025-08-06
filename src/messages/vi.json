@@ -26,37 +26,52 @@
     "hero": {
         "title": "Smartcom Solutions: Bệ Phóng Khởi Nghiệp",
         "subtitle": "Tối Ưu Chi Phí, Tối Đa Thành Công",
-        "description": "Chúng tôi cung cấp các khóa học chuyên sâu, mentoring 1-1 cùng chuyên gia, không gian làm việc sáng tạo và cộng đồng doanh nghiệp kết nối.",
+        "description": "",
         "services": "Khám phá các dịch vụ",
         "contact_us": "Liên hệ"
     },
     "about_us": {
         "title": "Về chúng tôi",
-        "subtitle": "Dẫn Dắt Bởi Các Chuyên Gia Đầu Ngành",
-        "description": "Đội ngũ cố vấn, giảng viên giàu kinh nghiệm thực chiến, sẵn sàng đồng hành cùng bạn trên con đường phát triển."
+        "subtitle": "Dẫn Dắt Bởi Tầm Nhìn, Vận Hành Bằng Đam Mê",
+        "description": "Smartcom Solutions không chỉ là một công ty công nghệ, mà còn là một đối tác chiến lược, một người bạn đồng hành trên hành trình chuyển đổi số và phát triển bền vững của doanh nghiệp bạn.",
+        "learn_more": "Tìm hiểu về chúng tôi"
+    },
+    "about_us_page": {
+        "hero": {
+            "pretitle": "Câu Chuyện Của Chúng Tôi",
+            "title": "Tiên Phong Tích Hợp AI, Kiến Tạo Tương Lai"
+        },
+        "shark_ana": {
+            "title": "Shark Ana Lê Mỹ Nga – Cố Vấn Chiến Lược Đồng Hành Cùng Smartcom Solutions",
+            "p1": "Trong hành trình phát triển và định vị là doanh nghiệp tiên phong trong ứng dụng AI vào thực tiễn, Smartcom Solutions chính thức công bố sự đồng hành chiến lược cùng Shark Ana Lê Mỹ Nga – một trong những nhà đầu tư, cố vấn và doanh nhân có ảnh hưởng lớn trong lĩnh vực công nghệ, giáo dục và đổi mới sáng tạo tại Việt Nam.",
+            "p2": "Với vai trò Cố vấn chiến lược, Shark Ana mang đến tầm nhìn sâu rộng, đồng thời trực tiếp hỗ trợ Smartcom xây dựng các mô hình tăng trưởng hiệu quả trong các lĩnh vực cốt lõi của doanh nghiệp."
+        },
+        "vision": { "title": "Tầm Nhìn", "text": "Trở thành doanh nghiệp hàng đầu tại Việt Nam trong việc cung cấp các giải pháp công nghệ và đào tạo toàn diện, lấy AI làm trọng tâm, giúp các doanh nghiệp tối ưu hóa hiệu suất và phát triển bền vững trong kỷ nguyên số." },
+        "mission": { "title": "Sứ Mệnh", "text": "Cam kết mang đến những sản phẩm, dịch vụ chất lượng cao, tích hợp công nghệ tiên tiến và kiến thức chuyên sâu, nhằm trao quyền cho doanh nghiệp, nâng cao năng lực cạnh tranh và cùng nhau kiến tạo những giá trị vượt trội." }
     },
     "services": {
         "title": "Dịch Vụ Của Chúng Tôi",
         "subtitle": "Giải Pháp Được Thiết Kế Riêng Cho Doanh Nghiệp Của Bạn",
         "items": [
-            {
-                "id": "training",
-                "title": "Đào tạo & Huấn luyện Doanh nghiệp",
-                "description": "Ứng dụng AI nâng cao năng lực đội ngũ",
-                "image": "/services/training.jpg",
-                "url": "/services/training"
-            },
+            
             {
                 "id": "it_solutions",
-                "title": "Tư vấn Giải pháp & Thiết bị CNTT",
-                "description": "Nền tảng vững chắc cho chuyển đổi số",
+                "title": "Tư vấn giải pháp công nghệ & Phân phối thiết bị CNTT",
+                "description": "Với bề dày kinh nghiệm trong tư vấn và triển khai hệ thống công nghệ, chúng tôi góp phần nâng cao năng lực tư vấn và cung ứng giải pháp công nghệ toàn diện cho Smartcom Solutions. Doanh nghiệp hiện đang là đối tác tin cậy trong việc cung cấp thiết bị CNTT và các giải pháp số hóa đồng bộ, hỗ trợ khách hàng tối ưu hiệu quả vận hành và sẵn sàng cho chuyển đổi số.",
                 "image": "/services/it.jpg",
                 "url": "/services/it-solutions"
             },
             {
+                "id": "training",
+                "title": "Đào tạo & Huấn luyện chuyên sâu cho Doanh nghiệp",
+                "description": "Chúng tôi định hướng Smartcom Solutions ứng dụng AI vào hoạt động đào tạo nội bộ, từ việc số hóa nội dung, cá nhân hóa trải nghiệm học tập cho đến đo lường hiệu suất học tập theo thời gian thực. Nhờ đó, Smartcom Solutions đã và đang mang đến các chương trình huấn luyện chuyên sâu, thực chiến, giúp doanh nghiệp nâng cao năng lực đội ngũ một cách hiệu quả và bền vững.",
+                "image": "/services/training.jpg",
+                "url": "/services/training"
+            },
+            {
                 "id": "digital_marketing",
-                "title": "Quảng cáo & Marketing trọn gói bằng AI",
-                "description": "Tối ưu chiến dịch, tiếp cận đúng khách hàng mục tiêu.",
+                "title": "Dịch vụ Quảng cáo & Marketing trọn gói ứng dụng AI",
+                "description": "Smartcom Solutions phát triển các dịch vụ marketing tích hợp, ứng dụng công nghệ AI trong phân tích hành vi người dùng, tự động hóa chiến dịch, tối ưu chi phí và nâng cao hiệu quả truyền thông. Đây là định hướng mà chúng tôi đặc biệt chú trọng – giúp doanh nghiệp không chỉ tiếp cận đúng đối tượng mà còn tạo ra giá trị bền vững trong hành trình xây dựng thương hiệu.",
                 "image": "/services/marketing.jpg",
                 "url": "/services/digital-marketing"
             }
