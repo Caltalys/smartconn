@@ -6,6 +6,13 @@ import Image from 'next/image';
 import Pretitle from './Pretitle';
 import { RiStarLine, RiTeamLine, RiToolsLine, RiGroup2Line } from 'react-icons/ri';
 import Link from 'next/link';
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface IconProps {
     className?: string;
@@ -22,11 +29,12 @@ const icons: Record<string, React.ComponentType<IconProps>> = {
 
 const partners = [
     { name: 'Adsolutions', logo: '/partners/adsolution.png', href: 'https://adsolutions.vn' },
-    { name: 'GEMate', logo: '/partners/gemate.png', href: 'https://gemate.vn' },
+    { name: 'GEMate', logo: '/partners/gemate.jpg', href: 'https://gemate.vn' },
     { name: 'WeAngels', logo: '/partners/weangels.jpeg', href: 'https://weangels.vn' },
     { name: 'M&A Vietnam', logo: '/partners/ma-vietnam.png', href: 'https://mavietnam.vn' },
-    // { name: 'Thinh Tien', logo: '/partners/thinh-tien.png', href: 'https://thinhtien.vn' },
+    { name: 'Thinh Tien', logo: '/partners/thinhtien.jpg', href: '#' },
     { name: 'TeamKCN', logo: '/partners/teamkcn.jpg', href: 'https://teamkcn.vn' },
+    { name: 'GFT', logo: '/partners/gft.jpg', href: '#' },
 ];
 
 const WhyChooseUs = () => {
@@ -72,16 +80,39 @@ const WhyChooseUs = () => {
 
                 {/* Partners Section */}
                 <div className="text-center">
-                    <h3 className="text-2xl font-bold mb-8">{t('partners_title')}</h3>
-                    <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-8 md:gap-x-16">
-                        {partners.map((partner) => (
-                            <div key={partner.name} className="relative h-32 w-48">
-                                <Link href={partner.href} target="_blank" rel="noopener noreferrer">
-                                    <Image src={partner.logo} alt={partner.name} fill className="object-contain" sizes="128px" />
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
+                    <Pretitle text={t('partners_title')} center={true} />
+                    {/* <h3 className="text-2xl font-bold mb-8">{t('partners_title')}</h3> */}
+                    <Carousel
+                        opts={{
+                            align: "start",
+                            loop: true,
+                        }}
+                        className="w-full max-w-6xl mx-auto"
+                    >
+                        <CarouselContent className="-ml-4">
+                            {partners.map((partner) => (
+                                <CarouselItem key={partner.name} className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/5">
+                                    <div className="p-1">
+                                        <Link href={partner.href} target="_blank" rel="noopener noreferrer" className="relative h-32 w-full flex items-center justify-center group">
+                                            <Image
+                                                src={partner.logo}
+                                                alt={partner.name}
+                                                fill
+                                                className="object-contain transition-transform duration-300 group-hover:scale-110"
+                                                sizes="128px"
+                                            />
+                                        </Link>
+                                    </div>
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                        <div className="mt-4 flex items-center justify-center gap-2 lg:hidden">
+                            <CarouselPrevious className="static translate-y-0 text-primary" />
+                            <CarouselNext className="static translate-y-0 text-primary" />
+                        </div>
+                        <CarouselPrevious className="hidden lg:flex text-primary" />
+                        <CarouselNext className="hidden lg:flex text-primary" />
+                    </Carousel>
                 </div>
             </div>
         </motion.section>

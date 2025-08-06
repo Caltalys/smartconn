@@ -10,9 +10,9 @@ const Header = () => {
   const t = useTranslations('navigation');
 
   const servicesSubMenu = [
-    { id: "it_solutions", href: "#service" },
-    { id: "training", href: "#service" },
-    { id: "digital_marketing", href: "#service" },
+    { id: "it_solutions", href: "#services" },
+    { id: "training", href: "#services" },
+    { id: "digital_marketing", href: "#services" },
   ];
 
   const navLinks = [
