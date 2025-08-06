@@ -5,8 +5,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Pretitle from "./Pretitle";
-import { Button } from "./ui/button";
-import SmartButton from "./SmartButton";
 import { RiArrowRightUpLine } from "react-icons/ri";
 
 const About = () => {

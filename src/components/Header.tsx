@@ -6,7 +6,6 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
 import NavMobileMenu from "./NavMobileMenu";
-import Link from "next/link";
 import { usePathname } from "@/i18n/navigation";
 
 const Header = () => {

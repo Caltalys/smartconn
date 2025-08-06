@@ -7,7 +7,13 @@ import Pretitle from './Pretitle';
 import { RiStarLine, RiTeamLine, RiToolsLine, RiGroup2Line } from 'react-icons/ri';
 import Link from 'next/link';
 
-const icons: { [key: string]: React.ComponentType<any> } = {
+interface IconProps {
+    className?: string;
+    size?: number | string;
+    color?: string;
+}
+
+const icons: Record<string, React.ComponentType<IconProps>> = {
     star: RiStarLine,
     tools: RiToolsLine,
     community: RiGroup2Line,
