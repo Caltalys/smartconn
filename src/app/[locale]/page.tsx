@@ -1,12 +1,10 @@
 import About from "@/components/About"
 import BackToTopButton from "@/components/BackToTopButton"
-import Blog from "@/components/Blog"
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
 import Hero from "@/components/Hero"
 import Services from "@/components/Services"
 import Topbar from "@/components/Topbar"
-import Gallery from "@/components/Gallery"
 import WhyChooseUs from "@/components/WhyChooseUs"
 
 export default function Page() {
@@ -24,8 +22,8 @@ export default function Page() {
           {/* <Works /> */}
           {/* <Testimonials /> */}
           {/* <Faq /> */}
-          <Blog />
-          <Gallery />
+          {/* <Blog /> */}
+          {/* <Gallery /> */}
         </main>
         <Footer />
         <BackToTopButton />

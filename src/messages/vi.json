@@ -24,8 +24,8 @@
         "contact_us": "Liên Hệ"
     },
     "hero": {
-        "title": "Smartcom Solutions: Bệ Phóng Khởi Nghiệp",
-        "subtitle": "Tối Ưu Chi Phí, Tối Đa Thành Công",
+        "title": "Giải pháp toàn diện cho doanh nghiệp của bạn",
+        "subtitle": "Chiến lược - đào tạo - vận hành",
         "description": "",
         "services": "Khám phá các dịch vụ",
         "contact_us": "Liên hệ"
@@ -58,21 +58,21 @@
                 "id": "it_solutions",
                 "title": "Tư vấn giải pháp công nghệ & Phân phối thiết bị CNTT",
                 "description": "Với bề dày kinh nghiệm trong tư vấn và triển khai hệ thống công nghệ, chúng tôi góp phần nâng cao năng lực tư vấn và cung ứng giải pháp công nghệ toàn diện cho Smartcom Solutions. Doanh nghiệp hiện đang là đối tác tin cậy trong việc cung cấp thiết bị CNTT và các giải pháp số hóa đồng bộ, hỗ trợ khách hàng tối ưu hiệu quả vận hành và sẵn sàng cho chuyển đổi số.",
-                "image": "/services/it.jpg",
+                "image": "/service1.jpg",
                 "url": "/services/it-solutions"
             },
             {
                 "id": "training",
                 "title": "Đào tạo & Huấn luyện chuyên sâu cho Doanh nghiệp",
                 "description": "Chúng tôi định hướng Smartcom Solutions ứng dụng AI vào hoạt động đào tạo nội bộ, từ việc số hóa nội dung, cá nhân hóa trải nghiệm học tập cho đến đo lường hiệu suất học tập theo thời gian thực. Nhờ đó, Smartcom Solutions đã và đang mang đến các chương trình huấn luyện chuyên sâu, thực chiến, giúp doanh nghiệp nâng cao năng lực đội ngũ một cách hiệu quả và bền vững.",
-                "image": "/services/training.jpg",
+                "image": "/service3.jpg",
                 "url": "/services/training"
             },
             {
                 "id": "digital_marketing",
                 "title": "Dịch vụ Quảng cáo & Marketing trọn gói ứng dụng AI",
                 "description": "Smartcom Solutions phát triển các dịch vụ marketing tích hợp, ứng dụng công nghệ AI trong phân tích hành vi người dùng, tự động hóa chiến dịch, tối ưu chi phí và nâng cao hiệu quả truyền thông. Đây là định hướng mà chúng tôi đặc biệt chú trọng – giúp doanh nghiệp không chỉ tiếp cận đúng đối tượng mà còn tạo ra giá trị bền vững trong hành trình xây dựng thương hiệu.",
-                "image": "/services/marketing.jpg",
+                "image": "/service2.jpg",
                 "url": "/services/digital-marketing"
             }
         ]
@@ -167,9 +167,9 @@
         "description": "Kết nối, đổi mới và phát triển cùng các giải pháp công nghệ hàng đầu.",
         "quick_links": "Liên kết nhanh",
         "contact_info": "Thông tin liên hệ",
-        "address": "123 Đường ABC, Quận 1, TP. Hồ Chí Minh",
-        "phone": "+84 123 456 789",
-        "email": "lienhe@smartconn.vn",
+        "address": "61 Hoàng Hoa Thám , Thành Phố Đà Nẵng",
+        "phone": "+84 905555569",
+        "email": "info@smartcomsolutions.vn",
         "copyright": "© {year} SmartCom. Đã đăng ký bản quyền."
     },
     "blog": {
@@ -216,22 +216,22 @@
             {
                 "icon": "star",
                 "title": "Cố vấn Chiến lược Uy tín",
-                "description": "Nổi bật hình ảnh và vai trò của Shark Ana Lê Mỹ Nga, người mang đến tầm nhìn sâu rộng và mô hình tăng trưởng hiệu quả."
+                "description": "Được dẫn dắt bởi tầm nhìn chiến lược của Shark Ana Lê Mỹ Nga, chúng tôi mang đến những định hướng sắc bén và mô hình tăng trưởng đã được kiểm chứng, giúp doanh nghiệp tự tin bứt phá."
             },
             {
                 "icon": "partners",
                 "title": "Hệ sinh thái Đối tác Mạnh mẽ",
-                "description": "Khẳng định sự tin cậy và mạng lưới kết nối rộng lớn thông qua các đối tác chiến lược hàng đầu."
+                "description": "Hợp tác với chúng tôi là bạn đã kết nối với một mạng lưới đối tác chiến lược hàng đầu, mở ra vô số cơ hội hợp tác, chia sẻ tài nguyên và mở rộng thị trường."
             },
             {
                 "icon": "tools",
                 "title": "Giải pháp Toàn diện & Thực chiến",
-                "description": "Nhấn mạnh các khóa học thực chiến, mentoring 1-1 và các giải pháp công nghệ có thể triển khai ngay."
+                "description": "Từ đào tạo, mentoring 1-1 đến các giải pháp công nghệ, chúng tôi cung cấp bộ công cụ toàn diện, dễ dàng áp dụng ngay để giải quyết các thách thức thực tế của doanh nghiệp."
             },
             {
                 "icon": "community",
                 "title": "Cộng đồng Doanh nghiệp Gắn kết",
-                "description": "Giới thiệu về cộng đồng kết nối thật, nơi các doanh nghiệp có thể học hỏi và phát triển cùng nhau."
+                "description": "Gia nhập cộng đồng doanh nghiệp năng động của chúng tôi, nơi bạn có thể giao lưu, học hỏi kinh nghiệm và tìm kiếm đối tác tiềm năng để cùng nhau phát triển bền vững."
             }
         ],
         "partners_title": "Đối tác của chúng tôi"

@@ -3,13 +3,13 @@ import { RiMailFill, RiPhoneFill } from "react-icons/ri";
 const Contact = () => {
     return (
         <div className="hidden lg:flex items-center gap-8">
-            <a href="tel:+15551234567" className='flex items-center gap-2 hover:text-secondary-foreground transition-colors'>
+            <a href="tel:+84 905555569" className='flex items-center gap-2 hover:text-secondary-foreground transition-colors'>
                 <RiPhoneFill size={16} />
-                <span>+1 (555) 123-4567</span>
+                <span>+84 905555569</span>
             </a>
-            <a href="mailto:contact@digilink.com" className='flex items-center gap-2 hover:text-secondary-foreground transition-colors'>
+            <a href="mailto:info@smartcomsolutions.vn" className='flex items-center gap-2 hover:text-secondary-foreground transition-colors'>
                 <RiMailFill size={16} />
-                <span>contact@digilink.com</span>
+                <span>info@smartcomsolutions.vn</span>
             </a>
         </div>
     )

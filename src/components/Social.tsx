@@ -10,7 +10,7 @@ type SocialLink = {
 
 // Centralize social link data in an array. This makes it easy to add, remove, or modify links.
 const socialLinks: SocialLink[] = [
-    { name: 'Facebook', href: '#', Icon: RiFacebookFill },
+    { name: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61579009258778', Icon: RiFacebookFill },
     { name: 'Twitter', href: '#', Icon: RiTwitterFill },
     { name: 'Instagram', href: '#', Icon: RiInstagramFill },
     { name: 'LinkedIn', href: '#', Icon: RiLinkedinFill },
@@ -32,7 +32,7 @@ const Social = ({ containerStyle, iconStyle }: SocialProps) => {
             {socialLinks.map(({ name, href, Icon }) => (
                 <a
                     key={name}
-                    href={href}
+                    href={href} target="_blank" rel="noopener noreferrer"
                     aria-label={`Follow us on ${name}`}
                     className={iconStyle || 'text-primary hover:text-accent transition-colors border border-primary/20 p-2 rounded-full flex items-center justify-center'}
                 >

@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, AnimatePresence } from "framer-motion";
-import LanguageSwitcher from './LanguageSwitcher';
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
@@ -11,9 +10,9 @@ import { RiMenu3Fill, RiArrowDownSLine } from "react-icons/ri";
 import Social from "./Social";
 
 const servicesSubMenu = [
-    { id: "it_solutions", href: "#service-it_solutions" },
-    { id: "training", href: "#service-training" },
-    { id: "digital_marketing", href: "#service-digital_marketing" },
+    { id: "it_solutions", href: "#service" },
+    { id: "training", href: "#service" },
+    { id: "digital_marketing", href: "#service" },
 ];
 
 const navLinks = [
@@ -22,8 +21,8 @@ const navLinks = [
     { href: '#services', id: "services", submenu: servicesSubMenu },
     // { href: '#works', id: "works" },
     // { href: '#testimonials', id: "testimonials" },
-    { href: '#faq', id: "faq" },
-    { href: '#blog', id: "blog" },
+    // { href: '#faq', id: "faq" },
+    // { href: '#blog', id: "blog" },
 ];
 
 const NavMobileMenu = () => {
@@ -41,7 +40,7 @@ const NavMobileMenu = () => {
                 <SheetHeader>
                     <SheetTitle className="flex items-center justify-between pr-8">
                         <Logo />
-                        <LanguageSwitcher />
+                        {/* <LanguageSwitcher /> */}
                     </SheetTitle>
                 </SheetHeader>
                 {/* This nav section now correctly fills the available space and centers the links. */}

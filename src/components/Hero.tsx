@@ -45,7 +45,7 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Text content on the left */}
           <motion.div
-            className="flex flex-col text-secondary items-center text-center lg:items-start lg:text-left space-y-10 order-2 lg:order-1"
+            className="flex flex-col text-white items-center text-center lg:items-start lg:text-left space-y-10 order-2 lg:order-1"
             variants={containerVariants}
             initial="hidden"
             animate="visible"

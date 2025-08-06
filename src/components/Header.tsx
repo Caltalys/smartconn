@@ -2,20 +2,17 @@
 
 import { useTranslations } from "next-intl";
 import { ChevronDown } from 'lucide-react';
-import LanguageSwitcher from './LanguageSwitcher';
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
 import NavMobileMenu from "./NavMobileMenu";
-import { usePathname } from "@/i18n/navigation";
 
 const Header = () => {
   const t = useTranslations('navigation');
-  const pathname = usePathname();
 
   const servicesSubMenu = [
-    { id: "it_solutions", href: "#service-it_solutions" },
-    { id: "training", href: "#service-training" },
-    { id: "digital_marketing", href: "#service-digital_marketing" },
+    { id: "it_solutions", href: "#service" },
+    { id: "training", href: "#service" },
+    { id: "digital_marketing", href: "#service" },
   ];
 
   const navLinks = [
@@ -24,8 +21,8 @@ const Header = () => {
     { href: '#services', id: "services", submenu: servicesSubMenu },
     // { href: '#works', id: "works" },
     // { href: '#testimonials', id: "testimonials" },
-    { href: '#faq', id: "faq" },
-    { href: '#blog', id: "blog" },
+    // { href: '#faq', id: "faq" },
+    // { href: '#blog', id: "blog" },
   ];
 
   return (
@@ -86,9 +83,9 @@ const Header = () => {
             ))}
           </ul>
           {/* Right side actions */}
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <LanguageSwitcher />
-          </div>
+          </div> */}
         </nav>
 
         {/* Mobile Menu Button */}

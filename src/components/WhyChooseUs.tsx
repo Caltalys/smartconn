@@ -24,9 +24,9 @@ const partners = [
     { name: 'Adsolutions', logo: '/partners/adsolution.png', href: 'https://adsolutions.vn' },
     { name: 'GEMate', logo: '/partners/gemate.png', href: 'https://gemate.vn' },
     { name: 'WeAngels', logo: '/partners/weangels.jpeg', href: 'https://weangels.vn' },
-    { name: 'M&A Vietnam', logo: '/partners/ma-vietnam.png', href: 'https://mavietnam.vn' }
+    { name: 'M&A Vietnam', logo: '/partners/ma-vietnam.png', href: 'https://mavietnam.vn' },
     // { name: 'Thinh Tien', logo: '/partners/thinh-tien.png', href: 'https://thinhtien.vn' },
-    // { name: 'TeamKCN', logo: '/partners/teamkcn.png', href: 'https://teamkcn.vn' },
+    { name: 'TeamKCN', logo: '/partners/teamkcn.jpg', href: 'https://teamkcn.vn' },
 ];
 
 const WhyChooseUs = () => {
@@ -36,7 +36,7 @@ const WhyChooseUs = () => {
     return (
         <motion.section
             id="why-us"
-            className="py-16 xl:py-32 bg-primary/5"
+            className="py-16 xl:py-32"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
