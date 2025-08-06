@@ -10,6 +10,7 @@ import Testimonials from "@/components/Testimonials"
 import Topbar from "@/components/Topbar"
 import Works from "@/components/Works"
 import Gallery from "@/components/Gallery"
+import WhyChooseUs from "@/components/WhyChooseUs"
 
 export default function Page() {
   return (
@@ -21,10 +22,11 @@ export default function Page() {
           <Hero />
           <About />
           <Services />
+          <WhyChooseUs />
           {/* <Stats /> */}
           {/* <Works /> */}
           {/* <Testimonials /> */}
-          <Faq />
+          {/* <Faq /> */}
           <Blog />
           <Gallery />
         </main>

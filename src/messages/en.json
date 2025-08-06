@@ -190,5 +190,31 @@
     },
     "gallery": {
         "title": "Gallery"
+    },
+    "why_choose_us": {
+        "title": "Why Do Businesses Choose to Partner with Smartcom Solutions?",
+        "items": [
+            {
+                "icon": "star",
+                "title": "Reputable Strategic Advisor",
+                "description": "Highlighting the image and role of Shark Ana Le My Nga, who brings a broad vision and effective growth models."
+            },
+            {
+                "icon": "partners",
+                "title": "Strong Partner Ecosystem",
+                "description": "Affirming reliability and a vast network through leading strategic partners."
+            },
+            {
+                "icon": "tools",
+                "title": "Comprehensive & Practical Solutions",
+                "description": "Emphasizing hands-on courses, 1-on-1 mentoring, and immediately deployable technology solutions."
+            },
+            {
+                "icon": "community",
+                "title": "Connected Business Community",
+                "description": "Introducing a genuine networking community where businesses can learn and grow together."
+            }
+        ],
+        "partners_title": "Our Partners"
     }
 }

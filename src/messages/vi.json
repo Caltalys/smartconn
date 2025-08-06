@@ -209,5 +209,31 @@
     },
     "gallery": {
         "title": "Thư viện ảnh"
+    },
+    "why_choose_us": {
+        "title": "Tại sao Doanh nghiệp chọn hợp tác cùng Smartcom Solutions?",
+        "items": [
+            {
+                "icon": "star",
+                "title": "Cố vấn Chiến lược Uy tín",
+                "description": "Nổi bật hình ảnh và vai trò của Shark Ana Lê Mỹ Nga, người mang đến tầm nhìn sâu rộng và mô hình tăng trưởng hiệu quả."
+            },
+            {
+                "icon": "partners",
+                "title": "Hệ sinh thái Đối tác Mạnh mẽ",
+                "description": "Khẳng định sự tin cậy và mạng lưới kết nối rộng lớn thông qua các đối tác chiến lược hàng đầu."
+            },
+            {
+                "icon": "tools",
+                "title": "Giải pháp Toàn diện & Thực chiến",
+                "description": "Nhấn mạnh các khóa học thực chiến, mentoring 1-1 và các giải pháp công nghệ có thể triển khai ngay."
+            },
+            {
+                "icon": "community",
+                "title": "Cộng đồng Doanh nghiệp Gắn kết",
+                "description": "Giới thiệu về cộng đồng kết nối thật, nơi các doanh nghiệp có thể học hỏi và phát triển cùng nhau."
+            }
+        ],
+        "partners_title": "Đối tác của chúng tôi"
     }
 }
