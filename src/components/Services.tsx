@@ -52,7 +52,7 @@ const Services = () => {
               {items.map((item) => (
                 <TabsTrigger key={item.id} value={item.id} className="flex w-full p-4 sm:p-6 border border-primary/20 bg-primary/5 data-[state=active]:bg-secondary/70 data-[state=active]:border-primary/20 data-[state=active]:shadow-lg transition-all duration-300 rounded-lg whitespace-normal">
                   <div className="w-full h-full flex items-center justify-center lg:justify-start">
-                    <p className="text-sm sm:text-base font-bold text-primary uppercase text-center lg:text-left">{item.title}</p>
+                    <p className="text-sm sm:text-base font-semibold text-primary uppercase text-center lg:text-left">{item.title}</p>
                   </div>
                 </TabsTrigger>
               ))}
