@@ -50,7 +50,7 @@ const Services = () => {
           <div className="w-full lg:w-1/3">
             <TabsList className="flex flex-col w-full h-auto bg-transparent gap-4 rounded-none overflow-hidden">
               {items.map((item) => (
-                <TabsTrigger key={item.id} value={item.id} className="flex w-full p-4 sm:p-6 border border-primary/20 bg-primary/5 data-[state=active]:bg-white data-[state=active]:border-primary/20 data-[state=active]:shadow-lg transition-all duration-300 rounded-lg whitespace-normal">
+                <TabsTrigger key={item.id} value={item.id} className="flex w-full p-4 sm:p-6 border border-primary/20 bg-primary/5 data-[state=active]:bg-secondary/70 data-[state=active]:border-primary/20 data-[state=active]:shadow-lg transition-all duration-300 rounded-lg whitespace-normal">
                   <div className="w-full h-full flex items-center justify-center lg:justify-start">
                     <p className="text-sm sm:text-base font-bold text-primary uppercase text-center lg:text-left">{item.title}</p>
                   </div>
@@ -62,14 +62,16 @@ const Services = () => {
           <div className="w-full lg:w-2/3">
             {items.map((item) => (
               <TabsContent value={item.id} key={item.id} className="w-full m-0">
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-center h-full bg-white p-8 rounded-lg shadow-lg border border-primary/10">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-center h-full bg-white p-8 rounded-lg shadow-lg border border-primary/10 group">
                   {/* Image */}
-                  <div className="relative w-full h-[300px] xl:h-full min-h-[300px] rounded-lg overflow-hidden">
+                  <div 
+                    className="relative w-full h-[300px] xl:h-full min-h-[300px] border-4 overflow-hidden [filter:drop-shadow(0_0_10px_hsl(var(--secondary)))]"
+                  >
                     <Image
                       src={item.image}
                       fill
                       alt={item.title}
-                      className="object-cover"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                       sizes="(max-width: 1279px) 90vw, 45vw"
                     />
                   </div>
