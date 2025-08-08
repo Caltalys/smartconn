@@ -12,4 +12,5 @@ export const navLinks = [
     // { href: 'testimonials', id: "testimonials" },
     // { href: 'faq', id: "faq" },
     // { href: 'blog', id: "blog" },
+     { href: '/categories', id: "categories" },
 ];
