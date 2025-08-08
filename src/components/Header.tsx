@@ -14,7 +14,7 @@ const Header = () => {
   const { setActiveService } = useServiceContext();
 
   return (
-    <header className="bg-white backdrop-blur-sm sticky top-0 z-40 shadow-lg">
+    <header className="bg-white backdrop-blur-sm sticky top-0 z-40 shadow-lg py-">
       <div className="container mx-auto px-6 py-2 flex justify-between items-center">
         {/* Logo */}
         <Logo />

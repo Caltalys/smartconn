@@ -7,9 +7,9 @@ const Contact = () => {
                 <RiPhoneFill size={16} />
                 <span>+84 905555569</span>
             </a>
-            <a href="mailto:info@smartcomsolutions.vn" className='flex items-center gap-2 hover:text-secondary-foreground transition-colors'>
+            <a href="mailto:contact@smartcomsolutions.vn" className='flex items-center gap-2 hover:text-secondary-foreground transition-colors'>
                 <RiMailFill size={16} />
-                <span>info@smartcomsolutions.vn</span>
+                <span>contact@smartcomsolutions.vn</span>
             </a>
         </div>
     )

@@ -62,7 +62,7 @@ const WhyChooseUs = () => {
                         return (
                             <motion.div
                                 key={index}
-                                className="bg-white p-6 rounded-lg text-center flex flex-col items-center border border-primary/10 shadow-lg"
+                                className="bg-primary/10 p-6 rounded-lg text-center flex flex-col items-center border border-primary/10 shadow-lg"
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.5 }}
@@ -71,7 +71,7 @@ const WhyChooseUs = () => {
                                 <div className="w-16 h-16 bg-secondary text-primary rounded-full flex items-center justify-center mb-4">
                                     {Icon && <Icon className="w-8 h-8" />}
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                                <p className="text-3xl font-semibold mb-2 uppercase">{item.title}</p>
                                 <p className="text-muted-foreground text-sm">{item.description}</p>
                             </motion.div>
                         );
