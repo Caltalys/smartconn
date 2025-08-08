@@ -8,6 +8,7 @@ export const navLinks = [
     { href: 'home', id: "home" },
     { href: '/about', id: "about" },
     { href: 'services', id: "services", submenu: servicesSubMenu },
+    { href: 'footer', id: "contact" }
     // { href: 'works', id: "works" },
     // { href: 'testimonials', id: "testimonials" },
     // { href: 'faq', id: "faq" },

@@ -18,7 +18,8 @@
             "training": "Đào tạo & Huấn luyện Doanh nghiệp",
             "it_solutions": "Tư vấn Giải pháp & Thiết bị CNTT",
             "digital_marketing": "Quảng cáo & Marketing trọn gói bằng AI"
-        }
+        },
+        "contact": "Liên hệ"
     },
     "contact": {
         "contact_us": "Liên Hệ"
@@ -167,9 +168,9 @@
         "description": "Kết nối, đổi mới và phát triển cùng các giải pháp công nghệ hàng đầu.",
         "quick_links": "Liên kết nhanh",
         "contact_info": "Thông tin liên hệ",
-        "address": "61 Hoàng Hoa Thám , Thành Phố Đà Nẵng",
+        "address": "61 Hoàng Hoa Thám, Thành Phố Đà Nẵng",
         "phone": "+84 905555569",
-        "email": "info@smartcomsolutions.vn",
+        "email": "contact@smartcomsolutions.vn",
         "copyright": "© {year} SmartCom. Đã đăng ký bản quyền."
     },
     "blog": {

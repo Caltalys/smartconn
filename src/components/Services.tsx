@@ -20,7 +20,7 @@ const Services = () => {
 
   if (!items || items.length === 0) {
     return (
-      <section id="services" className="py-16 xl:py-32 bg-primary/5">
+      <section id="services" className="py-16 xl:py-32 bg-primary/10">
         <div className="container mx-auto px-6 text-center">
           <p>No services available at the moment.</p>
         </div>
@@ -50,7 +50,7 @@ const Services = () => {
           <div className="w-full lg:w-1/3">
             <TabsList className="flex flex-col w-full h-auto bg-transparent gap-4 rounded-none overflow-hidden">
               {items.map((item) => (
-                <TabsTrigger key={item.id} value={item.id} className="flex w-full p-4 sm:p-6 border bg-primary/5 border-transparent data-[state=active]:bg-white data-[state=active]:border-primary/20 data-[state=active]:shadow-lg transition-all duration-300 rounded-lg whitespace-normal">
+                <TabsTrigger key={item.id} value={item.id} className="flex w-full p-4 sm:p-6 border border-primary/20 bg-primary/5 data-[state=active]:bg-white data-[state=active]:border-primary/20 data-[state=active]:shadow-lg transition-all duration-300 rounded-lg whitespace-normal">
                   <div className="w-full h-full flex items-center justify-center lg:justify-start">
                     <p className="text-sm sm:text-base font-bold text-primary uppercase text-center lg:text-left">{item.title}</p>
                   </div>
