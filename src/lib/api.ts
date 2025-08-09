@@ -1,13 +1,5 @@
 // lib/api.ts
-import { CollectionTypeManager, strapi, type StrapiClient } from "@strapi/client";
-
-// Define a type for the pagination object from Strapi
-interface StrapiPagination {
-    page: number;
-    pageSize: number;
-    pageCount: number;
-    total: number;
-}
+import { strapi, type StrapiClient } from "@strapi/client";
 
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 const strapiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
@@ -28,6 +20,14 @@ const getStrapiClient = (locale?: string): StrapiClient => {
         baseURL: strapiUrl,
         ...(strapiToken && { auth: strapiToken }),
         ...(locale && { headers: { "Accept-Language": locale } }),
+    });
+};
+
+export const getAllArticles = async (locale: string) => {
+    const client = getStrapiClient(locale).collection('articles');
+    return await client.find({
+        populate: ['cover', 'category', 'author'],
+        sort: 'publishedAt:desc',
     });
 };
 

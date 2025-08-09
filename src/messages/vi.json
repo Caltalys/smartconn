@@ -187,6 +187,7 @@
         "categoriesTitle": "Danh mục Bài viết",
         "categoriesSubtitle": "Khám phá các bài viết theo từng chủ đề.",
         "noCategoriesFound": "Không tìm thấy danh mục nào.",
+        "noArticlesFound": "Không tìm thấy bài viết nào.",
         "items": [
             {
                 "image": "/blog/post-1.jpg",

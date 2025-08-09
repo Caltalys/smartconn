@@ -1,50 +1,134 @@
-// lib/types.ts
-// export Interface for Image Data
-export interface ImageData {
-    url: string;
+export interface Articles {
+  data: Article[]
+  meta: Meta
 }
 
-// export Interface for Author Data
-export interface Author {
-    id: number; // Assuming each author has a unique ID
-    name: string;
-    email: string;
-    avatar: ImageData; // Assuming the author has
+export interface Article {
+  id: number
+  documentId: string
+  title: string
+  description: string
+  slug: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string | null
+  locale: string
+  cover: Cover | null
+  category: Category | null
+  author: Author | null
 }
 
-// export Interface for Category Data
+export interface Cover {
+  id: number
+  documentId: string
+  name: string
+  alternativeText?: string
+  caption?: string
+  width: number
+  height: number
+  formats: Formats
+  hash: string
+  ext: string
+  mime: string
+  size: number
+  url: string
+  previewUrl: any
+  provider: string
+  provider_metadata: any
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+}
+
+export interface Formats {
+  thumbnail: Thumbnail
+  medium: Medium
+  small: Small
+  large?: Large
+}
+
+export interface Thumbnail {
+  name: string
+  hash: string
+  ext: string
+  mime: string
+  path: any
+  width: number
+  height: number
+  size: number
+  sizeInBytes: number
+  url: string
+}
+
+export interface Medium {
+  name: string
+  hash: string
+  ext: string
+  mime: string
+  path: any
+  width: number
+  height: number
+  size: number
+  sizeInBytes: number
+  url: string
+}
+
+export interface Small {
+  name: string
+  hash: string
+  ext: string
+  mime: string
+  path: any
+  width: number
+  height: number
+  size: number
+  sizeInBytes: number
+  url: string
+}
+
+export interface Large {
+  name: string
+  hash: string
+  ext: string
+  mime: string
+  path: any
+  width: number
+  height: number
+  size: number
+  sizeInBytes: number
+  url: string
+}
+
 export interface Category {
-    id: number;
-    name: string;
-    slug: string;
-    description?: string; // Optional description
+  id: number
+  documentId: string
+  name: string
+  slug: string
+  description: any
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  locale: string
 }
 
-export interface BlogPost {
-    id: number;
-    title: string;
-    slug: string;
-    description: string;
-    content: string; // rich markdown text
-    createdAt: string; // ISO date string
-    cover: ImageData; // Assuming this is the structure of your featured image
-    author: Author; // The author of the blog post
-    categories: Category[]; // An array of categories associated with the post
+export interface Author {
+  id: number
+  documentId: string
+  name: string
+  email: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  locale: string
 }
 
-export interface UserBlogPostData {
-    title: string;
-    slug: string;
-    description: string;
-    content: string; //  rich markdown text
+export interface Meta {
+  pagination: Pagination
 }
 
-// Example response structure when fetching posts
-export interface BlogPostResponse {
-    data: BlogPost[];
-}
-
-// Example response structure when fetching a single post
-export interface SingleBlogPostResponse {
-    data: BlogPost; // The single blog post object
+export interface Pagination {
+  page: number
+  pageSize: number
+  pageCount: number
+  total: number
 }
