@@ -18,6 +18,7 @@ interface ArticlePageProps {
 
 function flattenArticle(data: any): Article | null {
   if (!data) return null;
+  console.log(data);
   return {
     id: data.id,
     ...data,

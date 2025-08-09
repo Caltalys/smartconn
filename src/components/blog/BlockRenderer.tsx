@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { getStrapiMedia } from "@/lib/utils";
 import { Block } from "@/lib/types";
 
@@ -12,7 +13,7 @@ interface BlockRendererProps {
 const components: { [key: string]: React.FC<any> } = {
   "shared.rich-text": ({ body }) => (
     <div className="prose-p:text-justify">
-      <ReactMarkdown>{body}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} children={body} />
     </div>
   ),
   "shared.media": ({ file }) => {
@@ -38,12 +39,16 @@ const components: { [key: string]: React.FC<any> } = {
       </figure>
     );
   },
-  "shared.quote": ({ quote, author }) => (
-    <blockquote className="border-l-4 border-primary pl-4 italic my-8">
-      <p className="mb-2 text-xl">"{quote}"</p>
-      {author && <cite className="font-semibold not-italic">- {author}</cite>}
-    </blockquote>
-  ),
+  "shared.quote": ({ quote, author }) => {
+      console.log(quote);
+      console.log(author);
+      return (
+      <blockquote className="border-l-4 border-primary pl-4 italic my-8">
+        <p className="mb-2 text-xl">"{quote}"</p>
+        {author && <cite className="font-semibold not-italic">- {author}</cite>}
+      </blockquote>
+    )
+  }
 };
 
 export default function BlockRenderer({ blocks }: BlockRendererProps) {
@@ -51,7 +56,7 @@ export default function BlockRenderer({ blocks }: BlockRendererProps) {
     <>
       {blocks.map((block) => {
         const Component = components[block.__component];
-        return Component ? <Component key={`block-${block.id}`} {...block} /> : null;
+        return Component ? <Component key={`${block.__component}-${block.id}`} {...block} /> : null;
       })}
     </>
   );
