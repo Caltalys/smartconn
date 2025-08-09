@@ -1,5 +1,6 @@
 // lib/api.ts
 import { strapi, type StrapiClient } from "@strapi/client";
+import type { Article, Articles } from "./types";
 
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 const strapiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
@@ -23,15 +24,16 @@ const getStrapiClient = (locale?: string): StrapiClient => {
     });
 };
 
-export const getAllArticles = async (locale: string) => {
+export const getAllArticles = async (locale: string): Promise<Articles> => {
     const client = getStrapiClient(locale).collection('articles');
-    return await client.find({
+    const response = await client.find({
         populate: ['cover', 'category', 'author'],
         sort: 'publishedAt:desc',
     });
+    return response as unknown as Articles;
 };
 
-export const getArticleBySlug = async (slug: string, locale: string) => {
+export const getArticleBySlug = async (slug: string, locale: string): Promise<Article | null> => {
     const client = getStrapiClient(locale).collection('articles');
     const articles = await client.find({
         filters: { slug: { $eq: slug } },
@@ -40,7 +42,10 @@ export const getArticleBySlug = async (slug: string, locale: string) => {
             limit: 1
         }
     });
-    return articles.data.length > 0 ? articles.data[0] : null;
+    if (articles.data.length === 0) {
+        return null;
+    }
+    return articles.data[0] as unknown as Article;
 };
 
 export const getAllCategories = async (locale: string) => {

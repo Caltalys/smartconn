@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { getStrapiMedia } from "@/lib/utils";
 import { Block } from "@/lib/types";
 
@@ -13,12 +12,11 @@ interface BlockRendererProps {
 const components: { [key: string]: React.FC<any> } = {
   "shared.rich-text": ({ body }) => (
     <div className="prose-p:text-justify">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} children={body} />
+      <ReactMarkdown>{body}</ReactMarkdown>
     </div>
   ),
   "shared.media": ({ file }) => {
-    console.log(file);
-    const media = file;
+    const media = file; // With Strapi v5, 'file' is the flattened media object.
     const imageUrl = getStrapiMedia(media?.url);
     if (!imageUrl) return null;
 
@@ -26,7 +24,7 @@ const components: { [key: string]: React.FC<any> } = {
       <figure className="my-8">
         <Image
           src={imageUrl}
-          alt={media.alternativeText || ""}
+          alt={media.alternativeText || "Blog post image"}
           width={media.width}
           height={media.height}
           className="rounded-lg"
@@ -40,15 +38,13 @@ const components: { [key: string]: React.FC<any> } = {
     );
   },
   "shared.quote": ({ quote, author }) => {
-      console.log(quote);
-      console.log(author);
-      return (
+    return (
       <blockquote className="border-l-4 border-primary pl-4 italic my-8">
         <p className="mb-2 text-xl">"{quote}"</p>
         {author && <cite className="font-semibold not-italic">- {author}</cite>}
       </blockquote>
-    )
-  }
+    );
+  },
 };
 
 export default function BlockRenderer({ blocks }: BlockRendererProps) {

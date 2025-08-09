@@ -1,3 +1,4 @@
+
 export interface Articles {
   data: Article[]
   meta: Meta
@@ -29,8 +30,8 @@ export interface Cover {
   id: number
   documentId: string
   name: string
-  alternativeText?: string
-  caption?: string
+  alternativeText: string | null
+  caption: string | null
   width: number
   height: number
   formats: Formats
@@ -39,9 +40,9 @@ export interface Cover {
   mime: string
   size: number
   url: string
-  previewUrl: any
+  previewUrl: string | null
   provider: string
-  provider_metadata: any
+  provider_metadata: Record<string, unknown> | null
   createdAt: string
   updatedAt: string
   publishedAt: string
@@ -59,7 +60,7 @@ export interface Thumbnail {
   hash: string
   ext: string
   mime: string
-  path: any
+  path: string | null
   width: number
   height: number
   size: number
@@ -72,7 +73,7 @@ export interface Medium {
   hash: string
   ext: string
   mime: string
-  path: any
+  path: string | null
   width: number
   height: number
   size: number
@@ -85,7 +86,7 @@ export interface Small {
   hash: string
   ext: string
   mime: string
-  path: any
+  path: string | null
   width: number
   height: number
   size: number
@@ -98,7 +99,7 @@ export interface Large {
   hash: string
   ext: string
   mime: string
-  path: any
+  path: string | null
   width: number
   height: number
   size: number
@@ -111,7 +112,7 @@ export interface Category {
   documentId: string
   name: string
   slug: string
-  description: any
+  description: string | null
   createdAt: string
   updatedAt: string
   publishedAt: string

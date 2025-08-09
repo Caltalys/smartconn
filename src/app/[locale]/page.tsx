@@ -12,7 +12,7 @@ export default function Page() {
     <>
       <div className="relative">
         <Topbar />
-        <Header />
+        {/* <Header /> */}
         <main>
           <Hero />
           <About />
@@ -25,7 +25,7 @@ export default function Page() {
           {/* <Blog /> */}
           {/* <Gallery /> */}
         </main>
-        <Footer />
+        {/* <Footer /> */}
         <BackToTopButton />
       </div>
     </>

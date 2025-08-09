@@ -11,7 +11,6 @@ interface ArticleCardProps {
 }
 
 export default function ArticleCard({ article, locale, readMoreText }: ArticleCardProps) {
-    console.log(article);
     const imageUrl = getStrapiMedia(article.cover?.url);
     const categoryUrl = article.category ? `/${locale}/blog/category/${article.category.slug}` : `/${locale}/blog`;
     const articleUrl = `/${locale}/blog/${article.slug}`;

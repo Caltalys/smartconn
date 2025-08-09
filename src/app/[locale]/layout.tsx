@@ -1,13 +1,15 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { ServiceProvider } from "@/context/ServiceContext";
+import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
-import "../globals.css";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import {
   getMessages,
   setRequestLocale,
 } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
-import { ServiceProvider } from "@/context/ServiceContext";
+import "../globals.css";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -38,9 +40,15 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={`antialiased bg-background text-foreground`}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ServiceProvider>{children}</ServiceProvider>
-        </NextIntlClientProvider>
+        <div className="relative flex flex-col min-h-screen">
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <ServiceProvider>
+              <Header />
+              {children}
+              <Footer />
+            </ServiceProvider>
+          </NextIntlClientProvider>
+        </div>
       </body>
     </html>
   );

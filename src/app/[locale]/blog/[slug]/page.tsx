@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getStrapiMedia } from "@/lib/utils";
 import { formatDate } from "@/lib/format-date";
 import BlockRenderer from "@/components/blog/BlockRenderer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { Article } from "@/lib/types";
 import { Metadata } from "next";
 
@@ -13,19 +14,6 @@ interface ArticlePageProps {
   params: {
     slug: string;
     locale: string;
-  };
-}
-
-function flattenArticle(data: any): Article | null {
-  if (!data) return null;
-  console.log(data);
-  return {
-    id: data.id,
-    ...data,
-    cover: data.cover?.data ? { id: data.cover.data.id, ...data.cover.data } : null,
-    category: data.category?.data ? { id: data.category.data.id, ...data.category.data } : null,
-    author: data.author?.data ? { id: data.author.data.id, ...data.author.data } : null,
-    blocks: data.blocks || null,
   };
 }
 
@@ -38,10 +26,7 @@ export async function generateStaticParams({ params: { locale } }: { params: { l
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug, locale } = params;
-  const articleResponse = await getArticleBySlug(slug, locale);
-  if (!articleResponse) return { title: "Article Not Found" };
-
-  const article = flattenArticle(articleResponse);
+  const article: Article | null = await getArticleBySlug(slug, locale);
   if (!article) return { title: "Article Not Found" };
 
   const imageUrl = getStrapiMedia(article.cover?.url);
@@ -66,20 +51,39 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug, locale } = params;
-  const t = await getTranslations({ locale, namespace: "blog" });
+  const tBlog = await getTranslations({ locale, namespace: "blog" });
+  const tNav = await getTranslations({ locale, namespace: "navigation" });
 
-  const articleResponse = await getArticleBySlug(slug, locale);
-  if (!articleResponse) notFound();
+  const article: Article | null = await getArticleBySlug(slug, locale);
+  if (!article) {
+    notFound();
+  }
 
-  const article = flattenArticle(articleResponse);
-  if (!article) notFound();
+  const breadcrumbItems = [
+    { label: tNav('home'), href: `/${locale}` },
+    { label: tNav('blog'), href: `/${locale}/blog` },
+  ];
+
+  if (article.category) {
+    breadcrumbItems.push({
+      label: article.category.name,
+      href: `/${locale}/blog/category/${article.category.slug}`,
+    });
+  }
+
+  breadcrumbItems.push({
+    label: article.title,
+    href: `/${locale}/blog/${slug}`,
+  });
 
   const imageUrl = getStrapiMedia(article.cover?.url);
   const categoryUrl = article.category ? `/${locale}/blog/category/${article.category.slug}` : `/${locale}/blog`;
 
   return (
-    <main className="container mx-auto px-6 py-12 md:py-20">
-      <article className="prose lg:prose-xl max-w-4xl mx-auto dark:prose-invert">
+    <main className="container mx-auto px-6 py-12 md:py-20 flex-grow">
+      <div className="max-w-4xl mx-auto">
+        <Breadcrumbs items={breadcrumbItems} />
+        <article className="prose lg:prose-xl max-w-none dark:prose-invert">
         <div className="mb-8 border-b pb-8 dark:border-gray-700">
           {article.category && (
             <Link href={categoryUrl} className="text-primary font-semibold uppercase tracking-wide no-underline hover:underline">
@@ -114,11 +118,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         {article.blocks && <BlockRenderer blocks={article.blocks} />}
 
         <div className="mt-12 pt-8 border-t dark:border-gray-700">
-          <Link href={`/${locale}/blog`} className="text-primary hover:underline no-underline font-semibold">
-            &larr; {t("back_to_blog")}
+            <Link href={`/${locale}/blog`} className="text-primary hover:underline no-underline font-semibold">
+              &larr; {tBlog("back_to_blog")}
           </Link>
         </div>
       </article>
+      </div>
     </main>
   );
 }

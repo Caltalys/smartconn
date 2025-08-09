@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { getAllArticles } from "@/lib/api";
 import { MotionDiv } from "@/components/MotionDiv";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
-import { Article, Articles } from "@/lib/types";
+import { Article } from "@/lib/types";
 import ArticleCard from "@/components/blog/ArticleCard";
 
 interface BlogPageProps {
@@ -14,25 +14,11 @@ interface BlogPageProps {
 export default async function BlogPage({ params: { locale } }: BlogPageProps) {
   const t = await getTranslations({ locale, namespace: "blog" });
   const articlesResponse = await getAllArticles(locale);
-  // The Strapi v4 API returns data in a nested structure, e.g., { id, attributes: { ... } }.
-  // Our components expect a flattened structure. This transformation maps the API response
-  // to the flat `Article` type our components use.
-  const articles: Article[] = articlesResponse.data.map((item: any) => {
-    const coverData = item.cover;
-    const categoryData = item.category;
-    const authorData = item.author;
 
-    return {
-      id: item.id,
-      ...item,
-      cover: coverData ? { id: coverData.id, ...coverData } : null,
-      category: categoryData ? { id: categoryData.id, ...categoryData } : null,
-      author: authorData ? { id: authorData.id, ...authorData } : null,
-    };
-  });
+  const articles = articlesResponse.data;
 
   return (
-    <main>
+    <main className="flex-grow">
       <section className="relative py-24 md:py-32 bg-primary/5">
         <div className="container mx-auto px-6 text-center">
           <MotionDiv variants={fadeInUp} initial="hidden" animate="visible">
