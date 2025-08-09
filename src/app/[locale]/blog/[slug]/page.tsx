@@ -1,97 +1,123 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
-import { RiArrowLeftLine } from 'react-icons/ri';
+import { getArticleBySlug, getAllArticles } from "@/lib/api";
+import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import { getStrapiMedia } from "@/lib/utils";
+import { formatDate } from "@/lib/format-date";
+import BlockRenderer from "@/components/blog/BlockRenderer";
+import { Article } from "@/lib/types";
+import { Metadata } from "next";
 
-type Props = {
+interface ArticlePageProps {
+  params: {
     slug: string;
     locale: string;
-};
-
-// Define the type for a blog post item to ensure type safety
-type BlogPost = {
-    image: string;
-    category: string;
-    date: string;
-    title: string;
-    description: string;
-    content: string;
-    slug: string;
-};
-
-/**
- * Generates metadata for the blog post page, enhancing SEO.
- * It fetches the specific post by its slug and sets the page title and description.
- */
-export async function generateMetadata({ params }: {params: Promise<Props>}) {
-    const { slug, locale } = await params;
-    const t = await getTranslations({ locale, namespace: 'blog' });
-    const items: BlogPost[] = t.raw('items');
-    const post = items.find((item) => item.slug === slug);
-
-    if (!post) {
-        return {
-            title: 'Post Not Found'
-        };
-    }
-
-    return {
-        title: `${post.title} | SmartConn`,
-        description: post.description,
-    };
+  };
 }
 
-/**
- * The main component for displaying a single blog post.
- * It fetches the post data based on the slug from the URL parameters.
- */
-export default async function BlogPostPage({ params }: {params: Promise<Props>}) {
-    const { slug, locale } = await params;
-    // Enable static rendering for i18n
-    setRequestLocale(locale);
+function flattenArticle(data: any): Article | null {
+  if (!data) return null;
+  return {
+    id: data.id,
+    ...data,
+    cover: data.cover?.data ? { id: data.cover.data.id, ...data.cover.data } : null,
+    category: data.category?.data ? { id: data.category.data.id, ...data.category.data } : null,
+    author: data.author?.data ? { id: data.author.data.id, ...data.author.data } : null,
+    blocks: data.blocks || null,
+  };
+}
 
-    const t = await getTranslations({ locale, namespace: 'blog' });
-    const items: BlogPost[] = t.raw('items');
-    const post = items.find((item) => item.slug === slug);
+export async function generateStaticParams({ params: { locale } }: { params: { locale: string } }) {
+  const articlesResponse = await getAllArticles(locale);
+  return articlesResponse.data.map((article: any) => ({
+    slug: article.slug,
+  }));
+}
 
-    // If no post is found for the given slug, render the 404 page.
-    if (!post) {
-        notFound();
-    }
+export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
+  const { slug, locale } = params;
+  const articleResponse = await getArticleBySlug(slug, locale);
+  if (!articleResponse) return { title: "Article Not Found" };
 
-    return (
-        <main className="py-16 xl:py-24 bg-primary/5">
-            <div className="container mx-auto px-6">
-                <article className="max-w-4xl mx-auto">
-                    {/* Back to Blog Link */}
-                    <div className="mb-8">
-                        <Link href="/#blog" className="inline-flex items-center gap-2 text-accent hover:underline font-semibold">
-                            <RiArrowLeftLine />
-                            {t('back_to_blog')}
-                        </Link>
-                    </div>
+  const article = flattenArticle(articleResponse);
+  if (!article) return { title: "Article Not Found" };
 
-                    {/* Post Header */}
-                    <header className="mb-8">
-                        <p className="text-accent font-semibold mb-2">{post.category}</p>
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-primary">
-                            {post.title}
-                        </h1>
-                        <p className="text-muted-foreground">{post.date}</p>
-                    </header>
+  const imageUrl = getStrapiMedia(article.cover?.url);
 
-                    {/* Featured Image */}
-                    <div className="relative w-full h-64 md:h-96 mb-12 rounded-lg overflow-hidden shadow-lg">
-                        <Image src={post.image} alt={post.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 896px" priority />
-                    </div>
+  return {
+    title: article.title,
+    description: article.description,
+    openGraph: {
+      title: article.title,
+      description: article.description,
+      url: `/${locale}/blog/${slug}`,
+      images: imageUrl ? [{ url: imageUrl, width: article.cover?.width, height: article.cover?.height }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.description,
+      images: imageUrl ? [imageUrl] : [],
+    },
+  };
+}
 
-                    {/* Post Content */}
-                    <div className="prose prose-lg max-w-none text-muted-foreground prose-headings:text-primary prose-strong:text-primary prose-a:text-accent hover:prose-a:underline">
-                        {post.content.split('\n\n').map((paragraph, index) => (<p key={index}>{paragraph}</p>))}
-                    </div>
-                </article>
-            </div>
-        </main>
-    );
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  const { slug, locale } = params;
+  const t = await getTranslations({ locale, namespace: "blog" });
+
+  const articleResponse = await getArticleBySlug(slug, locale);
+  if (!articleResponse) notFound();
+
+  const article = flattenArticle(articleResponse);
+  if (!article) notFound();
+
+  const imageUrl = getStrapiMedia(article.cover?.url);
+  const categoryUrl = article.category ? `/${locale}/blog/category/${article.category.slug}` : `/${locale}/blog`;
+
+  return (
+    <main className="container mx-auto px-6 py-12 md:py-20">
+      <article className="prose lg:prose-xl max-w-4xl mx-auto dark:prose-invert">
+        <div className="mb-8 border-b pb-8 dark:border-gray-700">
+          {article.category && (
+            <Link href={categoryUrl} className="text-primary font-semibold uppercase tracking-wide no-underline hover:underline">
+              {article.category.name}
+            </Link>
+          )}
+          <h1 className="mt-2 mb-4 text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white">
+            {article.title}
+          </h1>
+          <p className="text-lg text-muted-foreground mt-0">
+            {article.description}
+          </p>
+          <div className="mt-6 flex items-center text-sm text-muted-foreground">
+            <time dateTime={article.publishedAt ?? ""}>
+              {formatDate(article.publishedAt, locale)}
+            </time>
+          </div>
+        </div>
+
+        {imageUrl && (
+          <div className="relative w-full aspect-video my-8 rounded-lg overflow-hidden shadow-lg">
+            <Image
+              src={imageUrl}
+              alt={article.cover?.alternativeText || article.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        )}
+
+        {article.blocks && <BlockRenderer blocks={article.blocks} />}
+
+        <div className="mt-12 pt-8 border-t dark:border-gray-700">
+          <Link href={`/${locale}/blog`} className="text-primary hover:underline no-underline font-semibold">
+            &larr; {t("back_to_blog")}
+          </Link>
+        </div>
+      </article>
+    </main>
+  );
 }

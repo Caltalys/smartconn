@@ -3,6 +3,12 @@ export interface Articles {
   meta: Meta
 }
 
+export interface Block {
+  __component: string;
+  id: number;
+  [key: string]: any;
+}
+
 export interface Article {
   id: number
   documentId: string
@@ -16,6 +22,7 @@ export interface Article {
   cover: Cover | null
   category: Category | null
   author: Author | null
+  blocks: Block[] | null
 }
 
 export interface Cover {

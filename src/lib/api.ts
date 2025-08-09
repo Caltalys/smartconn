@@ -31,6 +31,18 @@ export const getAllArticles = async (locale: string) => {
     });
 };
 
+export const getArticleBySlug = async (slug: string, locale: string) => {
+    const client = getStrapiClient(locale).collection('articles');
+    const articles = await client.find({
+        filters: { slug: { $eq: slug } },
+        populate: ['cover', 'category', 'author', 'blocks'],
+        pagination: {
+            limit: 1
+        }
+    });
+    return articles.data.length > 0 ? articles.data[0] : null;
+};
+
 export const getAllCategories = async (locale: string) => {
     const client = getStrapiClient(locale).collection('categories');
     return await client.find();
