@@ -32,6 +32,16 @@ const itemVariants: Variants = {
 
 const Hero = ({ data }: { data?: HeroSection }) => {
   const t = useTranslations('hero');
+  console.log(data);
+  const heading = data?.heading || t("title");
+  const subtitle = data?.subtitle || t("subtitle");
+  const description = data?.description || t("description");
+  const cta = data?.cta;
+  const imageUrl = data?.image?.url
+    ? `${process.env.NEXT_PUBLIC_STRAPI_FILE_URL}${data.image.url}`
+    : "/hero.jpg";
+    console.log(imageUrl);
+  const imageAlt = data?.image?.alternativeText || subtitle;
   
   return (
     <section
@@ -52,25 +62,29 @@ const Hero = ({ data }: { data?: HeroSection }) => {
             animate="visible"
           >
             <motion.h1 variants={itemVariants} className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-              {t('title')}
+              {heading}
             </motion.h1>
             <motion.h1
               className="text-secondary text-4xl sm:text-6xl lg:text-7xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
               variants={itemVariants}
             >
-              {t('subtitle')}
+              {subtitle}
             </motion.h1>
             <motion.p
               className="text-white max-w-lg lg:text-lg"
               variants={itemVariants}
             >
-              {t('description')}
+              {description}
             </motion.p>
             <motion.div
               className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
               variants={itemVariants}
             >
-              <SmartButton text={t('services')} href="#services" />
+              {cta ? (
+                <SmartButton text={cta.label} href={cta.href} />
+              ) : (
+                <SmartButton text={t("services")} href="#services" />
+              )}
             </motion.div>
           </motion.div>
 
@@ -87,8 +101,8 @@ const Hero = ({ data }: { data?: HeroSection }) => {
               {/* Image container */}
               <div className="relative w-full h-full rounded-md overflow-hidden shadow-2xl">
                 <Image
-                  src={"/hero.jpg"}
-                  alt={t('subtitle')}
+                  src={imageUrl}
+                  alt={imageAlt}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1023px) 80vw, 45vw"

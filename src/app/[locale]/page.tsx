@@ -14,9 +14,7 @@ export default async function Page({ params: { locale } }: BaseProps) {
   const [landingPageResponse] = await Promise.all([
     getLandingPage(locale),
   ]);
-
-    const landingPage = landingPageResponse;
-    const heroSection = landingPage?.heroSection;
+  const heroSection = landingPageResponse?.heroSection;
 
 
   return (
