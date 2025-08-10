@@ -1,4 +1,85 @@
 
+export interface BaseProps {
+  params: {
+    locale: string;
+  };
+}
+
+export interface Formats {
+  thumbnail: File
+  medium: File
+  small: File
+  large?: File
+}
+
+export interface File {
+  name: string
+  hash: string
+  ext: string
+  mime: string
+  path: string | null
+  width: number
+  height: number
+  size: number
+  sizeInBytes: number
+  url: string
+}
+
+export interface StrapiEntity {
+  id: number;
+  documentId: string;
+  createdAt: string
+  updatedAt: string
+  publishedAt: string | null
+  locale: string
+}
+
+export interface StrapiComponent extends StrapiEntity {
+  __component: string;
+}
+
+export interface Media extends StrapiEntity {
+  name: string
+  alternativeText: any
+  caption: any
+  width: number
+  height: number
+  formats: Formats
+  hash: string
+  ext: string
+  mime: string
+  size: number
+  url: string
+  previewUrl: any
+  provider: string
+  provider_metadata: any
+}
+
+export interface LandingPage extends StrapiComponent {
+  heroSection?: HeroSection;
+}
+
+export interface HeroSection extends StrapiComponent {
+  heading: string;
+  subtitle: string;
+  description?: string;
+  button: Button;
+  cta: Cta | null;
+  image: Media | null;
+}
+export interface Cta {
+  id: number
+  label: string
+  href: string
+  isInternal: boolean
+}
+
+export interface Button extends StrapiComponent {
+  text: string;
+  href: string;
+  target: string;
+}
+
 export interface Articles {
   data: Article[]
   meta: Meta
@@ -10,9 +91,7 @@ export interface Block {
   [key: string]: any;
 }
 
-export interface Article {
-  id: number
-  documentId: string
+export interface Article extends StrapiEntity {
   title: string
   description: string
   slug: string
@@ -20,96 +99,13 @@ export interface Article {
   updatedAt: string
   publishedAt: string | null
   locale: string
-  cover: Cover | null
+  cover: Media | null
   category: Category | null
   author: Author | null
   blocks: Block[] | null
 }
 
-export interface Cover {
-  id: number
-  documentId: string
-  name: string
-  alternativeText: string | null
-  caption: string | null
-  width: number
-  height: number
-  formats: Formats
-  hash: string
-  ext: string
-  mime: string
-  size: number
-  url: string
-  previewUrl: string | null
-  provider: string
-  provider_metadata: Record<string, unknown> | null
-  createdAt: string
-  updatedAt: string
-  publishedAt: string
-}
-
-export interface Formats {
-  thumbnail: Thumbnail
-  medium: Medium
-  small: Small
-  large?: Large
-}
-
-export interface Thumbnail {
-  name: string
-  hash: string
-  ext: string
-  mime: string
-  path: string | null
-  width: number
-  height: number
-  size: number
-  sizeInBytes: number
-  url: string
-}
-
-export interface Medium {
-  name: string
-  hash: string
-  ext: string
-  mime: string
-  path: string | null
-  width: number
-  height: number
-  size: number
-  sizeInBytes: number
-  url: string
-}
-
-export interface Small {
-  name: string
-  hash: string
-  ext: string
-  mime: string
-  path: string | null
-  width: number
-  height: number
-  size: number
-  sizeInBytes: number
-  url: string
-}
-
-export interface Large {
-  name: string
-  hash: string
-  ext: string
-  mime: string
-  path: string | null
-  width: number
-  height: number
-  size: number
-  sizeInBytes: number
-  url: string
-}
-
-export interface Category {
-  id: number
-  documentId: string
+export interface Category extends StrapiEntity {
   name: string
   slug: string
   description: string | null
@@ -119,9 +115,7 @@ export interface Category {
   locale: string
 }
 
-export interface Author {
-  id: number
-  documentId: string
+export interface Author extends StrapiEntity {
   name: string
   email: string
   createdAt: string

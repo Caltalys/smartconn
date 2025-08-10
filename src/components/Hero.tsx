@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { motion, Variants } from "framer-motion";
 import SmartButton from "./SmartButton";
 import Image from "next/image";
+import { HeroSection } from "@/lib/types";
 
 // Variants for staggered animation
 const containerVariants: Variants = {
@@ -29,9 +30,9 @@ const itemVariants: Variants = {
   },
 };
 
-const Hero = () => {
+const Hero = ({ data }: { data?: HeroSection }) => {
   const t = useTranslations('hero');
-
+  
   return (
     <section
       id="home"

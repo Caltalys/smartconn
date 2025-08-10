@@ -42,7 +42,8 @@
     "remark-gfm": "^4.0.1",
     "shadcn": "^2.10.0",
     "tailwind-merge": "^3.3.1",
-    "yet-another-react-lightbox": "^3.25.0"
+    "yet-another-react-lightbox": "^3.25.0",
+    "zod": "^4.0.16"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

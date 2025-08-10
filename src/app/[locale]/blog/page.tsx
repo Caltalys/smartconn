@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { getAllArticles } from "@/lib/api";
+import { getBlogPage } from "@/lib/api/pages";
 import { MotionDiv } from "@/components/MotionDiv";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { Article } from "@/lib/types";
@@ -13,21 +14,23 @@ interface BlogPageProps {
 
 export default async function BlogPage({ params: { locale } }: BlogPageProps) {
   const t = await getTranslations({ locale, namespace: "blog" });
-  const articlesResponse = await getAllArticles(locale);
+
+  // Fetch articles and blog page content concurrently
+  const [articlesResponse, blogPageResponse] = await Promise.all([
+    getAllArticles(locale),
+    getBlogPage(locale),
+  ]);
 
   const articles = articlesResponse.data;
+  const blogPage = blogPageResponse.data;
 
   return (
     <main className="flex-grow">
       <section className="relative py-24 md:py-32 bg-primary/5">
         <div className="container mx-auto px-6 text-center">
           <MotionDiv variants={fadeInUp} initial="hidden" animate="visible">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
-              {t("title")}
-            </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              {t("subtitle")}
-            </p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">{blogPage?.title ?? t("title")}</h1>
+            <p className="mt-4 text-lg text-muted-foreground">{blogPage?.subtitle ?? t("subtitle")}</p>
           </MotionDiv>
         </div>
       </section>

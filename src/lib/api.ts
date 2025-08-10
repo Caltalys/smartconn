@@ -1,6 +1,6 @@
 // lib/api.ts
 import { strapi, type StrapiClient } from "@strapi/client";
-import type { Article, Articles } from "./types";
+import type { Article, Articles, LandingPage } from "./types";
 
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 const strapiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
@@ -16,12 +16,24 @@ if (!strapiUrl) {
  * @param {string} [locale] - The locale for the 'Accept-Language' header.
  * @returns {StrapiClient} A configured StrapiClient instance.
  */
-const getStrapiClient = (locale?: string): StrapiClient => {
+export const getStrapiClient = (locale?: string): StrapiClient => {
     return strapi({
         baseURL: strapiUrl,
         ...(strapiToken && { auth: strapiToken }),
         ...(locale && { headers: { "Accept-Language": locale } }),
     });
+};
+
+export const getLandingPage = async (locale: string): Promise<LandingPage> => {
+    const client = getStrapiClient(locale).single('landing-page');
+    const populateList = [
+        'heroSection',
+        'heroSection.image',
+        'heroSection.cta'];
+    const response = await client.find({
+        populate: populateList
+    });
+    return response as unknown as LandingPage;  
 };
 
 export const getAllArticles = async (locale: string): Promise<Articles> => {
