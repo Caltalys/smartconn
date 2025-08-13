@@ -6,34 +6,27 @@ import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
 import NavMobileMenu from "./NavMobileMenu";
 import { useServiceContext } from "@/context/ServiceContext";
+import { HeaderSection } from "@/lib/types";
 
-export type NavigationLink = {
-  id: number;
-  label: string;
-  url: string;
-  identifier: string;
-  submenu: NavigationLink[];
-};
-
-const Header = ({ navigationLinks }: { navigationLinks: NavigationLink[] }) => {
+const Header = ({ data }: { data: HeaderSection }) => {
   const { setActiveService } = useServiceContext();
 
   return (
-    <header className="bg-white backdrop-blur-sm sticky top-0 z-40 shadow-lg py-">
+    <header className="bg-white backdrop-blur-sm sticky top-0 z-40 shadow-lg">
       <div className="container mx-auto px-6 py-2 flex justify-between items-center">
         {/* Logo */}
         <Logo />
-        
+
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8">
           <ul className="flex items-center">
-            {navigationLinks.map((navItem) => (
-              navItem.submenu && navItem.submenu.length > 0 ? (
+            {data?.menus?.map((navItem) => (
+              navItem.submenus && navItem.submenus.length > 0 ? (
                 <li key={navItem.id} className="relative group flex items-center gap-1 cursor-pointer text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
                   <ScrollLink
                     spy={true}
                     smooth={true}
-                    to={navItem.url.startsWith('#') ? navItem.url.substring(1) : navItem.url} offset={-64}
+                    to={navItem.href.startsWith('#') ? navItem.href.substring(1) : navItem.href} offset={-64}
                     duration={500}
                     className="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left [&.is-active]:after:scale-x-100"
                     activeClass="text-accent is-active"
@@ -44,15 +37,15 @@ const Header = ({ navigationLinks }: { navigationLinks: NavigationLink[] }) => {
                   {/* Dropdown menu */}
                   <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-100 bg-white shadow-lg rounded-md p-2 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50">
                     <ul className="space-y-1">
-                      {navItem.submenu.map(subLink => (
+                      {navItem.submenus.map(subLink => (
                         <li key={subLink.id}>
                           <ScrollLink
                             spy={true}
                             smooth={true}
-                            to={subLink.url.startsWith('#') ? subLink.url.substring(1) : subLink.url} offset={-64}
+                            to={subLink.href.startsWith('#') ? subLink.href.substring(1) : subLink.href} offset={-64}
                             duration={500}
                             className="block px-4 py-2 text-sm text-primary hover:bg-gray-100 rounded-md cursor-pointer normal-case font-medium"
-                            onClick={() => setActiveService(subLink.identifier)}
+                            onClick={() => subLink.itemId ? setActiveService(subLink.itemId) : setActiveService("")}
                           >
                             {subLink.label}
                           </ScrollLink>
@@ -62,23 +55,23 @@ const Header = ({ navigationLinks }: { navigationLinks: NavigationLink[] }) => {
                   </div>
                 </li>
               ) : (
-                  <li key={navItem.id} className="text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
-                    {navItem.url.startsWith('/') ? (
-                      <Link href={navItem.url} className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
-                        {navItem.label}
-                      </Link>
-                    ) : (
-                      <ScrollLink
-                        spy={true}
-                        smooth={true}
-                        to={navItem.url.startsWith('#') ? navItem.url.substring(1) : navItem.url} offset={-64}
-                        duration={500}
-                        className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left [&.is-active]:after:scale-x-100"
-                        activeClass="text-accent is-active">
-                        {navItem.label}
-                      </ScrollLink>
-                    )}
-                  </li>
+                <li key={navItem.id} className="text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
+                  {navItem?.href?.startsWith('/') ? (
+                    <Link href={navItem.href} className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+                      {navItem.label}
+                    </Link>
+                  ) : (
+                    <ScrollLink
+                      spy={true}
+                      smooth={true}
+                      to={navItem.href.startsWith('#') ? navItem.href.substring(1) : navItem.href} offset={-64}
+                      duration={500}
+                      className="cursor-pointer relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-accent after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left [&.is-active]:after:scale-x-100"
+                      activeClass="text-accent is-active">
+                      {navItem.label}
+                    </ScrollLink>
+                  )}
+                </li>
               )
             ))}
           </ul>
@@ -90,7 +83,7 @@ const Header = ({ navigationLinks }: { navigationLinks: NavigationLink[] }) => {
 
         {/* Mobile Menu Button */}
         <div className="lg:hidden">
-          <NavMobileMenu navigationLinks={navigationLinks} />
+          <NavMobileMenu navigationLinks={data} />
         </div>
       </div>
 

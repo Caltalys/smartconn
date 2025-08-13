@@ -55,6 +55,19 @@ export interface Media extends StrapiEntity {
   provider_metadata: any
 }
 
+export interface LinkItem extends StrapiComponent {
+  label: string;
+  href: string;
+  isInternal: boolean
+  itemId?: string
+  submenus: LinkItem[];
+}
+
+
+export interface HeaderSection extends StrapiComponent {
+  menus: LinkItem[];
+}
+
 export interface LandingPage extends StrapiComponent {
   heroSection?: HeroSection;
   aboutSection?: AboutSection;
