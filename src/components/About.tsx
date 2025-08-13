@@ -24,7 +24,7 @@ const About = () => {
             <div className="relative w-full max-w-md xl:w-full xl:max-w-none aspect-[4/3]">
               <div className="flex w-full h-full bg-secondary absolute -top-3 -left-3 -z-10 rounded-md"></div>
               <Image
-                src={"/shark-ana.jpg"}
+                src={"/about.jpeg"}
                 alt={t('subtitle')}
                 fill
                 sizes="(max-width: 768px) 90vw, (max-width: 1279px) 448px, 40vw"
