@@ -7,8 +7,9 @@ import Image from "next/image";
 import SmartButton from "./SmartButton";
 import { motion } from "framer-motion";
 import { useServiceContext } from "@/context/ServiceContext";
+import { ServicesSection } from "@/lib/types";
 
-const Services = () => {
+const Services = ({ data }: { data?: ServicesSection }) => {
   const t = useTranslations('services');
   const tCommon = useTranslations('common');
   const { activeService, setActiveService } = useServiceContext();
@@ -31,7 +32,7 @@ const Services = () => {
   return (
     <motion.section
       id="services"
-      className="py-16 xl:py-32 bg-primary/5"
+      className="py-16 xl:py-32 bg-primary/10"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}

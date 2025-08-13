@@ -57,6 +57,9 @@ export interface Media extends StrapiEntity {
 
 export interface LandingPage extends StrapiComponent {
   heroSection?: HeroSection;
+  aboutSection?: AboutSection;
+  servicesSection?: ServicesSection;
+
 }
 
 export interface HeroSection extends StrapiComponent {
@@ -67,6 +70,35 @@ export interface HeroSection extends StrapiComponent {
   cta: Cta | null;
   image: Media | null;
 }
+
+export interface AboutSection extends StrapiComponent {
+  title: string;
+  heading: string;
+  subtitle: string;
+  description?: string;
+  cta: Cta | null;
+  image: Media | null;
+}
+
+export interface ServicesSection extends StrapiComponent {
+  title: string;
+  heading: string;
+  subtitle: string;
+  description?: string;
+  cta: Cta | null;
+  image: Media | null;
+  items: ServiceItem[] | null;
+}
+
+export interface ServiceItem extends StrapiComponent {
+  title: string;
+  subtitle: string;
+  description?: string;
+  cta: Cta | null;
+  image: Media | null;
+  itemId?: string;
+}
+
 export interface Cta {
   id: number
   label: string

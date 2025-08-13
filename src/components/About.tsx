@@ -6,8 +6,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Pretitle from "./Pretitle";
 import { RiArrowRightUpLine } from "react-icons/ri";
+import { AboutSection } from "@/lib/types";
 
-const About = () => {
+const About = ({ data }: { data?: AboutSection }) => {
   const t = useTranslations('about_us');
 
   return (

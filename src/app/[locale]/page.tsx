@@ -15,6 +15,9 @@ export default async function Page({ params: { locale } }: BaseProps) {
     getLandingPage(locale),
   ]);
   const heroSection = landingPageResponse?.heroSection;
+  const aboutSection = landingPageResponse?.aboutSection;
+  const servicesSection = landingPageResponse?.servicesSection;
+
 
 
   return (
@@ -24,8 +27,8 @@ export default async function Page({ params: { locale } }: BaseProps) {
         {/* <Header /> */}
         <main>
           <Hero data={heroSection}/>
-          <About />
-          <Services />
+          <About data={aboutSection}/>
+          <Services data={servicesSection}/>
           <WhyChooseUs />
           {/* <Stats /> */}
           {/* <Works /> */}

@@ -32,7 +32,6 @@ const itemVariants: Variants = {
 
 const Hero = ({ data }: { data?: HeroSection }) => {
   const t = useTranslations('hero');
-  console.log(data);
   const heading = data?.heading || t("title");
   const subtitle = data?.subtitle || t("subtitle");
   const description = data?.description || t("description");
@@ -40,7 +39,6 @@ const Hero = ({ data }: { data?: HeroSection }) => {
   const imageUrl = data?.image?.url
     ? `${process.env.NEXT_PUBLIC_STRAPI_FILE_URL}${data.image.url}`
     : "/hero.jpg";
-    console.log(imageUrl);
   const imageAlt = data?.image?.alternativeText || subtitle;
   
   return (
