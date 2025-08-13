@@ -29,7 +29,16 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
     const populateList = [
         'heroSection',
         'heroSection.image',
-        'heroSection.cta'];
+        'heroSection.cta',
+        'aboutSection',
+        'aboutSection.image',
+        'aboutSection.cta',
+        'servicesSection',
+        'servicesSection.image',
+        'servicesSection.cta',
+        'servicesSection.items',
+        'servicesSection.items.image',
+        'servicesSection.items.cta'];
     const response = await client.find({
         populate: populateList
     });
