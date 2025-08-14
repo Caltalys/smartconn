@@ -21,6 +21,14 @@ interface UnifiedServiceItem {
   ctaLabel: string;
 }
 
+interface StaticServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  url: string;
+}
+
 const Services = ({ data }: { data?: ServicesSection }) => {
   const t = useTranslations('services');
   const tCommon = useTranslations('common');
@@ -43,7 +51,7 @@ const Services = ({ data }: { data?: ServicesSection }) => {
         ctaHref: item.href || '#',
         ctaLabel: item.label || tCommon('more'),
       }))
-    : (t.raw('items') as any[]).map((item, index) => ({
+    : (t.raw('items') as StaticServiceItem[]).map((item, index) => ({
         id: item.id || index,
         title: item.title,
         description: item.description,

@@ -85,7 +85,14 @@ export const getArticleBySlug = async (slug: string, locale: string): Promise<Ar
     const client = getStrapiClient(locale).collection('articles');
     const articles = await client.find({
         filters: { slug: { $eq: slug } },
-        populate: ['cover', 'category', 'author', 'blocks'],
+        populate: {
+            cover: true,
+            category: true,
+            author: true,
+            blocks: {
+                populate: '*',
+            },
+        },
         pagination: {
             limit: 1
         }

@@ -1,5 +1,9 @@
 
 export interface BaseProps {
+  params: { locale: string };
+}
+
+export interface AsyncBaseProps {
   params: Promise<{ locale: string }>;
 }
 
@@ -51,7 +55,7 @@ export interface Media extends StrapiEntity {
   url: string
   previewUrl: string | null
   provider: string
-  provider_metadata: any
+  provider_metadata: unknown
 }
 
 export interface LinkItem {
@@ -145,7 +149,7 @@ export interface Articles {
 export interface Block {
   __component: string;
   id: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface Article extends StrapiEntity {

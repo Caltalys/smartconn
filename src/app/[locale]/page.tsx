@@ -5,10 +5,10 @@ import Services from "@/components/Services"
 import Advantages from "@/components/Advantages"
 import Partners from "@/components/Partners"
 import { getAllArticles, getLandingPage } from "@/lib/api"
-import { BaseProps } from "@/lib/types"
+import { AsyncBaseProps } from "@/lib/types"
 import Blog from "@/components/Blog"
 
-export default async function Page({ params }: BaseProps) {
+export default async function Page({ params }: AsyncBaseProps) {
   const { locale } = await params;
   const [landingPageResponse, articlesResponse] = await Promise.all([
     getLandingPage(locale),

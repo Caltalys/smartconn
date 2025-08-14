@@ -6,13 +6,12 @@ import ArticleCard from '@/components/blog/ArticleCard';
 import Pretitle from '@/components/Pretitle';
 
 interface BlogPageProps {
-    params: { locale: string };
-    searchParams?: {
-        page?: string;
-    };
+    params: Promise<{ locale: string }>;
+    searchParams?: Promise<{ page?: string }>;
 }
 
-export async function generateMetadata({ params: { locale } }: BlogPageProps) {
+export async function generateMetadata({ params }: BlogPageProps) {
+    const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'blog' });
     return {
         title: t('title'),
@@ -20,10 +19,12 @@ export async function generateMetadata({ params: { locale } }: BlogPageProps) {
     };
 }
 
-export default async function BlogPage({ params: { locale }, searchParams }: BlogPageProps) {
+export default async function BlogPage({ params, searchParams }: BlogPageProps) {
+    const { locale } = await params;
+    const sp = searchParams ? await searchParams : {};
     const t = await getTranslations({ locale, namespace: 'blog' });
     const tNav = await getTranslations({ locale, namespace: 'navigation' });
-    const currentPage = Number(searchParams?.page) || 1;
+    const currentPage = Number(sp?.page) || 1;
     const articlesPerPage = 6;
 
     const articlesResponse = await getAllArticles(locale, {

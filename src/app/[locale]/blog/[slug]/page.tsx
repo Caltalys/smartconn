@@ -1,5 +1,6 @@
 import { getArticleBySlug } from '@/lib/api';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { getStrapiMedia } from '@/lib/utils';
@@ -11,28 +12,34 @@ import { Button } from '@/components/ui/button';
 import { RiArrowLeftLine } from 'react-icons/ri';
 
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     slug: string;
     locale: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params: { slug, locale } }: ArticlePageProps) {
+export async function generateMetadata(
+  { params }: ArticlePageProps
+): Promise<Metadata> {
+  const { slug, locale } = await params; 
   const article = await getArticleBySlug(slug, locale);
+
   if (!article) {
     return {};
   }
+
   return {
     title: article.title,
     description: article.description,
   };
 }
 
-export default async function ArticlePage({ params: { slug, locale } }: ArticlePageProps) {
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  const { slug, locale } = await params;
   const article = await getArticleBySlug(slug, locale);
   const t = await getTranslations({ locale, namespace: 'blog' });
   const tNav = await getTranslations({ locale, namespace: 'navigation' });
-
+  
   if (!article) {
     notFound();
   }
@@ -90,4 +97,3 @@ export default async function ArticlePage({ params: { slug, locale } }: ArticleP
     </main>
   );
 }
-
