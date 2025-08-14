@@ -22,7 +22,7 @@ const About = ({ data }: { data?: AboutSection }) => {
   return (
     <motion.section
       id="about"
-      className="py-16 xl:py-32"
+      className="py-12 xl:py-16"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}

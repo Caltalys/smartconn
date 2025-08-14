@@ -13,34 +13,46 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { PartnerSection } from '@/lib/types';
+import { getStrapiMedia } from '@/lib/utils';
 
 const staticPartners = [
-    { name: 'Adsolutions', logo: '/partners/adsolution.png', href: 'https://adsolutions.vn' },
-    { name: 'Gemate', logo: '/partners/gemate.png', href: 'https://gemate.vn' },
-    { name: 'WeAngels', logo: '/partners/weangels.jpeg', href: 'https://weangels.vn' },
-    { name: 'M&A', logo: '/partners/ma-vietnam.png', href: 'https://mavietnam.vn' },
-    { name: 'ThinhTien', logo: '/partners/thinhtien.jpg', href: '#' },
-    { name: 'TeamKCN', logo: '/partners/teamkcn.jpg', href: 'https://teamkcn.vn' },
-    { name: 'GFT', logo: '/partners/gft.jpg', href: '#' },
+    { name: 'Adsolutions', alt: 'Adsolutions', logo: '/partners/adsolution.png', href: 'https://adsolutions.vn' },
+    { name: 'Gemate', alt: 'Gemate', logo: '/partners/gemate.png', href: 'https://gemate.vn' },
+    { name: 'WeAngels', alt: 'WeAngels', logo: '/partners/weangels.jpeg', href: 'https://weangels.vn' },
+    { name: 'M&A', alt: 'M&A', logo: '/partners/ma-vietnam.png', href: 'https://mavietnam.vn' },
+    { name: 'ThinhTien', alt: 'ThinhTien', logo: '/partners/thinhtien.jpg', href: '#' },
+    { name: 'TeamKCN', alt: 'TeamKCN', logo: '/partners/teamkcn.jpg', href: 'https://teamkcn.vn' },
+    { name: 'GFT', alt: 'GFT' , logo: '/partners/gft.jpg', href: '#' },
 ];
 
 const Partners = ({ data }: { data?: PartnerSection }) => {
     const t = useTranslations('why_choose_us');
     
     const title = data?.base?.title || t('partners_title');
-    const partners = data?.items?.map(p => {
-        const staticPartner = staticPartners.find(sp => sp.name.toLowerCase() === (p.label || p.heading || '').toLowerCase());
-        return {
-            name: p.heading || p.label || 'Partner',
-            logo: staticPartner ? staticPartner.logo : `/partners/${(p.label || p.heading || '').toLowerCase()}.png`,
-            href: p.href || '#',
-        };
-    }) || staticPartners;
+    const hasDynamicPartners = data?.items && data.items.length > 0;
+
+    const partners = hasDynamicPartners
+        ? data.items.map(p => {
+            const name = p.heading || p.label || 'Partner';
+            const staticPartner = staticPartners.find(sp => sp.name.toLowerCase() === name.toLowerCase());
+            
+            const logoUrl = (p.image?.url && getStrapiMedia(p.image.url)) 
+                || staticPartner?.logo 
+                || `/partners/${name.toLowerCase().replace(/\s/g, '-')}.png`;
+
+            return {
+                name: name,
+                logo: logoUrl,
+                href: p.href || '#',
+                alt: p.image?.alternativeText || name,
+            };
+        }) 
+        : staticPartners;
     
     return (
         <motion.section
             id="partners"
-            className="pt-20 pb-16 xl:pb-32"
+            className="py-12 xl:py-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -65,7 +77,7 @@ const Partners = ({ data }: { data?: PartnerSection }) => {
                                     <Link href={partner.href} target="_blank" rel="noopener noreferrer" className="relative h-32 w-full flex items-center justify-center group">
                                         <Image
                                             src={partner.logo}
-                                            alt={partner.name}
+                                            alt={partner.alt || partner.name}
                                             fill
                                             className="object-contain transition-transform duration-300 group-hover:scale-110"
                                             sizes="128px"

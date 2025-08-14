@@ -31,7 +31,7 @@ const Advantages = ({ data }: { data?: AdvantagesSection }) => {
     return (
         <motion.section
             id="advantages"
-            className="pt-16 xl:pt-32"
+            className="py-12 xl:py-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}

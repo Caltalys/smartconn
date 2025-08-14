@@ -57,6 +57,7 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
         'partnerSection.base',
         'partnerSection.base.ctas',
         'partnerSection.items',
+        'partnerSection.items.image',
         ];
     const response = await client.find({
         populate: populateList
@@ -65,13 +66,16 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
     return response.data as unknown as LandingPage;  
 };
 
-export const getAllArticles = async (locale: string): Promise<Articles> => {
+export const getAllArticles = async (
+    locale: string,
+    { page = 1, pageSize = 10 }: { page?: number; pageSize?: number } = {}
+): Promise<Articles> => {
     const client = getStrapiClient(locale).collection('articles');
     const response = await client.find({
         populate: ['cover', 'category', 'author'],
         sort: 'publishedAt:desc',
+        pagination: { page, pageSize },
     });
-    console.log(response);
     return response as unknown as Articles;
 };
 

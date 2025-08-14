@@ -5,21 +5,22 @@ import Hero from "@/components/Hero"
 import Services from "@/components/Services"
 import Advantages from "@/components/Advantages"
 import Partners from "@/components/Partners"
-import { getLandingPage } from "@/lib/api"
-import { BaseProps } from "@/lib/types"
+import { getAllArticles, getLandingPage } from "@/lib/api"
+import { Article, BaseProps } from "@/lib/types"
 import Blog from "@/components/Blog"
 
 export default async function Page({ params }: BaseProps) {
   const { locale } = await params;
-  const [landingPageResponse] = await Promise.all([
+  const [landingPageResponse, articlesResponse] = await Promise.all([
     getLandingPage(locale),
+    getAllArticles(locale, { pageSize: 3 }),
   ]);
   const heroSection = landingPageResponse?.heroSection;
   const aboutSection = landingPageResponse?.aboutSection;
   const servicesSection = landingPageResponse?.servicesSection;
   const advantagesSection = landingPageResponse?.advantagesSection;
   const partnerSection = landingPageResponse?.partnerSection;
-  const headerSection = landingPageResponse?.headerSection;
+  const articles = articlesResponse?.data;
 
   return (
     <>
@@ -35,7 +36,7 @@ export default async function Page({ params }: BaseProps) {
           {/* <Works /> */}
           {/* <Testimonials /> */}
           {/* <Faq /> */}
-          <Blog />
+          <Blog articles={articles} />
           {/* <Gallery /> */}
         </main>
         {/* <Footer /> */}

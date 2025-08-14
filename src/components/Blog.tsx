@@ -1,12 +1,14 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Pretitle from './Pretitle';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
 import Image from 'next/image';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { Article } from '@/lib/types';
+import { getStrapiMedia } from '@/lib/utils';
 
 // Define the type for a blog post item
 type BlogPost = {
@@ -18,14 +20,31 @@ type BlogPost = {
     slug: string;
 };
 
-const Blog = () => {
+const Blog = ({ articles }: { articles?: Article[] }) => {
     const t = useTranslations('blog');
-    const items: BlogPost[] = t.raw('items');
+    const locale = useLocale();
+
+    const hasArticles = articles && articles.length > 0;
+
+    const items: BlogPost[] = hasArticles
+        ? articles.map(article => ({
+            slug: article.slug,
+            title: article.title,
+            description: article.description,
+            image: (article.cover?.url && getStrapiMedia(article.cover.url)) || '/post-placeholder.jpg',
+            category: article.category?.name || 'Uncategorized',
+            date: article.publishedAt ? new Date(article.publishedAt).toLocaleDateString(locale, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            }) : 'No date',
+        }))
+        : (t.raw('items') as BlogPost[]);
 
     return (
         <motion.section
             id="blog"
-            className="py-16 xl:py-32"
+            className="py-12 xl:py-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -72,6 +91,11 @@ const Blog = () => {
                             </CardFooter>
                         </Card>
                     ))}
+                </div>
+                <div className="text-center mt-12">
+                    <Link href="/blog">
+                        <Button variant="default">{t('viewAllArticles')}</Button>
+                    </Link>
                 </div>
             </div>
         </motion.section>

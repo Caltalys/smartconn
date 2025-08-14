@@ -56,7 +56,7 @@ const Services = ({ data }: { data?: ServicesSection }) => {
   return (
     <motion.section
       id="services"
-      className="py-16 xl:py-32 bg-primary/10"
+      className="py-12 xl:py-16 bg-primary/10"
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
