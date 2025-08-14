@@ -1,6 +1,5 @@
 'use client';
 
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
@@ -10,11 +9,14 @@ import { RiMenu3Fill, RiArrowDownSLine } from "react-icons/ri";
 import Social from "./Social";
 import { useServiceContext } from "@/context/ServiceContext";
 import { HeaderSection } from "@/lib/types";
+import { Link, usePathname } from "@/i18n/navigation";
 
 const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection }) => {
+    console.log(navigationLinks);
     const [isOpen, setIsOpen] = useState(false);
-    const [isServicesOpen, setServicesOpen] = useState(false);
+    const [openMenuId, setOpenMenuId] = useState<number | null>(null);
     const { setActiveService } = useServiceContext();
+    const pathname = usePathname();
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -37,13 +39,13 @@ const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection })
                                 <li key={navItem.id} className="flex flex-col items-center gap-4">
                                     <div
                                         className="text-sm uppercase font-semibold tracking-[1.2px] flex items-center gap-2 cursor-pointer"
-                                        onClick={() => setServicesOpen(!isServicesOpen)}
+                                        onClick={() => setOpenMenuId(openMenuId === navItem.id ? null : navItem.id)}
                                     >
                                         <span>{navItem.label}</span>
-                                        <RiArrowDownSLine className={`transition-transform duration-300 ${isServicesOpen ? 'rotate-180' : ''}`} />
+                                        <RiArrowDownSLine className={`transition-transform duration-300 ${openMenuId === navItem.id ? 'rotate-180' : ''}`} />
                                     </div>
                                     <AnimatePresence>
-                                        {isServicesOpen && (
+                                        {openMenuId === navItem.id && (
                                             <motion.ul
                                                 initial={{ height: 0, opacity: 0, marginTop: 0 }}
                                                 animate={{ height: 'auto', opacity: 1, marginTop: '0.5rem' }}
@@ -52,21 +54,31 @@ const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection })
                                             >
                                                 {navItem.submenus.map(subLink => (
                                                     <li key={subLink.id} className="text-xs normal-case font-medium">
-                                                        <ScrollLink
-                                                            spy={true}
-                                                            smooth={true}
-                                                            to={subLink.href.startsWith('#') ? subLink.href.substring(1) : subLink.href} offset={-64}
-                                                            duration={500}
-                                                            className="cursor-pointer"
-                                                            activeClass="text-accent"
-                                                            onClick={() => {
-                                                                if (subLink.id) {
-                                                                    setActiveService(subLink.id.toString());
-                                                                }
-                                                                setIsOpen(false);
-                                                            }}>
-                                                            {subLink.label}
-                                                        </ScrollLink>
+                                                        {subLink.href.startsWith('/') ? (
+                                                            <Link
+                                                                href={subLink.href}
+                                                                className={`cursor-pointer ${pathname === subLink.href ? 'text-accent' : ''}`}
+                                                                onClick={() => setIsOpen(false)}
+                                                            >
+                                                                {subLink.label}
+                                                            </Link>
+                                                        ) : (
+                                                            <ScrollLink
+                                                                spy={true}
+                                                                smooth={true}
+                                                                to={subLink.href.startsWith('#') ? subLink.href.substring(1) : subLink.href} offset={-64}
+                                                                duration={500}
+                                                                className="cursor-pointer"
+                                                                activeClass="text-accent"
+                                                                onClick={() => {
+                                                                    if (subLink.id) {
+                                                                        setActiveService(subLink.id.toString());
+                                                                    }
+                                                                    setIsOpen(false);
+                                                                }}>
+                                                                {subLink.label}
+                                                            </ScrollLink>
+                                                        )}
                                                     </li>
                                                 ))}
                                             </motion.ul>
@@ -78,7 +90,7 @@ const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection })
                                     {navItem.href.startsWith('/') ? (
                                         <Link
                                             href={navItem.href}
-                                            className="cursor-pointer"
+                                            className={`cursor-pointer ${pathname === navItem.href ? 'text-accent' : ''}`}
                                             onClick={() => setIsOpen(false)}
                                         >
                                             {navItem.label}
