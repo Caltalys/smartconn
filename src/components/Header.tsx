@@ -35,7 +35,7 @@ const Header = ({ data }: { data?: HeaderSection }) => {
                   </ScrollLink>
                   <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-300" />
                   {/* Dropdown menu */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-100 bg-white shadow-lg rounded-md p-2 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50">
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-max bg-white shadow-lg rounded-md p-2 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50">
                     <ul className="space-y-1">
                       {navItem.submenus.map(subLink => (
                         <li key={subLink.id}>
@@ -45,7 +45,7 @@ const Header = ({ data }: { data?: HeaderSection }) => {
                             to={subLink.href.startsWith('#') ? subLink.href.substring(1) : subLink.href} offset={-64}
                             duration={500}
                             className="block px-4 py-2 text-sm text-primary hover:bg-gray-100 rounded-md cursor-pointer normal-case font-medium"
-                            onClick={() => subLink.itemId ? setActiveService(subLink.itemId) : setActiveService("")}
+                            onClick={() => subLink.id ? setActiveService(subLink.id.toString()) : setActiveService("")}
                           >
                             {subLink.label}
                           </ScrollLink>

@@ -29,6 +29,7 @@ export const getHeaderSection = async (locale: string): Promise<LandingPage> => 
     const populateList = [
         'headerSection.navbar',
         'headerSection.navbar.menus',
+        'headerSection.navbar.menus.submenus',
     ];
     const response = await client.find({
         populate: populateList
@@ -41,6 +42,7 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
     const populateList = [
         'headerSection.navbar',
         'headerSection.navbar.menus',
+        'headerSection.navbar.menus.submenus',
         'heroSection.base',
         'heroSection.base.ctas',
         'heroSection.image',

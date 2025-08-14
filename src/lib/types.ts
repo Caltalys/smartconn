@@ -58,8 +58,8 @@ export interface LinkItem {
   id: number;
   label: string;
   href: string;
-  isInternal?: boolean;
-  itemId?: string;
+  heading: string;
+  target?: string;
   submenus?: LinkItem[];
 }
 

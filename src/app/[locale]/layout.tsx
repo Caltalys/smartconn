@@ -40,7 +40,7 @@ export default async function LocaleLayout({
     getHeaderSection(locale),
   ]);
   const headerSection = landingPageResponse?.headerSection;
-
+  console.log(headerSection);
   const messages = await getMessages();
 
   return (
