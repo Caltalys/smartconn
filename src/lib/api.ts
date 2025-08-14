@@ -64,7 +64,7 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
     const response = await client.find({
         populate: populateList
     });
-    console.log(response);
+    //console.log(response);
     return response.data as unknown as LandingPage;  
 };
 
