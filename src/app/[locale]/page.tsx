@@ -1,12 +1,11 @@
 import About from "@/components/About"
 import BackToTopButton from "@/components/BackToTopButton"
-import Header from "@/components/Header"
 import Hero from "@/components/Hero"
 import Services from "@/components/Services"
 import Advantages from "@/components/Advantages"
 import Partners from "@/components/Partners"
 import { getAllArticles, getLandingPage } from "@/lib/api"
-import { Article, BaseProps } from "@/lib/types"
+import { BaseProps } from "@/lib/types"
 import Blog from "@/components/Blog"
 
 export default async function Page({ params }: BaseProps) {

@@ -60,7 +60,9 @@ const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection })
                                                             className="cursor-pointer"
                                                             activeClass="text-accent"
                                                             onClick={() => {
-                                                                subLink.itemId && setActiveService(subLink.itemId);
+                                                                if (subLink.id) {
+                                                                    setActiveService(subLink.id.toString());
+                                                                }
                                                                 setIsOpen(false);
                                                             }}>
                                                             {subLink.label}

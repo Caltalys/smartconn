@@ -1,6 +1,6 @@
 // lib/api.ts
 import { strapi, type StrapiClient } from "@strapi/client";
-import type { Article, Articles, HeaderSection, LandingPage } from "./types";
+import type { Article, Articles, LandingPage } from "./types";
 
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 const strapiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;

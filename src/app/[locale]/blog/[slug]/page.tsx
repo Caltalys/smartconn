@@ -1,14 +1,14 @@
-import { getArticleBySlug, getAllArticles } from "@/lib/api";
-import { getTranslations } from "next-intl/server";
-import { notFound } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import { getStrapiMedia } from "@/lib/utils";
-import { formatDate } from "@/lib/format-date";
-import BlockRenderer from "@/components/blog/BlockRenderer";
-import Breadcrumbs from "@/components/Breadcrumbs";
-import { Article } from "@/lib/types";
-import { Metadata } from "next";
+import { getArticleBySlug } from '@/lib/api';
+import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
+import { getStrapiMedia } from '@/lib/utils';
+import { formatDate } from '@/lib/format-date';
+import BlockRenderer from '@/components/blog/BlockRenderer';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { RiArrowLeftLine } from 'react-icons/ri';
 
 interface ArticlePageProps {
   params: {
@@ -17,113 +17,77 @@ interface ArticlePageProps {
   };
 }
 
-export async function generateStaticParams({ params: { locale } }: { params: { locale: string } }) {
-  const articlesResponse = await getAllArticles(locale);
-  return articlesResponse.data.map((article: any) => ({
-    slug: article.slug,
-  }));
-}
-
-export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
-  const { slug, locale } = params;
-  const article: Article | null = await getArticleBySlug(slug, locale);
-  if (!article) return { title: "Article Not Found" };
-
-  const imageUrl = getStrapiMedia(article.cover?.url);
-
+export async function generateMetadata({ params: { slug, locale } }: ArticlePageProps) {
+  const article = await getArticleBySlug(slug, locale);
+  if (!article) {
+    return {};
+  }
   return {
     title: article.title,
     description: article.description,
-    openGraph: {
-      title: article.title,
-      description: article.description,
-      url: `/${locale}/blog/${slug}`,
-      images: imageUrl ? [{ url: imageUrl, width: article.cover?.width, height: article.cover?.height }] : [],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: article.title,
-      description: article.description,
-      images: imageUrl ? [imageUrl] : [],
-    },
   };
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { slug, locale } = params;
-  const tBlog = await getTranslations({ locale, namespace: "blog" });
-  const tNav = await getTranslations({ locale, namespace: "navigation" });
+export default async function ArticlePage({ params: { slug, locale } }: ArticlePageProps) {
+  const article = await getArticleBySlug(slug, locale);
+  const t = await getTranslations({ locale, namespace: 'blog' });
+  const tNav = await getTranslations({ locale, namespace: 'navigation' });
 
-  const article: Article | null = await getArticleBySlug(slug, locale);
   if (!article) {
     notFound();
   }
 
+  const imageUrl = getStrapiMedia(article.cover?.url);
+
   const breadcrumbItems = [
-    { label: tNav('home'), href: `/${locale}` },
-    { label: tNav('blog'), href: `/${locale}/blog` },
+    { label: tNav('home'), href: '/' },
+    { label: t('title'), href: '/blog' },
+    { label: article.title }
   ];
 
-  if (article.category) {
-    breadcrumbItems.push({
-      label: article.category.name,
-      href: `/${locale}/blog/category/${article.category.slug}`,
-    });
-  }
-
-  breadcrumbItems.push({
-    label: article.title,
-    href: `/${locale}/blog/${slug}`,
-  });
-
-  const imageUrl = getStrapiMedia(article.cover?.url);
-  const categoryUrl = article.category ? `/${locale}/blog/category/${article.category.slug}` : `/${locale}/blog`;
-
   return (
-    <main className="container mx-auto px-6 py-12 md:py-20 flex-grow">
-      <div className="max-w-4xl mx-auto">
-        <Breadcrumbs items={breadcrumbItems} />
-        <article className="prose lg:prose-xl max-w-none dark:prose-invert">
-        <div className="mb-8 border-b pb-8 dark:border-gray-700">
-          {article.category && (
-            <Link href={categoryUrl} className="text-primary font-semibold uppercase tracking-wide no-underline hover:underline">
-              {article.category.name}
-            </Link>
+    <main className="py-12 xl:py-16">
+      <div className="container mx-auto px-6 max-w-4xl">
+        <article>
+          <header className="mb-8">
+            <Breadcrumbs items={breadcrumbItems} />
+            <h1 className="mb-4 text-4xl md:text-5xl font-extrabold leading-tight text-gray-900 dark:text-white">
+              {article.title}
+            </h1>
+            <div className="text-gray-500 dark:text-gray-400">
+              <span>{formatDate(article.publishedAt, locale)}</span>
+              {article.author && <span> &bull; By {article.author.name}</span>}
+            </div>
+          </header>
+
+          {imageUrl && (
+            <div className="relative w-full h-96 mb-8 rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src={imageUrl}
+                alt={article.cover?.alternativeText || article.title}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
           )}
-          <h1 className="mt-2 mb-4 text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white">
-            {article.title}
-          </h1>
-          <p className="text-lg text-muted-foreground mt-0">
-            {article.description}
-          </p>
-          <div className="mt-6 flex items-center text-sm text-muted-foreground">
-            <time dateTime={article.publishedAt ?? ""}>
-              {formatDate(article.publishedAt, locale)}
-            </time>
+
+          <div className="prose prose-lg dark:prose-invert max-w-none">
+            <p className="lead text-xl font-medium">{article.description}</p>
+            {article.blocks && <BlockRenderer blocks={article.blocks} />}
           </div>
-        </div>
 
-        {imageUrl && (
-          <div className="relative w-full aspect-video my-8 rounded-lg overflow-hidden shadow-lg">
-            <Image
-              src={imageUrl}
-              alt={article.cover?.alternativeText || article.title}
-              fill
-              className="object-cover"
-              priority
-            />
+          <div className="mt-12 text-center">
+            <Link href="/blog">
+              <Button variant="outline">
+                <RiArrowLeftLine className="mr-2 h-4 w-4" />
+                {t('back_to_blog')}
+              </Button>
+            </Link>
           </div>
-        )}
-
-        {article.blocks && <BlockRenderer blocks={article.blocks} />}
-
-        <div className="mt-12 pt-8 border-t dark:border-gray-700">
-            <Link href={`/${locale}/blog`} className="text-primary hover:underline no-underline font-semibold">
-              &larr; {tBlog("back_to_blog")}
-          </Link>
-        </div>
-      </article>
+        </article>
       </div>
     </main>
   );
 }
+

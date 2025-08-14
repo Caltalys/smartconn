@@ -1,4 +1,3 @@
-import { strapi } from "@/lib/api/client";
 import { z } from "zod";
 import { getStrapiClient } from "../api";
 

@@ -1,5 +1,4 @@
 import { getAllCategories } from "@/lib/api";
-import { Category } from "@/lib/types";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 

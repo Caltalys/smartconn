@@ -5,12 +5,6 @@ import Logo from './Logo';
 import Social from './Social';
 import { Link as ScrollLink } from 'react-scroll';
 import { RiMapPin2Fill, RiMailFill, RiPhoneFill } from 'react-icons/ri';
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from '@/components/ui/accordion';
 
 const Footer = () => {
     const t = useTranslations('footer');
