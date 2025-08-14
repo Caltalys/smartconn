@@ -5,15 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "./Logo";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RiMenu3Fill, RiArrowDownSLine } from "react-icons/ri";
 import Social from "./Social";
-import { navLinks } from "@/config/navigation";
 import { useServiceContext } from "@/context/ServiceContext";
+import { HeaderSection } from "@/lib/types";
 
-const NavMobileMenu = () => {
-    const t = useTranslations('navigation');
+const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isServicesOpen, setServicesOpen] = useState(false);
     const { setActiveService } = useServiceContext();
@@ -34,14 +32,14 @@ const NavMobileMenu = () => {
                 {/* This nav section now correctly fills the available space and centers the links. */}
                 <nav className="flex-1 flex flex-col items-center justify-center">
                     <ul className="flex flex-col items-center gap-10">
-                        {navLinks.map((link) => (
-                            link.submenu ? (
-                                <li key={link.id} className="flex flex-col items-center gap-4">
+                        {navigationLinks?.navbar?.menus.map((navItem) => (
+                            navItem.submenus && navItem.submenus.length > 0 ? (
+                                <li key={navItem.id} className="flex flex-col items-center gap-4">
                                     <div
                                         className="text-sm uppercase font-semibold tracking-[1.2px] flex items-center gap-2 cursor-pointer"
                                         onClick={() => setServicesOpen(!isServicesOpen)}
                                     >
-                                        <span>{t(link.id)}</span>
+                                        <span>{navItem.label}</span>
                                         <RiArrowDownSLine className={`transition-transform duration-300 ${isServicesOpen ? 'rotate-180' : ''}`} />
                                     </div>
                                     <AnimatePresence>
@@ -52,20 +50,20 @@ const NavMobileMenu = () => {
                                                 exit={{ height: 0, opacity: 0, marginTop: 0 }}
                                                 className="overflow-hidden flex flex-col items-center gap-4"
                                             >
-                                                {link.submenu.map(subLink => (
+                                                {navItem.submenus.map(subLink => (
                                                     <li key={subLink.id} className="text-xs normal-case font-medium">
                                                         <ScrollLink
                                                             spy={true}
                                                             smooth={true}
-                                                            to={subLink.href} offset={-64}
+                                                            to={subLink.href.startsWith('#') ? subLink.href.substring(1) : subLink.href} offset={-64}
                                                             duration={500}
                                                             className="cursor-pointer"
                                                             activeClass="text-accent"
                                                             onClick={() => {
-                                                                setActiveService(subLink.id);
+                                                                subLink.itemId && setActiveService(subLink.itemId);
                                                                 setIsOpen(false);
                                                             }}>
-                                                            {t(`services_submenu.${subLink.id}`)}
+                                                            {subLink.label}
                                                         </ScrollLink>
                                                     </li>
                                                 ))}
@@ -74,25 +72,25 @@ const NavMobileMenu = () => {
                                     </AnimatePresence>
                                 </li>
                             ) : (
-                                <li key={link.id} className="text-sm uppercase font-semibold tracking-[1.2px]">
-                                    {link.href.startsWith('/') ? (
+                                <li key={navItem.id} className="text-sm uppercase font-semibold tracking-[1.2px]">
+                                    {navItem.href.startsWith('/') ? (
                                         <Link
-                                            href={link.href}
+                                            href={navItem.href}
                                             className="cursor-pointer"
                                             onClick={() => setIsOpen(false)}
                                         >
-                                            {t(link.id)}
+                                            {navItem.label}
                                         </Link>
                                     ) : (
                                         <ScrollLink
                                             spy={true}
                                             smooth={true}
-                                            to={link.href} offset={-64}
+                                            to={navItem.href.startsWith('#') ? navItem.href.substring(1) : navItem.href} offset={-64}
                                             duration={500}
                                             className="cursor-pointer"
                                             activeClass="text-accent"
                                             onClick={() => setIsOpen(false)}>
-                                            {t(link.id)}
+                                            {navItem.label}
                                         </ScrollLink>
                                     )}
                                 </li>

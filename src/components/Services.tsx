@@ -1,98 +1,104 @@
+// src/components/Services.tsx
 'use client';
 
 import { useTranslations } from "next-intl";
-import Pretitle from "./Pretitle";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
-import SmartButton from "./SmartButton";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { useServiceContext } from "@/context/ServiceContext";
+import Pretitle from "./Pretitle";
+import { staggerContainer, fadeInUp } from "@/lib/animations";
+import { RiArrowRightUpLine } from "react-icons/ri";
+import { FeatureItem, ServicesSection } from "@/lib/types";
+import { getStrapiMedia } from "@/lib/utils";
 
-const Services = () => {
+interface UnifiedServiceItem {
+  id: string | number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  imageAlt: string;
+  ctaHref: string;
+  ctaLabel: string;
+}
+
+const Services = ({ data }: { data?: ServicesSection }) => {
   const t = useTranslations('services');
   const tCommon = useTranslations('common');
-  const { activeService, setActiveService } = useServiceContext();
 
-  const items = t.raw('items') as { id: string; title: string; description: string; image: string, url: string }[];
+  const title = data?.base?.title || t('title');
+  const subtitle = data?.base?.heading || t('subtitle');
+  
+  const hasServiceItemData = data?.services && data.services.length > 0;
 
-  const defaultTabId = items.length > 0 ? items[0].id : '';
-  const tabValue = activeService && items.some(i => i.id === activeService) ? activeService : defaultTabId;
-
-  if (!items || items.length === 0) {
-    return (
-      <section id="services" className="py-16 xl:py-32 bg-primary/10">
-        <div className="container mx-auto px-6 text-center">
-          <p>No services available at the moment.</p>
-        </div>
-      </section>
-    );
-  }
+  // Chuyển đổi dữ liệu động hoặc tĩnh về một cấu trúc chung
+  const items: UnifiedServiceItem[] = hasServiceItemData
+      ? data!.services!.map((item: FeatureItem) => ({
+        id: item.id,
+        title: item.heading || '',
+        description: item.description || '',
+        imageUrl: item.image?.url
+          ? `${getStrapiMedia(item.image.url)}`
+          : "/service-placeholder.jpg", // Ảnh dự phòng
+        imageAlt: item.image?.alternativeText || item.heading || "Service Image",
+        ctaHref: item.href || '#',
+        ctaLabel: item.label || tCommon('more'),
+      }))
+    : (t.raw('items') as any[]).map((item, index) => ({
+        id: item.id || index,
+        title: item.title,
+        description: item.description,
+        imageUrl: item.image,
+        imageAlt: item.title,
+        ctaHref: item.url,
+        ctaLabel: tCommon('more'),
+      }));
 
   return (
     <motion.section
       id="services"
-      className="py-16 xl:py-32 bg-primary/5"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      className="py-12 xl:py-16 bg-primary/10"
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}>
+    >
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
-          <Pretitle text={t('title')} center={true} />
-          <h2 className="mb-4">{t('subtitle')}</h2>
+          <Pretitle text={title} center/>
+          <h2 className="mb-4">{subtitle}</h2>
         </div>
-        <Tabs
-          value={tabValue}
-          onValueChange={setActiveService}
-          className="w-full flex flex-col lg:flex-row items-start gap-12"
-        >
-          {/* Danh sách các thẻ dịch vụ */}
-          <div className="w-full lg:w-1/3">
-            <TabsList className="flex flex-col w-full h-auto bg-transparent gap-4 rounded-none overflow-hidden">
-              {items.map((item) => (
-                <TabsTrigger key={item.id} value={item.id} className="flex w-full p-4 sm:p-6 border border-primary/20 bg-primary/5 data-[state=active]:bg-secondary/70 data-[state=active]:border-primary/20 data-[state=active]:shadow-lg transition-all duration-300 rounded-lg whitespace-normal">
-                  <div className="w-full h-full flex items-center justify-center lg:justify-start">
-                    <p className="text-sm sm:text-base font-semibold text-primary uppercase text-center lg:text-left">{item.title}</p>
-                  </div>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
-          {/* Phần hiển thị chi tiết dịch vụ */}
-          <div className="w-full lg:w-2/3">
-            {items.map((item) => (
-              <TabsContent value={item.id} key={item.id} className="w-full m-0">
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-center h-full bg-white p-8 rounded-lg shadow-lg border border-primary/10 group">
-                  {/* Image */}
-                  <div 
-                    className="relative w-full h-[300px] xl:h-full min-h-[300px] border-4 overflow-hidden [filter:drop-shadow(0_0_10px_hsl(var(--secondary)))]"
-                  >
-                    <Image
-                      src={item.image}
-                      fill
-                      alt={item.title}
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 1279px) 90vw, 45vw"
-                    />
-                  </div>
-                  {/* Text */}
-                  <div className="text-center xl:text-left">
-                    <h3 className="text-2xl xl:text-3xl font-bold mb-4">{item.title}</h3>
-                    <p className="text-base text-muted-foreground mb-6 whitespace-pre-line">
-                      {item.description}
-                    </p>
-                    <div className="w-full flex xl:items-center justify-center xl:justify-start gap-4">
-                      <SmartButton text={tCommon('more')} href={item.url} />
-                    </div>
-                  </div>
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+          {items.map((item) => (
+            <motion.div
+              key={item.id}
+              variants={fadeInUp}
+              className="flex flex-col items-center text-center bg-white p-8 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300"
+            >
+              <div className="relative w-full aspect-[3/2] xl:aspect-square mb-6">
+                <Image
+                  src={item.imageUrl}
+                  alt={item.imageAlt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover rounded-md"
+                />
+              </div>
+              <h3 className="text-xl font-bold mb-4">{item.title}</h3>
+              <p className="text-justify text-muted-foreground mb-6 flex-grow">{item.description}</p>
+              <Link href={item.ctaHref} className="relative flex items-center justify-center group bg-secondary cursor-pointer w-[180px] h-12 min-w-[180px]">
+                <span className="font-primary font-bold text-primary uppercase text-sm tracking-[1.2px] text-center pl-2 pr-12">
+                  {item.ctaLabel}
+                </span>
+                <div className="absolute top-1/2 -translate-y-1/2 right-1 flex items-center justify-center bg-secondary-foreground w-10 h-10">
+                  <RiArrowRightUpLine className="text-white text-lg group-hover:rotate-45 transition-all duration-300" />
                 </div>
-              </TabsContent>
-            ))}
-          </div>
-        </Tabs>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </motion.section>
-  )
-}
+  );
+};
 
 export default Services;

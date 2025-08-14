@@ -14,6 +14,7 @@
         "testimonials": "Câu Chuyện Thành Công",
         "faq": "Hỏi Đáp",
         "blog": "Bài viết",
+        "categories": "Danh mục bài viết",
         "services_submenu": {
             "training": "Đào tạo & Huấn luyện Doanh nghiệp",
             "it_solutions": "Tư vấn Giải pháp & Thiết bị CNTT",
@@ -47,14 +48,19 @@
             "p1": "Trong hành trình phát triển và định vị là doanh nghiệp tiên phong trong ứng dụng AI vào thực tiễn, Smartcom Solutions chính thức công bố sự đồng hành chiến lược cùng Shark Ana Lê Mỹ Nga – một trong những nhà đầu tư, cố vấn và doanh nhân có ảnh hưởng lớn trong lĩnh vực công nghệ, giáo dục và đổi mới sáng tạo tại Việt Nam.",
             "p2": "Với vai trò Cố vấn chiến lược, Shark Ana mang đến tầm nhìn sâu rộng, đồng thời trực tiếp hỗ trợ Smartcom xây dựng các mô hình tăng trưởng hiệu quả trong các lĩnh vực cốt lõi của doanh nghiệp."
         },
-        "vision": { "title": "Tầm Nhìn", "text": "Trở thành doanh nghiệp hàng đầu tại Việt Nam trong việc cung cấp các giải pháp công nghệ và đào tạo toàn diện, lấy AI làm trọng tâm, giúp các doanh nghiệp tối ưu hóa hiệu suất và phát triển bền vững trong kỷ nguyên số." },
-        "mission": { "title": "Sứ Mệnh", "text": "Cam kết mang đến những sản phẩm, dịch vụ chất lượng cao, tích hợp công nghệ tiên tiến và kiến thức chuyên sâu, nhằm trao quyền cho doanh nghiệp, nâng cao năng lực cạnh tranh và cùng nhau kiến tạo những giá trị vượt trội." }
+        "vision": {
+            "title": "Tầm Nhìn",
+            "text": "Trở thành doanh nghiệp hàng đầu tại Việt Nam trong việc cung cấp các giải pháp công nghệ và đào tạo toàn diện, lấy AI làm trọng tâm, giúp các doanh nghiệp tối ưu hóa hiệu suất và phát triển bền vững trong kỷ nguyên số."
+        },
+        "mission": {
+            "title": "Sứ Mệnh",
+            "text": "Cam kết mang đến những sản phẩm, dịch vụ chất lượng cao, tích hợp công nghệ tiên tiến và kiến thức chuyên sâu, nhằm trao quyền cho doanh nghiệp, nâng cao năng lực cạnh tranh và cùng nhau kiến tạo những giá trị vượt trội."
+        }
     },
     "services": {
         "title": "Dịch Vụ Của Chúng Tôi",
         "subtitle": "Giải Pháp Được Thiết Kế Riêng Cho Doanh Nghiệp Của Bạn",
         "items": [
-            
             {
                 "id": "it_solutions",
                 "title": "Tư vấn giải pháp công nghệ & Phân phối thiết bị CNTT",
@@ -178,35 +184,12 @@
         "subtitle": "Cập Nhật Những Phân Tích Và Xu Hướng Mới Nhất",
         "read_more": "Đọc thêm",
         "back_to_blog": "Quay lại danh sách bài viết",
-        "items": [
-            {
-                "image": "/blog/post-1.jpg",
-                "category": "Chiến lược",
-                "date": "15 tháng 7, 2024",
-                "slug": "5-xu-huong-ai-se-dinh-hinh-doanh-nghiep",
-                "title": "5 Xu Hướng AI Sẽ Định Hình Doanh Nghiệp Trong Năm Tới",
-                "description": "Khám phá cách trí tuệ nhân tạo đang thay đổi cuộc chơi và làm thế nào bạn có thể tận dụng nó để tạo ra lợi thế cạnh tranh.",
-                "content": "Khám phá cách trí tuệ nhân tạo đang thay đổi cuộc chơi và làm thế nào bạn có thể tận dụng nó để tạo ra lợi thế cạnh tranh. Trong bài viết này, chúng tôi khám phá năm xu hướng hàng đầu, từ AI tạo sinh đến an ninh mạng do AI điều khiển, và cung cấp những hiểu biết có thể hành động cho các nhà lãnh đạo doanh nghiệp.\n\nTương lai là ngay bây giờ, và việc hiểu rõ những xu hướng này là rất quan trọng để đi trước trong một bối cảnh số đang phát triển nhanh chóng."
-            },
-            {
-                "image": "/blog/post-2.jpg",
-                "category": "Marketing",
-                "date": "10 tháng 7, 2024",
-                "slug": "xay-dung-pheu-marketing-hieu-qua-cho-b2b",
-                "title": "Xây Dựng Phễu Marketing Hiệu Quả Cho Sản Phẩm B2B",
-                "description": "Hướng dẫn từng bước để tạo ra một phễu marketing chuyển đổi cao, thu hút và nuôi dưỡng khách hàng tiềm năng cho doanh nghiệp B2B.",
-                "content": "Hướng dẫn từng bước để tạo ra một phễu marketing chuyển đổi cao, thu hút và nuôi dưỡng khách hàng tiềm năng cho doanh nghiệp B2B. Chúng tôi đề cập đến mọi thứ từ các chiến dịch nhận thức ở đầu phễu sử dụng content marketing đến các chiến thuật chuyển đổi ở cuối phễu như demo cá nhân hóa và các nghiên cứu điển hình.\n\nTìm hiểu cách lập bản đồ hành trình khách hàng và tối ưu hóa từng giai đoạn để đạt được tác động tối đa."
-            },
-            {
-                "image": "/blog/post-3.jpg",
-                "category": "Công nghệ",
-                "date": "05 tháng 7, 2024",
-                "slug": "an-ninh-mang-cho-doanh-nghiep-vua-va-nho",
-                "title": "An Ninh Mạng Cho Doanh Nghiệp Vừa Và Nhỏ: Những Điều Cần Biết",
-                "description": "Trong thế giới số, bảo mật không còn là một lựa chọn. Tìm hiểu các bước thiết yếu để bảo vệ tài sản số của doanh nghiệp bạn.",
-                "content": "Trong thế giới số, bảo mật không còn là một lựa chọn. Tìm hiểu các bước thiết yếu để bảo vệ tài sản số của doanh nghiệp bạn. Hướng dẫn này phân tích các khái niệm an ninh mạng phức tạp thành các hành động có thể quản lý được cho các Doanh nghiệp Vừa và Nhỏ (SME).\n\nChúng tôi thảo luận về đánh giá rủi ro, đào tạo nhân viên, mã hóa dữ liệu và lập kế hoạch ứng phó sự cố để xây dựng một hệ thống bảo mật vững chắc."
-            }
-        ]
+        "categoriesTitle": "Danh mục Bài viết",
+        "categoriesSubtitle": "Khám phá các bài viết theo từng chủ đề.",
+        "noCategoriesFound": "Không tìm thấy danh mục nào.",
+        "noArticlesFound": "Không tìm thấy bài viết nào.",
+        "viewAllArticles": "Xem tất cả",
+        "items": []
     },
     "gallery": {
         "title": "Thư viện ảnh"

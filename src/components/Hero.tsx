@@ -4,6 +4,8 @@ import { useTranslations } from "next-intl";
 import { motion, Variants } from "framer-motion";
 import SmartButton from "./SmartButton";
 import Image from "next/image";
+import { HeroSection } from "@/lib/types";
+import { getStrapiMedia } from "@/lib/utils";
 
 // Variants for staggered animation
 const containerVariants: Variants = {
@@ -29,9 +31,15 @@ const itemVariants: Variants = {
   },
 };
 
-const Hero = () => {
+const Hero = ({ data }: { data?: HeroSection }) => {
   const t = useTranslations('hero');
-
+  const heading = data?.base?.heading || t("title");
+  const subtitle = data?.base?.subHeading || t("subtitle");
+  const description = data?.base?.description || t("description");
+  const cta = data?.base?.ctas?.[0];
+  const imageUrl = (data?.image?.url && getStrapiMedia(data.image.url)) || "/hero.jpg";
+  const imageAlt = data?.image?.alternativeText || subtitle || "Hero Image";
+  
   return (
     <section
       id="home"
@@ -51,25 +59,29 @@ const Hero = () => {
             animate="visible"
           >
             <motion.h1 variants={itemVariants} className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-              {t('title')}
+              {heading}
             </motion.h1>
             <motion.h1
               className="text-secondary text-4xl sm:text-6xl lg:text-7xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
               variants={itemVariants}
             >
-              {t('subtitle')}
+              {subtitle}
             </motion.h1>
             <motion.p
               className="text-white max-w-lg lg:text-lg"
               variants={itemVariants}
             >
-              {t('description')}
+              {description}
             </motion.p>
             <motion.div
               className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
               variants={itemVariants}
             >
-              <SmartButton text={t('services')} href="#services" />
+              {cta ? (
+                <SmartButton text={cta.label} href={cta.href} />
+              ) : (
+                <SmartButton text={t("services")} href="#services" />
+              )}
             </motion.div>
           </motion.div>
 
@@ -86,8 +98,8 @@ const Hero = () => {
               {/* Image container */}
               <div className="relative w-full h-full rounded-md overflow-hidden shadow-2xl">
                 <Image
-                  src={"/hero.jpg"}
-                  alt={t('subtitle')}
+                  src={imageUrl}
+                  alt={imageAlt}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1023px) 80vw, 45vw"
