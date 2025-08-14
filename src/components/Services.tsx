@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import Pretitle from "./Pretitle";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { RiArrowRightUpLine } from "react-icons/ri";
-import { ServiceItem, ServicesSection } from "@/lib/types";
+import { FeatureItem, ServicesSection } from "@/lib/types";
 import { getStrapiMedia } from "@/lib/utils";
 
 interface UnifiedServiceItem {
@@ -25,23 +25,23 @@ const Services = ({ data }: { data?: ServicesSection }) => {
   const t = useTranslations('services');
   const tCommon = useTranslations('common');
 
-  const title = data?.title || t('title');
-  const subtitle = data?.subtitle || t('subtitle');
+  const title = data?.base?.title || t('title');
+  const subtitle = data?.base?.heading || t('subtitle');
   
-  const hasServiceItemData = data?.items && data.items.length > 0;
+  const hasServiceItemData = data?.services && data.services.length > 0;
 
   // Chuyển đổi dữ liệu động hoặc tĩnh về một cấu trúc chung
   const items: UnifiedServiceItem[] = hasServiceItemData
-      ? data!.items!.map((item: ServiceItem) => ({
-        id: item.itemId,
-        title: item.title,
+      ? data!.services!.map((item: FeatureItem) => ({
+        id: item.id,
+        title: item.heading || '',
         description: item.description || '',
         imageUrl: item.image?.url
           ? `${getStrapiMedia(item.image.url)}`
           : "/service-placeholder.jpg", // Ảnh dự phòng
-        imageAlt: item.image?.alternativeText || item.title,
-        ctaHref: item.cta?.href || '#',
-        ctaLabel: item.cta?.label || tCommon('more'),
+        imageAlt: item.image?.alternativeText || item.heading || "Service Image",
+        ctaHref: item.href || '#',
+        ctaLabel: item.label || tCommon('more'),
       }))
     : (t.raw('items') as any[]).map((item, index) => ({
         id: item.id || index,

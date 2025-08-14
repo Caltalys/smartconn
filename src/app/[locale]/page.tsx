@@ -1,40 +1,41 @@
 import About from "@/components/About"
 import BackToTopButton from "@/components/BackToTopButton"
-import Footer from "@/components/Footer"
 import Header from "@/components/Header"
 import Hero from "@/components/Hero"
 import Services from "@/components/Services"
-import Topbar from "@/components/Topbar"
-import WhyChooseUs from "@/components/WhyChooseUs"
-import { getHeaderMenu, getLandingPage } from "@/lib/api"
+import Advantages from "@/components/Advantages"
+import Partners from "@/components/Partners"
+import { getLandingPage } from "@/lib/api"
 import { BaseProps } from "@/lib/types"
+import Blog from "@/components/Blog"
 
-export default async function Page({ params: { locale } }: BaseProps) {
-
-  const [landingPageResponse, getHeaderMenuResponse] = await Promise.all([
+export default async function Page({ params }: BaseProps) {
+  const { locale } = await params;
+  const [landingPageResponse] = await Promise.all([
     getLandingPage(locale),
-    getHeaderMenu(locale),
   ]);
   const heroSection = landingPageResponse?.heroSection;
   const aboutSection = landingPageResponse?.aboutSection;
   const servicesSection = landingPageResponse?.servicesSection;
-  const headerSection = getHeaderMenuResponse;
+  const advantagesSection = landingPageResponse?.advantagesSection;
+  const partnerSection = landingPageResponse?.partnerSection;
+  const headerSection = landingPageResponse?.headerSection;
 
   return (
     <>
       <div className="relative">
-        <Topbar />
-        <Header data={headerSection}/>
+        {/* <Header data={headerSection}/> */}
         <main>
           <Hero data={heroSection}/>
           <About data={aboutSection}/>
           <Services data={servicesSection}/>
-          <WhyChooseUs />
+          <Advantages data={advantagesSection} />
+          <Partners data={partnerSection} />
           {/* <Stats /> */}
           {/* <Works /> */}
           {/* <Testimonials /> */}
           {/* <Faq /> */}
-          {/* <Blog /> */}
+          <Blog />
           {/* <Gallery /> */}
         </main>
         {/* <Footer /> */}

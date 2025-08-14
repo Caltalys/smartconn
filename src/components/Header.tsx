@@ -8,7 +8,7 @@ import NavMobileMenu from "./NavMobileMenu";
 import { useServiceContext } from "@/context/ServiceContext";
 import { HeaderSection } from "@/lib/types";
 
-const Header = ({ data }: { data: HeaderSection }) => {
+const Header = ({ data }: { data?: HeaderSection }) => {
   const { setActiveService } = useServiceContext();
 
   return (
@@ -20,7 +20,7 @@ const Header = ({ data }: { data: HeaderSection }) => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8">
           <ul className="flex items-center">
-            {data?.menus?.map((navItem) => (
+            {data?.navbar?.menus?.map((navItem) => (
               navItem.submenus && navItem.submenus.length > 0 ? (
                 <li key={navItem.id} className="relative group flex items-center gap-1 cursor-pointer text-primary text-sm uppercase font-semibold tracking-[1.2px] after:content-['/'] after:mx-2 last:after:content-none">
                   <ScrollLink

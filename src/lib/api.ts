@@ -24,33 +24,40 @@ export const getStrapiClient = (locale?: string): StrapiClient => {
     });
 };
 
-export const getHeaderMenu = async (locale: string): Promise<HeaderSection> => {
-    const client = getStrapiClient(locale).single('header-menu');
+export const getHeaderSection = async (locale: string): Promise<LandingPage> => {
+    const client = getStrapiClient(locale).single('landing-page');
     const populateList = [
-        'menus',
-        'menus.submenus'];
+        'headerSection.navbar',
+        'headerSection.navbar.menus',
+    ];
     const response = await client.find({
         populate: populateList
     });
-    console.log(response);
-    return response.data as unknown as HeaderSection;  
+    return response.data as unknown as LandingPage;  
 };
 
 export const getLandingPage = async (locale: string): Promise<LandingPage> => {
     const client = getStrapiClient(locale).single('landing-page');
     const populateList = [
-        'heroSection',
+        'headerSection.navbar',
+        'headerSection.navbar.menus',
+        'heroSection.base',
+        'heroSection.base.ctas',
         'heroSection.image',
-        'heroSection.cta',
-        'aboutSection',
-        'aboutSection.image',
-        'aboutSection.cta',
-        'servicesSection',
-        'servicesSection.image',
-        'servicesSection.cta',
-        'servicesSection.items',
-        'servicesSection.items.image',
-        'servicesSection.items.cta'];
+        'aboutSection.base',
+        'aboutSection.base.ctas',
+        'aboutSection.base.image',
+        'servicesSection.base',
+        'servicesSection.base.ctas',
+        'servicesSection.services',
+        'servicesSection.services.image',
+        'advantagesSection.base',
+        'advantagesSection.base.ctas',
+        'advantagesSection.items',
+        'partnerSection.base',
+        'partnerSection.base.ctas',
+        'partnerSection.items',
+        ];
     const response = await client.find({
         populate: populateList
     });
@@ -64,6 +71,7 @@ export const getAllArticles = async (locale: string): Promise<Articles> => {
         populate: ['cover', 'category', 'author'],
         sort: 'publishedAt:desc',
     });
+    console.log(response);
     return response as unknown as Articles;
 };
 

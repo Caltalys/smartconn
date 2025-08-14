@@ -5,6 +5,7 @@ import { motion, Variants } from "framer-motion";
 import SmartButton from "./SmartButton";
 import Image from "next/image";
 import { HeroSection } from "@/lib/types";
+import { getStrapiMedia } from "@/lib/utils";
 
 // Variants for staggered animation
 const containerVariants: Variants = {
@@ -32,14 +33,12 @@ const itemVariants: Variants = {
 
 const Hero = ({ data }: { data?: HeroSection }) => {
   const t = useTranslations('hero');
-  const heading = data?.heading || t("title");
-  const subtitle = data?.subtitle || t("subtitle");
-  const description = data?.description || t("description");
-  const cta = data?.cta;
-  const imageUrl = data?.image?.url
-    ? `${process.env.NEXT_PUBLIC_STRAPI_FILE_URL}${data.image.url}`
-    : "/hero.jpg";
-  const imageAlt = data?.image?.alternativeText || subtitle;
+  const heading = data?.base?.heading || t("title");
+  const subtitle = data?.base?.subHeading || t("subtitle");
+  const description = data?.base?.description || t("description");
+  const cta = data?.base?.ctas?.[0];
+  const imageUrl = (data?.image?.url && getStrapiMedia(data.image.url)) || "/hero.jpg";
+  const imageAlt = data?.image?.alternativeText || subtitle || "Hero Image";
   
   return (
     <section

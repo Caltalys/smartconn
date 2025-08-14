@@ -11,7 +11,7 @@ import Social from "./Social";
 import { useServiceContext } from "@/context/ServiceContext";
 import { HeaderSection } from "@/lib/types";
 
-const NavMobileMenu = ({ navigationLinks }: { navigationLinks: HeaderSection }) => {
+const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isServicesOpen, setServicesOpen] = useState(false);
     const { setActiveService } = useServiceContext();
@@ -32,7 +32,7 @@ const NavMobileMenu = ({ navigationLinks }: { navigationLinks: HeaderSection }) 
                 {/* This nav section now correctly fills the available space and centers the links. */}
                 <nav className="flex-1 flex flex-col items-center justify-center">
                     <ul className="flex flex-col items-center gap-10">
-                        {navigationLinks.menus.map((navItem) => (
+                        {navigationLinks?.navbar?.menus.map((navItem) => (
                             navItem.submenus && navItem.submenus.length > 0 ? (
                                 <li key={navItem.id} className="flex flex-col items-center gap-4">
                                     <div

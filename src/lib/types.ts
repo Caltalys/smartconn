@@ -1,8 +1,6 @@
 
 export interface BaseProps {
-  params: {
-    locale: string;
-  };
+  params: Promise<{ locale: string }>;
 }
 
 export interface Formats {
@@ -34,14 +32,15 @@ export interface StrapiEntity {
   locale: string
 }
 
-export interface StrapiComponent extends StrapiEntity {
-  __component: string;
+export interface StrapiComponent {
+  id: number;
+  __component?: string;
 }
 
 export interface Media extends StrapiEntity {
   name: string
-  alternativeText: any
-  caption: any
+  alternativeText: string | null
+  caption: string | null
   width: number
   height: number
   formats: Formats
@@ -50,65 +49,81 @@ export interface Media extends StrapiEntity {
   mime: string
   size: number
   url: string
-  previewUrl: any
+  previewUrl: string | null
   provider: string
   provider_metadata: any
 }
 
-export interface LinkItem extends StrapiComponent {
+export interface LinkItem {
+  id: number;
   label: string;
   href: string;
-  isInternal: boolean
-  itemId?: string
-  submenus: LinkItem[];
+  isInternal?: boolean;
+  itemId?: string;
+  submenus?: LinkItem[];
 }
 
-
-export interface HeaderSection extends StrapiComponent {
+export interface Navbar {
+  id: number;
   menus: LinkItem[];
 }
 
-export interface LandingPage extends StrapiComponent {
+export interface HeaderSection extends StrapiComponent {
+  navbar: Navbar;
+}
+
+export interface LandingPage extends StrapiEntity {
+  headerSection?: HeaderSection;
   heroSection?: HeroSection;
   aboutSection?: AboutSection;
   servicesSection?: ServicesSection;
+  advantagesSection?: AdvantagesSection;
+  partnerSection?: PartnerSection;
+}
 
+export interface BaseSection {
+  id: number;
+  title: string | null;
+  subtitle: string | null;
+  heading: string | null;
+  subHeading: string | null;
+  description: string | null;
+  ctas: Cta[];
+  image?: Media | null;
 }
 
 export interface HeroSection extends StrapiComponent {
-  heading: string;
-  subtitle: string;
-  description?: string;
-  button: Button;
-  cta: Cta | null;
   image: Media | null;
+  base: BaseSection;
 }
 
 export interface AboutSection extends StrapiComponent {
-  title: string;
-  heading: string;
-  subtitle: string;
-  description?: string;
-  cta: Cta | null;
-  image: Media | null;
+  base: BaseSection;
 }
 
 export interface ServicesSection extends StrapiComponent {
-  title: string;
-  heading: string;
-  subtitle: string;
-  description?: string;
-  cta: Cta | null;
-  image: Media | null;
-  items: ServiceItem[] | null;
+  services: FeatureItem[];
+  base: BaseSection;
 }
 
-export interface ServiceItem extends StrapiComponent {
-  title: string;
-  subtitle: string;
-  description?: string;
-  cta: Cta | null;
-  image: Media | null;
+export interface AdvantagesSection extends StrapiComponent {
+  items: FeatureItem[];
+  base: BaseSection;
+}
+
+export interface PartnerSection extends StrapiComponent {
+  items: FeatureItem[];
+  base: BaseSection;
+}
+
+export interface FeatureItem {
+  id: number;
+  label: string | null;
+  href: string | null;
+  target: string | null;
+  heading: string | null;
+  description: string | null;
+  image?: Media | null;
   itemId?: string;
 }
 
@@ -116,13 +131,10 @@ export interface Cta {
   id: number
   label: string
   href: string
-  isInternal: boolean
-}
-
-export interface Button extends StrapiComponent {
-  text: string;
-  href: string;
-  target: string;
+  target: string | null
+  isInternal?: boolean
+  heading?: string | null
+  description?: string | null
 }
 
 export interface Articles {

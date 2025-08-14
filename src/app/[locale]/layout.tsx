@@ -1,6 +1,5 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { ServiceProvider } from "@/context/ServiceContext";
 import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
@@ -10,6 +9,8 @@ import {
 } from "next-intl/server";
 import { notFound } from "next/navigation";
 import "../globals.css";
+import { getHeaderSection } from "@/lib/api";
+import Topbar from "@/components/Topbar";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -35,6 +36,11 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
+  const [landingPageResponse] = await Promise.all([
+    getHeaderSection(locale),
+  ]);
+  const headerSection = landingPageResponse?.headerSection;
+
   const messages = await getMessages();
 
   return (
@@ -42,11 +48,10 @@ export default async function LocaleLayout({
       <body className={`antialiased bg-background text-foreground`}>
         <div className="relative flex flex-col min-h-screen">
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <ServiceProvider>
-              {/* <Header /> */}
+            <Topbar />
+            <Header data={headerSection} />
               {children}
-              <Footer />
-            </ServiceProvider>
+            <Footer />
           </NextIntlClientProvider>
         </div>
       </body>

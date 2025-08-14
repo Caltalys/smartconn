@@ -6,19 +6,18 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Pretitle from "./Pretitle";
 import { RiArrowRightUpLine } from "react-icons/ri";
-import { AboutSection } from "@/lib/types";
+import { AboutSection, Cta } from "@/lib/types";
+import { getStrapiMedia } from "@/lib/utils";
 
 const About = ({ data }: { data?: AboutSection }) => {
   const t = useTranslations('about_us');
   
-  const title = data?.title || t('title');
-  const subtitle = data?.subtitle || t('subtitle');
-  const description = data?.description || t('description');
-  const cta = data?.cta;
-  const imageUrl = data?.image?.url
-    ? `${process.env.NEXT_PUBLIC_STRAPI_FILE_URL}${data.image.url}`
-    : "/shark-ana.jpg";
-  const imageAlt = data?.image?.alternativeText || subtitle;
+  const title = data?.base?.title || t('title');
+  const subtitle = data?.base?.heading || t('subtitle');
+  const description = data?.base?.description || t('description');
+  const cta: Cta | undefined = data?.base?.ctas?.[0];
+  const imageUrl = (data?.base?.image?.url && getStrapiMedia(data.base.image.url)) || "/shark-ana.jpg";
+  const imageAlt = data?.base?.image?.alternativeText || subtitle || "About Us Image";
 
   return (
     <motion.section
