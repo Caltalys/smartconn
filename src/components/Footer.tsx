@@ -5,6 +5,7 @@ import Logo from './Logo';
 import Social from './Social';
 import { Link as ScrollLink } from 'react-scroll';
 import { RiMapPin2Fill, RiMailFill, RiPhoneFill } from 'react-icons/ri';
+import Link from 'next/link';
 
 const Footer = () => {
     const t = useTranslations('footer');
@@ -45,16 +46,9 @@ const Footer = () => {
                         <ul className="flex flex-col gap-3 items-center md:items-start">
                             {navLinks.map(link => (
                                 <li key={link.id}>
-                                    <ScrollLink
-                                        to={link.href}
-                                        spy={true}
-                                        smooth={true}
-                                        offset={-64}
-                                        duration={500}
-                                        className="text-sm text-primary hover:text-accent cursor-pointer transition-colors"
-                                    >
+                                    <Link href={link.href}>
                                         {tNav(link.id)}
-                                    </ScrollLink>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
