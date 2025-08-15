@@ -57,7 +57,7 @@ const Blog = ({ articles }: { articles?: Article[] }) => {
                 </div>
 
                 {/* Blog Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
                     {items.map((post, index) => (
                         <Card key={index} className="overflow-hidden shadow-lg flex flex-col group bg-primary/5 border-primary/10">
                             <CardHeader className="p-0">

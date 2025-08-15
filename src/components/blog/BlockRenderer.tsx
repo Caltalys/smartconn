@@ -17,7 +17,7 @@ interface BlockRendererProps {
 }
 
 const RichText = ({ body }: { body: string }) => (
-  <div className="prose-p:text-justify">
+  <div className="text-justify">
     <ReactMarkdown>{body}</ReactMarkdown>
   </div>
 );
@@ -27,7 +27,7 @@ const MediaComponent = ({ file }: { file: Media }) => {
   if (!imageUrl) return null;
 
   return (
-    <figure className="my-8">
+    <figure className="my-8 items-center justify-center flex">
       <Image
         src={imageUrl}
         alt={file.alternativeText || "Blog post image"}
@@ -102,7 +102,7 @@ export default function BlockRenderer({ blocks }: BlockRendererProps) {
           case "shared.rich-text":
             return <RichText key={key} body={block.body as string} />;
           case "shared.media":
-            return <MediaComponent key={key} file={block.file as Media} />;
+            return <MediaComponent key={key} file={block.image as Media} />;
           case "shared.quote":
             return <Quote key={key} quote={block.body as string} author={block.title as string | undefined} />;
           case "shared.slider":

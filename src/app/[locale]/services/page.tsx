@@ -1,33 +1,33 @@
-import { getAllArticles } from '@/lib/api';
+import { getAllArticles, getAllServices } from '@/lib/api';
 import { getTranslations } from 'next-intl/server';
 import Pagination from '@/components/Pagination';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import ArticleCard from '@/components/blog/ArticleCard';
 import Pretitle from '@/components/Pretitle';
+import ServiceCard from '@/components/service/ServiceCard';
 
-interface BlogPageProps {
+interface ServicePageProps {
     params: Promise<{ locale: string }>;
     searchParams?: Promise<{ page?: string }>;
 }
 
-export async function generateMetadata({ params }: BlogPageProps) {
+export async function generateMetadata({ params }: ServicePageProps) {
     const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: 'blog' });
+    const t = await getTranslations({ locale, namespace: 'services' });
     return {
         title: t('title'),
         description: t('subtitle'),
     };
 }
 
-export default async function BlogPage({ params, searchParams }: BlogPageProps) {
+export default async function BlogPage({ params, searchParams }: ServicePageProps) {
     const { locale } = await params;
     const sp = searchParams ? await searchParams : {};
-    const t = await getTranslations({ locale, namespace: 'blog' });
+    const t = await getTranslations({ locale, namespace: 'services' });
     const tNav = await getTranslations({ locale, namespace: 'navigation' });
     const currentPage = Number(sp?.page) || 1;
     const articlesPerPage = 6;
 
-    const articlesResponse = await getAllArticles(locale, {
+    const articlesResponse = await getAllServices(locale, {
         page: currentPage,
         pageSize: articlesPerPage,
     });
@@ -56,13 +56,13 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
                     <>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {articles.map((article) => (
-                                <ArticleCard key={article.id} article={article} locale={locale} readMoreText={t('read_more')} />
+                                <ServiceCard key={article.id} article={article} locale={locale} readMoreText={t('read_more')} />
                             ))}
                         </div>
                         <Pagination pageCount={pageCount} />
                     </>
                 ) : (
-                    <div className="text-center py-16"><p className="text-muted-foreground">{t('noArticlesFound')}</p></div>
+                    <div className="text-center py-16"><p className="text-muted-foreground">{t('noServiceFound')}</p></div>
                 )}
             </div>
         </section>

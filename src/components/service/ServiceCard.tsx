@@ -1,19 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Article } from "@/lib/types";
+import { Service } from "@/lib/types";
 import { getStrapiMedia } from "@/lib/utils";
 import { formatDate } from "@/lib/format-date";
 
-interface ArticleCardProps {
-    article: Article;
+interface ServiceCardProps {
+    article: Service;
     locale: string;
     readMoreText: string;
 }
 
-export default function ArticleCard({ article, locale, readMoreText }: ArticleCardProps) {
+export default function ServiceCard({ article, locale, readMoreText }: ServiceCardProps) {
     const imageUrl = getStrapiMedia(article.cover?.url);
-    const categoryUrl = article.category ? `/${locale}/blog/category/${article.category.slug}` : `/${locale}/blog`;
-    const articleUrl = `/${locale}/blog/${article.slug}`;
+    const articleUrl = `/${locale}/services/${article.slug}`;
 
     return (
         <article className="overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-xl bg-white dark:bg-gray-800 flex flex-col h-full">
@@ -36,11 +35,6 @@ export default function ArticleCard({ article, locale, readMoreText }: ArticleCa
             </Link>
             <div className="p-6 flex-grow flex flex-col">
                 <div className="mb-4 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                    {article.category ? (
-                        <Link href={categoryUrl} className="font-medium text-primary hover:underline">
-                            {article.category.name}
-                        </Link>
-                    ) : <span />}
                     <time dateTime={article.publishedAt ?? ""}>
                         {formatDate(article.publishedAt, locale)}
                     </time>

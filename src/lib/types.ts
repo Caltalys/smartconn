@@ -146,6 +146,11 @@ export interface Articles {
   meta: Meta
 }
 
+export interface Services {
+  data: Service[]
+  meta: Meta
+}
+
 export interface Block {
   __component: string;
   id: number;
@@ -164,6 +169,9 @@ export interface Article extends StrapiEntity {
   category: Category | null
   author: Author | null
   blocks: Block[] | null
+}
+
+export interface Service extends Article {
 }
 
 export interface Category extends StrapiEntity {

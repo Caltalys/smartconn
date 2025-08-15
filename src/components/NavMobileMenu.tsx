@@ -12,7 +12,6 @@ import { HeaderSection } from "@/lib/types";
 import { Link, usePathname } from "@/i18n/navigation";
 
 const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection }) => {
-    console.log(navigationLinks);
     const [isOpen, setIsOpen] = useState(false);
     const [openMenuId, setOpenMenuId] = useState<number | null>(null);
     const { setActiveService } = useServiceContext();

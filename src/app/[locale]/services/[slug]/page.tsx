@@ -1,4 +1,4 @@
-import { getArticleBySlug } from '@/lib/api';
+import { getServiceBySlug } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { RiArrowLeftLine } from 'react-icons/ri';
 
-interface ArticlePageProps {
+interface ServicePageProps {
   params: Promise<{
     slug: string;
     locale: string;
@@ -19,10 +19,10 @@ interface ArticlePageProps {
 }
 
 export async function generateMetadata(
-  { params }: ArticlePageProps
+  { params }: ServicePageProps
 ): Promise<Metadata> {
   const { slug, locale } = await params; 
-  const article = await getArticleBySlug(slug, locale);
+  const article = await getServiceBySlug(slug, locale);
 
   if (!article) {
     return {};
@@ -34,10 +34,10 @@ export async function generateMetadata(
   };
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
+export default async function ArticlePage({ params }: ServicePageProps) {
   const { slug, locale } = await params;
-  const article = await getArticleBySlug(slug, locale);
-  const t = await getTranslations({ locale, namespace: 'blog' });
+  const article = await getServiceBySlug(slug, locale);
+  const t = await getTranslations({ locale, namespace: 'services' });
   const tNav = await getTranslations({ locale, namespace: 'navigation' });
   
   if (!article) {
@@ -48,7 +48,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   const breadcrumbItems = [
     { label: tNav('home'), href: '/' },
-    { label: t('title'), href: '/blog' },
+    { label: t('title'), href: '/services' },
     { label: article.title }
   ];
 
@@ -85,10 +85,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </div>
 
           <div className="mt-12 text-center">
-            <Link href="/blog">
+            <Link href="/services">
               <Button variant="outline">
                 <RiArrowLeftLine className="mr-2 h-4 w-4" />
-                {t('back_to_blog')}
+                {t('backToServices')}
               </Button>
             </Link>
           </div>

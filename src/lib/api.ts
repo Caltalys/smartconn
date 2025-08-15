@@ -1,6 +1,6 @@
 // lib/api.ts
 import { strapi, type StrapiClient } from "@strapi/client";
-import type { Article, Articles, LandingPage } from "./types";
+import type { Article, Articles, LandingPage, Service, Services } from "./types";
 
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 const strapiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
@@ -78,6 +78,7 @@ export const getAllArticles = async (
         sort: 'publishedAt:desc',
         pagination: { page, pageSize },
     });
+    console.log(response);
     return response as unknown as Articles;
 };
 
@@ -97,10 +98,46 @@ export const getArticleBySlug = async (slug: string, locale: string): Promise<Ar
             limit: 1
         }
     });
+    console.log(articles);
     if (articles.data.length === 0) {
         return null;
     }
     return articles.data[0] as unknown as Article;
+};
+
+export const getAllServices = async (
+    locale: string,
+    { page = 1, pageSize = 10 }: { page?: number; pageSize?: number } = {}
+): Promise<Services> => {
+    const client = getStrapiClient(locale).collection('services');
+    const response = await client.find({
+        populate: ['cover'],
+        sort: 'publishedAt:desc',
+        pagination: { page, pageSize },
+    });
+    console.log(response);
+    return response as unknown as Services;
+};
+
+export const getServiceBySlug = async (slug: string, locale: string): Promise<Service | null> => {
+    const client = getStrapiClient(locale).collection('services');
+    const services = await client.find({
+        filters: { slug: { $eq: slug } },
+        populate: {
+            cover: true,
+            blocks: {
+                populate: '*',
+            },
+        },
+        pagination: {
+            limit: 1
+        }
+    });
+    console.log(services);
+    if (services.data.length === 0) {
+        return null;
+    }
+    return services.data[0] as unknown as Service;
 };
 
 export const getAllCategories = async (locale: string) => {
