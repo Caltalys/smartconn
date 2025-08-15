@@ -45,12 +45,12 @@ export default function ArticleCard({ article, locale, readMoreText }: ArticleCa
                         {formatDate(article.publishedAt, locale)}
                     </time>
                 </div>
-                <h3 className="mb-2 text-2xl font-bold tracking-tight text-primary dark:text-white text-justify">
+                <h3 className="mb-2 text-2xl font-bold tracking-tight text-primary dark:text-white text-justify line-clamp-3">
                     <Link href={articleUrl} className="hover:underline">
                         {article.title}
                     </Link>
                 </h3>
-                <p className="mb-4 flex-grow font-normal text-gray-700 dark:text-gray-400 text-justify">
+                <p className="mb-4 flex-grow font-normal text-gray-700 dark:text-gray-400 text-justify line-clamp-4">
                     {article.description}
                 </p>
                 <Link

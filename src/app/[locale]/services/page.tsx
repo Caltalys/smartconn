@@ -1,4 +1,4 @@
-import { getAllArticles, getAllServices } from '@/lib/api';
+import { getAllServices } from '@/lib/api';
 import { getTranslations } from 'next-intl/server';
 import Pagination from '@/components/Pagination';
 import Breadcrumbs from '@/components/Breadcrumbs';

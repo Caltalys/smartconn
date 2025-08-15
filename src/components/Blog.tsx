@@ -57,9 +57,9 @@ const Blog = ({ articles }: { articles?: Article[] }) => {
                 </div>
 
                 {/* Blog Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4">
                     {items.map((post, index) => (
-                        <Card key={index} className="overflow-hidden shadow-lg flex flex-col group bg-primary/5 border-primary/10">
+                        <Card key={index} className="overflow-hidden shadow-lg flex flex-col group bg-primary/5 border-primary/10 py-0 gap-0">
                             <CardHeader className="p-0">
                                 <div className="relative w-full h-60">
                                     <Image
@@ -77,7 +77,7 @@ const Blog = ({ articles }: { articles?: Article[] }) => {
                                     <span>&bull;</span>
                                     <span>{post.date}</span>
                                 </div>
-                                <CardTitle className="text-xl mb-2 line-clamp-2">{post.title}</CardTitle>
+                                <CardTitle className="text-2xl mb-2 line-clamp-2">{post.title}</CardTitle>
                                 <p className="text-muted-foreground text-sm line-clamp-3">
                                     {post.description}
                                 </p>

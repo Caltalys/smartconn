@@ -25,7 +25,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
     const t = await getTranslations({ locale, namespace: 'blog' });
     const tNav = await getTranslations({ locale, namespace: 'navigation' });
     const currentPage = Number(sp?.page) || 1;
-    const articlesPerPage = 6;
+    const articlesPerPage = 10;
 
     const articlesResponse = await getAllArticles(locale, {
         page: currentPage,
@@ -54,7 +54,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
 
                 {hasArticles ? (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
                             {articles.map((article) => (
                                 <ArticleCard key={article.id} article={article} locale={locale} readMoreText={t('read_more')} />
                             ))}

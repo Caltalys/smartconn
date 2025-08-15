@@ -12,9 +12,9 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     const navLinks = [
-        { href: 'home', id: "home" },
-        { href: 'about', id: "about" },
-        { href: 'services', id: "services" }
+        { href: '/', id: "home" },
+        { href: '/about', id: "about" },
+        { href: '/services', id: "services" }
     ];
 
     const contactItems = [
@@ -117,43 +117,6 @@ const Footer = () => {
                         </ul>
                     </div>
                 </div>
-
-                {/* Mobile Accordion */}
-                {/* <div className="md:hidden">
-                    <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="quick-links" className='border-t border-primary/10'>
-                            <AccordionTrigger className="py-4 text-lg font-semibold hover:no-underline">{t('quick_links')}</AccordionTrigger>
-                            <AccordionContent>
-                                <ul className="flex flex-col gap-3 items-start pt-2 pl-2">
-                                    {navLinks.map(link => (
-                                        <li key={link.id}>
-                                            <ScrollLink to={link.href} spy={true} smooth={true} offset={-64} duration={500} className="text-sm text-primary hover:text-accent cursor-pointer transition-colors">
-                                                {tNav(link.id)}
-                                            </ScrollLink>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="contact-info" className='border-y border-primary/10'>
-                            <AccordionTrigger className="py-4 text-lg font-semibold hover:no-underline">{t('contact_info')}</AccordionTrigger>
-                            <AccordionContent>
-                                <ul className="flex flex-col gap-4 items-start pt-2 pl-2">
-                                    {contactItems.map((item, index) => (
-                                        <li key={index} className="flex items-start gap-4">
-                                            <div className="text-accent text-xl mt-1">{item.icon}</div>
-                                            {item.href ? (
-                                                <a href={item.href} className="text-sm text-muted-foreground hover:text-accent transition-colors">{item.text}</a>
-                                            ) : (
-                                                <p className="text-sm text-muted-foreground">{item.text}</p>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                </div> */}
             </div>
             {/* Copyright */}
             <div className="bg-primary/70 text-white text-center text-sm py-3 z-10">

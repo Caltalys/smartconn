@@ -12,7 +12,7 @@ export default async function Page({ params }: AsyncBaseProps) {
   const { locale } = await params;
   const [landingPageResponse, articlesResponse] = await Promise.all([
     getLandingPage(locale),
-    getAllArticles(locale, { pageSize: 10 }),
+    getAllArticles(locale, { pageSize: 4 }),
   ]);
   const heroSection = landingPageResponse?.heroSection;
   const aboutSection = landingPageResponse?.aboutSection;

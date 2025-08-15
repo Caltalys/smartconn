@@ -171,7 +171,18 @@ export interface Article extends StrapiEntity {
   blocks: Block[] | null
 }
 
-export interface Service extends Article {
+export interface Service extends StrapiEntity {
+  title: string
+  description: string
+  slug: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string | null
+  locale: string
+  cover: Media | null
+  category: Category | null
+  author: Author | null
+  blocks: Block[] | null
 }
 
 export interface Category extends StrapiEntity {
