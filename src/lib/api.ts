@@ -70,6 +70,7 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
         'heroSection.base',
         'heroSection.base.ctas',
         'heroSection.image',
+        'heroSection.video',
         'aboutSection.base',
         'aboutSection.base.ctas',
         'aboutSection.base.image',
@@ -89,7 +90,7 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
     const response = await client.find({
         populate: populateList
     });
-    //console.log(response);
+    console.log(response);
     return response.data as unknown as LandingPage;  
 };
 

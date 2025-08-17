@@ -39,7 +39,8 @@ const Hero = ({ data }: { data?: HeroSection }) => {
   const cta = data?.base?.ctas?.[0];
   const imageUrl = (data?.image?.url && getStrapiMedia(data.image.url)) || "/hero.jpg";
   const imageAlt = data?.image?.alternativeText || subtitle || "Hero Image";
-  
+  const youtubeId = data?.video?.youtubeId;
+
   return (
     <section
       id="home"
@@ -92,21 +93,34 @@ const Hero = ({ data }: { data?: HeroSection }) => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <div className="relative w-full max-w-sm sm:max-w-md xl:max-w-lg aspect-square">
-              {/* Decorative blob/circle */}
-              <div className="w-full h-full bg-secondary absolute -top-4 -right-4 -z-10 rounded-lg"></div>
-              {/* Image container */}
-              <div className="relative w-full h-full rounded-lg overflow-hidden shadow-2xl">
-                <Image
-                  src={imageUrl}
-                  alt={imageAlt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1023px) 80vw, 45vw"
-                  priority
-                />
+            {youtubeId ?
+              <div className="relative aspect-video w-full max-w-2xl mx-auto">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                  src={`https://www.youtube.com/embed/${youtubeId}?rel=0&autoplay=1&mute=1`}
+                  title={heading}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
               </div>
-            </div>
+              : <div className="relative w-full max-w-sm sm:max-w-md xl:max-w-lg aspect-square">
+                {/* Decorative blob/circle */}
+                <div className="w-full h-full bg-secondary absolute -top-4 -right-4 -z-10 rounded-lg"></div>
+                {/* Image container */}
+                <div className="relative w-full h-full rounded-lg overflow-hidden shadow-2xl">
+                  <Image
+                    src={imageUrl}
+                    alt={imageAlt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1023px) 80vw, 45vw"
+                    priority
+                  />
+                </div>
+              </div>
+            }
+
+
           </motion.div>
         </div>
       </div>

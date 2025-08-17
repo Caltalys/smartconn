@@ -58,6 +58,14 @@ export interface Media extends StrapiEntity {
   provider_metadata: unknown
 }
 
+export interface YoutubeVideo {
+    headline?: Headline;
+    title?: string;
+    text?: string;
+    textPosition?: 'Left' | 'Right';
+    youtubeId?: string;
+}
+
 export interface LinkItem {
   id: number;
   label: string;
@@ -98,8 +106,9 @@ export interface BaseSection {
 }
 
 export interface HeroSection extends StrapiComponent {
-  image: Media | null;
   base: BaseSection;
+  image?: Media | null;
+  video?: YoutubeVideo | null;
 }
 
 export interface AboutSection extends StrapiComponent {
