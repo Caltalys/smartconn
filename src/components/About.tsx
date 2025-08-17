@@ -31,13 +31,13 @@ const About = ({ data }: { data?: AboutSection }) => {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 xl:gap-16 items-center">
           <div className="flex items-center justify-center order-1 xl:order-none">
             <div className="relative w-full max-w-md xl:w-full xl:max-w-none aspect-[4/3]">
-              <div className="flex w-full h-full bg-secondary absolute -top-3 -left-3 -z-10 rounded-md"></div>
+              <div className="flex w-full h-full bg-secondary absolute -top-3 -left-3 -z-10 rounded-lg"></div>
               <Image
                 src={imageUrl}
                 alt={imageAlt}
                 fill
                 sizes="(max-width: 768px) 90vw, (max-width: 1279px) 448px, 40vw"
-                className="object-cover rounded-md"
+                className="object-cover rounded-lg"
               />
             </div>
           </div>

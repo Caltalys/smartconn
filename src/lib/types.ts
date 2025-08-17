@@ -121,7 +121,7 @@ export interface PartnerSection extends StrapiComponent {
 }
 
 export interface AboutPage extends StrapiComponent {
-  headline: Headline;
+  headline?: Headline;
   blocks: Block[];
   features: FeatureItem[];
 }
@@ -222,6 +222,6 @@ export interface Pagination {
 }
 
 export interface Headline extends StrapiComponent {
-  headline: string
+  headline?: string
   subheadline?: string
 }

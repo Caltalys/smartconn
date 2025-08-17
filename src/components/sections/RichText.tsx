@@ -2,9 +2,9 @@
 
 import ReactMarkdown from "react-markdown";
 
-const RichText = ({ data }: { data: { body: string } }) => (
+const RichText = ({ body }: { body: string } ) => (
   <div className="prose prose-lg max-w-none text-justify mx-auto py-8 px-6">
-    <ReactMarkdown>{data.body}</ReactMarkdown>
+    <ReactMarkdown>{body}</ReactMarkdown>
   </div>
 );
 

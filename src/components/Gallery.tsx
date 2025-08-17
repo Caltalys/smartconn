@@ -74,7 +74,7 @@ const Gallery = () => {
                       setOpen(true);
                     }}
                   >
-                    <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                    <Card className="overflow-hidden shadow-lg hover:shadow-lg transition-all duration-300">
                       <CardContent className="relative flex aspect-video items-center justify-center p-0">
                         <Image
                           src={image.src}

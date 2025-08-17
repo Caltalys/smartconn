@@ -4,7 +4,6 @@ import { AboutPage } from '@/lib/types';
 import BlockRenderer from '@/components/blog/BlockRenderer';
 import BlockHeader from './sections/BlockHeader';
 import TextGrid, { TextGridProps } from './sections/TextGrid';
-import { title } from 'process';
 
 /**
  * AboutPageContent là một trình render động.
@@ -12,28 +11,28 @@ import { title } from 'process';
  * và render component tương ứng cho mỗi section.
  */
 const AboutPageContent = ({ data }: { data: AboutPage | null }) => {
-  // Nếu không có dữ liệu hoặc không có blocks (sections), không render gì cả.
-  // Trang cha (page.tsx) nên xử lý trường hợp "not found".
-  if (!data || !data.blocks || data.blocks.length === 0) {
+  if (!data) {
     return null;
   }
 
-  const headline = { pretitle: data.headline.headline, title: data.headline.subheadline };
+  // Truy cập các thuộc tính lồng nhau một cách an toàn bằng optional chaining.
+  const headline = {
+    pretitle: data.headline?.headline,
+    title: data.headline?.subheadline,
+  };
 
-const features: TextGridProps["data"] = {
-  items: data.features.map(feature => ({
-    title: feature.heading ?? "",
-    text: feature.description ?? "",
-  })),
-};
-
-
+  const featuresData: TextGridProps["data"] | undefined = data.features ? {
+    items: data.features.map((feature) => ({
+      title: feature.heading ?? "",
+      text: feature.description ?? "",
+    })),
+  } : undefined;
 
   return (
     <main>
-      <BlockHeader data={headline} />
-      <BlockRenderer blocks={data.blocks} />
-      <TextGrid data={features} />
+      {headline && <BlockHeader pretitle={data.headline?.headline} title={data.headline?.subheadline} />}
+      {data.blocks && data.blocks.length > 0 && <BlockRenderer blocks={data.blocks} />}
+      {featuresData && <TextGrid data={featuresData} />}
     </main>
   );
 };

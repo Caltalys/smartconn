@@ -80,7 +80,7 @@ export default async function ArticlePage({ params }: ServicePageProps) {
           )}
 
           <div className="prose prose-lg dark:prose-invert max-w-none">
-            <p className="lead text-xl font-medium">{article.description}</p>
+            {/* <p className="lead text-xl font-medium">{article.description}</p> */}
             {article.blocks && <BlockRenderer blocks={article.blocks} />}
           </div>
 

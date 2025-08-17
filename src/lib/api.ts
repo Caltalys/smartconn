@@ -39,13 +39,13 @@ export const getHeaderSection = async (locale: string): Promise<LandingPage> => 
 
 export const getAboutPage = async (locale: string): Promise<AboutPage> => {
     const client = getStrapiClient(locale).single('about');
-    const populateList = [
-        'about',
-        'about.base.image',
-        'about.base.ctas',
-        'about.features',
-        'about.features.image',
-    ];
+    // const populateList = [
+    //     'about',
+    //     'about.base.image',
+    //     'about.base.ctas',
+    //     'about.features',
+    //     'about.features.image',
+    // ];
     const response = await client.find({
         populate: {
             headline : true,

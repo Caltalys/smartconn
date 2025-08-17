@@ -54,7 +54,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
 
                 {hasArticles ? (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
                             {articles.map((article) => (
                                 <ArticleCard key={article.id} article={article} locale={locale} readMoreText={t('read_more')} />
                             ))}

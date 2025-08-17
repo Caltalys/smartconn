@@ -16,7 +16,7 @@ export default function ArticleCard({ article, locale, readMoreText }: ArticleCa
     const articleUrl = `/${locale}/blog/${article.slug}`;
 
     return (
-        <article className="overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-xl bg-white dark:bg-gray-800 flex flex-col h-full">
+        <article className="overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-lg bg-white dark:bg-gray-800 flex flex-col h-full">
             <Link href={articleUrl}>
                 <div className="relative h-56 w-full">
                     {imageUrl ? (
@@ -45,7 +45,7 @@ export default function ArticleCard({ article, locale, readMoreText }: ArticleCa
                         {formatDate(article.publishedAt, locale)}
                     </time>
                 </div>
-                <h3 className="mb-2 text-2xl font-bold tracking-tight text-primary dark:text-white text-justify line-clamp-3">
+                <h3 className="mb-2 font-bold tracking-tight text-primary dark:text-white text-justify line-clamp-3">
                     <Link href={articleUrl} className="hover:underline">
                         {article.title}
                     </Link>

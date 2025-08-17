@@ -16,7 +16,7 @@ const TextGrid = ({ data }: TextGridProps) => {
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-center md:text-left">
                     {data.items.map((item, index) => (
-                        <motion.div className='bg-primary/10 p-4 rounded-lg'
+                        <motion.div className='bg-primary/10 p-4 rounded-lg shadow-lg'
                             key={index}
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}

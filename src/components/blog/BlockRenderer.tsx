@@ -11,14 +11,43 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import BlockHeader from "../sections/BlockHeader";
-import ImageText from "../sections/ImageText";
-import TextGrid from "../sections/TextGrid";
-import RichText from "../sections/RichText";
+import ImageText, { ImageTextProps } from "../sections/ImageText";
+import TextGrid, { TextGridProps } from "../sections/TextGrid";
+import ReactMarkdown from "react-markdown";
+
+// interface ImageTextBlock {
+//   __component: "shared.image-text";
+//   id: number;
+//   headline?: Headline;
+//   title: string;
+//   text: string;
+//   image: Media;
+//   imagePosition?: 'Left' | 'Right';
+//   cta?: {
+//     label: string;
+//     href: string;
+//   };
+// }
+
+// interface TextGridBlock {
+//   __component: "shared.text-grid";
+//   id: number;
+//   items: { title: string; text: string }[];
+// }
+
+// Union type bao gồm tất cả các loại block có thể có
+// type AnyBlock = Block | ImageTextBlock | TextGridBlock;
 
 interface BlockRendererProps {
-  blocks: Block[] | any[]; // Use any[] to accommodate dynamic zone components
+  // Sử dụng AnyBlock để có type-safety thay vì `any`
+  blocks: Block[];
 }
+
+const RichText = ({ body }: { body: string }) => (
+  <div className="text-justify">
+    <ReactMarkdown>{body}</ReactMarkdown>
+  </div>
+);
 
 const MediaComponent = ({ file }: { file: Media }) => {
   const imageUrl = getStrapiMedia(file?.url);
@@ -94,15 +123,16 @@ const SliderComponent = ({ files }: { files: Media[] }) => {
 export default function BlockRenderer({ blocks }: BlockRendererProps) {
   return (
     <Fragment>
-      {blocks.map((block: Block | any) => {
+      {blocks.map((block: Block) => {
         const key = `${block.__component}-${block.id}`;
         switch (block.__component) {
-          case "shared.image-text":
-            return <ImageText key={key} data={block} />;
+          case "shared.image-text": {
+            return <ImageText key={key} {...block as ImageTextProps} />;
+          }
           case "shared.text-grid":
-            return <TextGrid key={key} data={block} />;
+            return <TextGrid key={key} data={block.data as TextGridProps["data"]} />;
           case "shared.rich-text":
-            return <RichText key={key} data={block} />;
+            return <RichText key={key} body={block.body as string} />;
           case "shared.media":
             return <MediaComponent key={key} file={block.image as Media} />;
           case "shared.quote":
