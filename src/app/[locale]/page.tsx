@@ -7,6 +7,7 @@ import Partners from "@/components/Partners"
 import { getAllArticles, getLandingPage } from "@/lib/api"
 import { AsyncBaseProps } from "@/lib/types"
 import Blog from "@/components/Blog"
+import BlockRenderer from "@/components/blog/BlockRenderer"
 
 export default async function Page({ params }: AsyncBaseProps) {
   const { locale } = await params;
@@ -20,6 +21,7 @@ export default async function Page({ params }: AsyncBaseProps) {
   const advantagesSection = landingPageResponse?.advantagesSection;
   const partnerSection = landingPageResponse?.partnerSection;
   const articles = articlesResponse?.data;
+  const blocks = landingPageResponse?.blocks;
 
   return (
     <>
@@ -35,6 +37,7 @@ export default async function Page({ params }: AsyncBaseProps) {
           {/* <Works /> */}
           {/* <Testimonials /> */}
           {/* <Faq /> */}
+          {blocks && blocks.length > 0 && <div className="container mx-auto px-6"><BlockRenderer blocks={blocks} /></div>}
           <Blog articles={articles} />
           {/* <Gallery /> */}
         </main>

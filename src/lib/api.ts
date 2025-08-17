@@ -84,6 +84,7 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
         'partnerSection.base.ctas',
         'partnerSection.items',
         'partnerSection.items.image',
+        'blocks'
         ];
     const response = await client.find({
         populate: populateList

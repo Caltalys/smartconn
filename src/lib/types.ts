@@ -83,6 +83,7 @@ export interface LandingPage extends StrapiEntity {
   servicesSection?: ServicesSection;
   advantagesSection?: AdvantagesSection;
   partnerSection?: PartnerSection;
+  blocks: Block[];
 }
 
 export interface BaseSection {
