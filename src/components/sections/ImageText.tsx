@@ -28,12 +28,12 @@ const ImageText = ({ headline, title, text, image, imagePosition = 'Left' }: Ima
 
     return (
         <motion.section
-            className="py-12 xl:py-16"
+            className="py-8 xl:py-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}>
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto">
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 xl:gap-16 items-center">
                     {imageUrl && (
                         <div className={`flex items-center justify-center ${imageOrder}`}>

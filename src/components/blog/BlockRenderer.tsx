@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/carousel";
 import ImageText, { ImageTextProps } from "../sections/ImageText";
 import TextGrid, { TextGridProps } from "../sections/TextGrid";
+import YoutubeVideo, { YoutubeVideoProps } from "../sections/YoutubeVideo";
 import ReactMarkdown from "react-markdown";
 
 // interface ImageTextBlock {
@@ -128,6 +129,9 @@ export default function BlockRenderer({ blocks }: BlockRendererProps) {
         switch (block.__component) {
           case "shared.image-text": {
             return <ImageText key={key} {...block as ImageTextProps} />;
+          }
+          case "shared.video-text": {
+            return <YoutubeVideo key={key} {...block as YoutubeVideoProps} />;
           }
           case "shared.text-grid":
             return <TextGrid key={key} data={block.data as TextGridProps["data"]} />;
