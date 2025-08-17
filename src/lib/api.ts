@@ -1,6 +1,6 @@
 // lib/api.ts
 import { strapi, type StrapiClient } from "@strapi/client";
-import type { Article, Articles, LandingPage, Service, Services } from "./types";
+import type { AboutPage, Article, Articles, LandingPage, Service, Services } from "./types";
 
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 const strapiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
@@ -35,6 +35,30 @@ export const getHeaderSection = async (locale: string): Promise<LandingPage> => 
         populate: populateList
     });
     return response.data as unknown as LandingPage;  
+};
+
+export const getAboutPage = async (locale: string): Promise<AboutPage> => {
+    const client = getStrapiClient(locale).single('about');
+    const populateList = [
+        'about',
+        'about.base.image',
+        'about.base.ctas',
+        'about.features',
+        'about.features.image',
+    ];
+    const response = await client.find({
+        populate: {
+            headline : true,
+            blocks: {
+                populate: '*',
+            },
+            features: {
+                populate: '*',
+            }
+        },
+    });
+    console.log(response);
+    return response.data as unknown as AboutPage;  
 };
 
 export const getLandingPage = async (locale: string): Promise<LandingPage> => {

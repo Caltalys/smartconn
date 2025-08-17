@@ -1,12 +1,16 @@
 import AboutPageContent from '@/components/AboutPageContent';
-import { setRequestLocale } from 'next-intl/server';
+import { getAboutPage } from '@/lib/api';
+import { AsyncBaseProps } from '@/lib/types';
+import { notFound } from 'next/navigation';
 
-export default async function AboutPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-    const { locale } = await params;
-    setRequestLocale(locale);
-    return <AboutPageContent />;
+
+export default async function AboutUsPage({ params }: AsyncBaseProps) {
+  const { locale } = await params;
+  const data = await getAboutPage(locale);
+
+  if (!data) {
+    notFound();
+  }
+
+  return <AboutPageContent data={data} />;
 }

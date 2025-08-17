@@ -120,6 +120,12 @@ export interface PartnerSection extends StrapiComponent {
   base: BaseSection;
 }
 
+export interface AboutPage extends StrapiComponent {
+  headline: Headline;
+  blocks: Block[];
+  features: FeatureItem[];
+}
+
 export interface FeatureItem {
   id: number;
   label: string | null;
@@ -213,4 +219,9 @@ export interface Pagination {
   pageSize: number
   pageCount: number
   total: number
+}
+
+export interface Headline extends StrapiComponent {
+  headline: string
+  subheadline?: string
 }

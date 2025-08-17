@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import ReactMarkdown from "react-markdown";
+import React, { Fragment } from "react";
 import { getStrapiMedia } from "@/lib/utils";
 import { Block, Media } from "@/lib/types";
 import {
@@ -11,16 +11,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import BlockHeader from "../sections/BlockHeader";
+import ImageText from "../sections/ImageText";
+import TextGrid from "../sections/TextGrid";
+import RichText from "../sections/RichText";
 
 interface BlockRendererProps {
-  blocks: Block[];
+  blocks: Block[] | any[]; // Use any[] to accommodate dynamic zone components
 }
-
-const RichText = ({ body }: { body: string }) => (
-  <div className="text-justify">
-    <ReactMarkdown>{body}</ReactMarkdown>
-  </div>
-);
 
 const MediaComponent = ({ file }: { file: Media }) => {
   const imageUrl = getStrapiMedia(file?.url);
@@ -95,18 +93,23 @@ const SliderComponent = ({ files }: { files: Media[] }) => {
 
 export default function BlockRenderer({ blocks }: BlockRendererProps) {
   return (
-    <>
-      {blocks.map((block: Block) => {
+    <Fragment>
+      {blocks.map((block: Block | any) => {
         const key = `${block.__component}-${block.id}`;
         switch (block.__component) {
+          case "shared.image-text":
+            return <ImageText key={key} data={block} />;
+          case "shared.text-grid":
+            return <TextGrid key={key} data={block} />;
           case "shared.rich-text":
-            return <RichText key={key} body={block.body as string} />;
+            return <RichText key={key} data={block} />;
           case "shared.media":
             return <MediaComponent key={key} file={block.image as Media} />;
           case "shared.quote":
             return <Quote key={key} quote={block.body as string} author={block.title as string | undefined} />;
           case "shared.slider":
             return <SliderComponent key={key} files={block.files as Media[]} />;
+            
           default:
             if (process.env.NODE_ENV === 'development') {
               console.warn(`Unknown block component type: ${block.__component}`);
@@ -114,6 +117,6 @@ export default function BlockRenderer({ blocks }: BlockRendererProps) {
             return null;
         }
       })}
-    </>
+    </Fragment>
   );
 }

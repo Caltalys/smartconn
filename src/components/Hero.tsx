@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { motion, Variants } from "framer-motion";
-import SmartButton from "./SmartButton";
+import SmartButton from "./elements/SmartButton";
 import Image from "next/image";
 import { HeroSection } from "@/lib/types";
 import { getStrapiMedia } from "@/lib/utils";
