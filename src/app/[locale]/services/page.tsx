@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: ServicePageProps) {
 export default async function BlogPage({ params, searchParams }: ServicePageProps) {
     const { locale } = await params;
     const sp = searchParams ? await searchParams : {};
-    const t = await getTranslations({ locale, namespace: 'services' });
+    const t = await getTranslations('services');
     const tNav = await getTranslations({ locale, namespace: 'navigation' });
     const currentPage = Number(sp?.page) || 1;
     const articlesPerPage = 6;

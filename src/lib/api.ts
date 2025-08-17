@@ -20,7 +20,12 @@ export const getStrapiClient = (locale?: string): StrapiClient => {
     return strapi({
         baseURL: strapiUrl,
         ...(strapiToken && { auth: strapiToken }),
-        ...(locale && { headers: { "Accept-Language": locale } }),
+        ...(locale && {
+            headers: { 
+                "Accept-Language": locale, 
+                "cache": "no-store" 
+            },
+        }),
     });
 };
 
@@ -32,6 +37,7 @@ export const getHeaderSection = async (locale: string): Promise<LandingPage> => 
         'headerSection.navbar.menus.submenus',
     ];
     const response = await client.find({
+        locale: locale,
         populate: populateList
     });
     return response.data as unknown as LandingPage;  
@@ -47,6 +53,7 @@ export const getAboutPage = async (locale: string): Promise<AboutPage> => {
     //     'about.features.image',
     // ];
     const response = await client.find({
+        locale: locale,
         populate: {
             headline : true,
             blocks: {
@@ -88,9 +95,10 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
         'blocks'
         ];
     const response = await client.find({
+        locale: locale,
         populate: populateList
     });
-    console.log(response);
+    //console.log(response);
     return response.data as unknown as LandingPage;  
 };
 
@@ -100,17 +108,19 @@ export const getAllArticles = async (
 ): Promise<Articles> => {
     const client = getStrapiClient(locale).collection('articles');
     const response = await client.find({
+        locale: locale,
         populate: ['cover', 'category', 'author'],
         sort: 'publishedAt:desc',
         pagination: { page, pageSize },
     });
-    console.log(response);
+    //console.log(response);
     return response as unknown as Articles;
 };
 
 export const getArticleBySlug = async (slug: string, locale: string): Promise<Article | null> => {
     const client = getStrapiClient(locale).collection('articles');
     const articles = await client.find({
+        locale: locale,
         filters: { slug: { $eq: slug } },
         populate: {
             cover: true,
@@ -124,7 +134,7 @@ export const getArticleBySlug = async (slug: string, locale: string): Promise<Ar
             limit: 1
         }
     });
-    console.log(articles);
+    //console.log(articles);
     if (articles.data.length === 0) {
         return null;
     }
@@ -137,17 +147,19 @@ export const getAllServices = async (
 ): Promise<Services> => {
     const client = getStrapiClient(locale).collection('services');
     const response = await client.find({
+        locale: locale,
         populate: ['cover'],
         sort: 'publishedAt:desc',
         pagination: { page, pageSize },
     });
-    console.log(response);
+    //console.log(response);
     return response as unknown as Services;
 };
 
 export const getServiceBySlug = async (slug: string, locale: string): Promise<Service | null> => {
     const client = getStrapiClient(locale).collection('services');
     const services = await client.find({
+        locale: locale,
         filters: { slug: { $eq: slug } },
         populate: {
             cover: true,
@@ -159,7 +171,7 @@ export const getServiceBySlug = async (slug: string, locale: string): Promise<Se
             limit: 1
         }
     });
-    console.log(services);
+    //console.log(services);
     if (services.data.length === 0) {
         return null;
     }

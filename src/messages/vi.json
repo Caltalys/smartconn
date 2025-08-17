@@ -62,7 +62,7 @@
         "subtitle": "Giải Pháp Được Thiết Kế Riêng Cho Doanh Nghiệp Của Bạn",
         "backToServices": "Quay lại",
         "read_more": "Đọc thêm",
-        "noAServiceFound": "Không tìm thấy dịch vụ nào.",
+        "noServiceFound": "Không tìm thấy dịch vụ nào.",
         "items": [
             {
                 "id": "it_solutions",

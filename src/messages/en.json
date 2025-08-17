@@ -14,11 +14,13 @@
         "testimonials": "Testimonials",
         "faq": "FAQ",
         "blog": "Blog",
+        "categories": "Categories",
         "services_submenu": {
             "training": "Corporate Training & Coaching",
             "it_solutions": "IT Solutions & Equipment Consulting",
             "digital_marketing": "AI-Powered Full-Service Advertising & Marketing"
-        }
+        },
+        "contact": "Contact"
     },
     "contact": {
         "contact_us": "Contact Us"
@@ -52,6 +54,9 @@
     "services": {
         "title": "Our Services",
         "subtitle": "Solutions Tailored for Your Business",
+        "backToServices": "Back to services",
+        "read_more": "Read more",
+        "noServiceFound": "No service found.",
         "items": [
             {
                 "id": "it_solutions",
@@ -158,6 +163,11 @@
         "subtitle": "Stay Updated with the Latest Insights and Trends",
         "read_more": "Read More",
         "back_to_blog": "Back to all articles",
+        "categoriesTitle": "Article Categories",
+        "categoriesSubtitle": "Explore articles by topic.",
+        "noCategoriesFound": "No categories found.",
+        "noArticlesFound": "No articles found.",
+        "viewAllArticles": "View all articles",
         "items": [
             {
                 "image": "/blog/post-1.jpg",

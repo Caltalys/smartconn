@@ -10,6 +10,7 @@ import Social from "./Social";
 import { useServiceContext } from "@/context/ServiceContext";
 import { HeaderSection } from "@/lib/types";
 import { Link, usePathname } from "@/i18n/navigation";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,7 @@ const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection })
                 <SheetHeader>
                     <SheetTitle className="flex items-center justify-between pr-8">
                         <Logo />
-                        {/* <LanguageSwitcher /> */}
+                        <LanguageSwitcher />
                     </SheetTitle>
                 </SheetHeader>
                 {/* This nav section now correctly fills the available space and centers the links. */}

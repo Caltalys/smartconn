@@ -37,7 +37,7 @@ export async function generateMetadata(
 export default async function ArticlePage({ params }: ServicePageProps) {
   const { slug, locale } = await params;
   const article = await getServiceBySlug(slug, locale);
-  const t = await getTranslations({ locale, namespace: 'services' });
+  const t = await getTranslations('services');
   const tNav = await getTranslations({ locale, namespace: 'navigation' });
   
   if (!article) {

@@ -8,6 +8,7 @@ import Logo from "./Logo";
 import NavMobileMenu from "./NavMobileMenu";
 import { useServiceContext } from "@/context/ServiceContext";
 import { HeaderSection } from "@/lib/types";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = ({ data }: { data?: HeaderSection }) => {
   const { setActiveService } = useServiceContext();
@@ -91,9 +92,9 @@ const Header = ({ data }: { data?: HeaderSection }) => {
             ))}
           </ul>
           {/* Right side actions */}
-          {/* <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4">
             <LanguageSwitcher />
-          </div> */}
+          </div>
         </nav>
 
         {/* Mobile Menu Button */}
