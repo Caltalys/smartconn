@@ -44,7 +44,7 @@ const Hero = ({ data }: { data?: HeroSection }) => {
   return (
     <section
       id="home"
-      className="relative py-20 xl:py-32 min-h-screen flex items-center overflow-hidden"
+      className="relative py-16 xl:py-32 flex items-center overflow-hidden"
     >
       {/* Blurred Background & Overlay */}
       <div className="absolute inset-0 bg-[url('/bg-4.jpg')] bg-cover bg-center bg-no-repeat blur-sm scale-105"></div>
