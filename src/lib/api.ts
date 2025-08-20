@@ -98,7 +98,7 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
         locale: locale,
         populate: populateList
     });
-    //console.log(response);
+    console.log(response);
     return response.data as unknown as LandingPage;  
 };
 
