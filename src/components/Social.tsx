@@ -1,5 +1,6 @@
 import { RiFacebookFill, RiInstagramFill, RiLinkedinFill, RiTwitterFill } from "react-icons/ri";
 import type { IconType } from "react-icons";
+import { FooterSection } from "@/lib/types";
 
 // Define the shape of a social link for better type safety and maintainability
 type SocialLink = {
@@ -8,16 +9,9 @@ type SocialLink = {
     Icon: IconType;
 };
 
-// Centralize social link data in an array. This makes it easy to add, remove, or modify links.
-const socialLinks: SocialLink[] = [
-    { name: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61579009258778', Icon: RiFacebookFill },
-    { name: 'Twitter', href: '#', Icon: RiTwitterFill },
-    { name: 'Instagram', href: '#', Icon: RiInstagramFill },
-    { name: 'LinkedIn', href: '#', Icon: RiLinkedinFill },
-];
-
 // Define the component's props for clarity and type-checking
 type SocialProps = {
+    data?: FooterSection;
     containerStyle?: string;
     iconStyle?: string;
 };
@@ -26,7 +20,14 @@ type SocialProps = {
  * A reusable component to display social media links.
  * This refactored version is data-driven, fixes prop handling, and has improved styling with sensible defaults.
  */
-const Social = ({ containerStyle, iconStyle }: SocialProps) => {
+const Social = ({ containerStyle, iconStyle, data }: SocialProps) => {
+    // Centralize social link data in an array. This makes it easy to add, remove, or modify links.
+const socialLinks: SocialLink[] = [
+    { name: 'Facebook', href: data?.facebookUrl || '#', Icon: RiFacebookFill },
+    { name: 'Twitter', href: data?.twitterUrl || '#', Icon: RiTwitterFill },
+    { name: 'Instagram', href: data?.instagramUrl || '#', Icon: RiInstagramFill },
+    { name: 'LinkedIn', href: data?.linkedinUrl || '#', Icon: RiLinkedinFill },
+];
     return (
         <div className={containerStyle || 'flex items-center gap-4'}>
             {socialLinks.map(({ name, href, Icon }) => (

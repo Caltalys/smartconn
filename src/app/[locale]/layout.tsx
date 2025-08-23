@@ -9,7 +9,7 @@ import {
 } from "next-intl/server";
 import { notFound } from "next/navigation";
 import "../globals.css";
-import { getHeaderSection } from "@/lib/api";
+import { getHeaderFooterSection } from "@/lib/api";
 import Topbar from "@/components/Topbar";
 
 export function generateStaticParams() {
@@ -37,9 +37,11 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const [landingPageResponse] = await Promise.all([
-    getHeaderSection(locale),
+    getHeaderFooterSection(locale),
   ]);
   const headerSection = landingPageResponse?.headerSection;
+  const footerSection = landingPageResponse?.footerSection;
+
   const messages = await getMessages();
 
   return (
@@ -47,10 +49,10 @@ export default async function LocaleLayout({
       <body className={`antialiased bg-background text-foreground`}>
         <div className="relative flex flex-col min-h-screen">
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <Topbar />
+            <Topbar data={footerSection}/>
             <Header data={headerSection} />
               {children}
-            <Footer />
+            <Footer  data={footerSection}/>
           </NextIntlClientProvider>
         </div>
       </body>

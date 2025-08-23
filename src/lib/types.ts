@@ -80,10 +80,6 @@ export interface Navbar {
   menus: LinkItem[];
 }
 
-export interface HeaderSection extends StrapiComponent {
-  navbar: Navbar;
-}
-
 export interface LandingPage extends StrapiEntity {
   headerSection?: HeaderSection;
   heroSection?: HeroSection;
@@ -91,7 +87,12 @@ export interface LandingPage extends StrapiEntity {
   servicesSection?: ServicesSection;
   advantagesSection?: AdvantagesSection;
   partnerSection?: PartnerSection;
+  footerSection?: FooterSection;
   blocks: Block[];
+}
+
+export interface HeaderSection extends StrapiComponent {
+  navbar: Navbar;
 }
 
 export interface BaseSection {
@@ -134,6 +135,19 @@ export interface AboutPage extends StrapiComponent {
   headline?: Headline;
   blocks: Block[];
   features: FeatureItem[];
+}
+
+export interface FooterSection extends StrapiComponent {
+  title: string | null;
+  facebookUrl: string | null;
+  twitterUrl: string | null;
+  instagramUrl: string | null;
+  linkedinUrl: string | null;
+  addredd: string | null;
+  phone: string | null;
+  email: string | null;
+  copyright: string | null;
+  quickLinks: Cta[]
 }
 
 export interface FeatureItem {

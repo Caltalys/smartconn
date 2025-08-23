@@ -29,12 +29,13 @@ export const getStrapiClient = (locale?: string): StrapiClient => {
     });
 };
 
-export const getHeaderSection = async (locale: string): Promise<LandingPage> => {
+export const getHeaderFooterSection = async (locale: string): Promise<LandingPage> => {
     const client = getStrapiClient(locale).single('landing-page');
     const populateList = [
         'headerSection.navbar',
         'headerSection.navbar.menus',
         'headerSection.navbar.menus.submenus',
+        'footerSection.quickLinks'
     ];
     const response = await client.find({
         locale: locale,
@@ -92,13 +93,14 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
         'partnerSection.base.ctas',
         'partnerSection.items',
         'partnerSection.items.image',
+        'footerSection.quickLinks',
         'blocks'
         ];
     const response = await client.find({
         locale: locale,
         populate: populateList
     });
-    console.log(response);
+    //console.log(response);
     return response.data as unknown as LandingPage;  
 };
 
@@ -109,11 +111,28 @@ export const getAllArticles = async (
     const client = getStrapiClient(locale).collection('articles');
     const response = await client.find({
         locale: locale,
+        filters: { category: { id : { $ne: 6 }} },
         populate: ['cover', 'category', 'author'],
         sort: 'publishedAt:desc',
         pagination: { page, pageSize },
     });
     //console.log(response);
+    return response as unknown as Articles;
+};
+
+export const getRecruitmentArticles = async (
+    locale: string,
+    { page = 1, pageSize = 10 }: { page?: number; pageSize?: number } = {}
+): Promise<Articles> => {
+    const client = getStrapiClient(locale).collection('articles');
+    const response = await client.find({
+        locale: locale,
+        filters: { category: { id : { $eq: 6 }} },
+        populate: ['cover', 'category', 'author'],
+        sort: 'publishedAt:desc',
+        pagination: { page, pageSize },
+    });
+    console.log(response);
     return response as unknown as Articles;
 };
 

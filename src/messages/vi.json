@@ -222,5 +222,11 @@
             }
         ],
         "partners_title": "Đối tác của chúng tôi"
+    },
+    "recruitment" : {
+        "title": "Tuyển dụng",
+        "subtitle": "",
+        "read_more": "Đọc thêm",
+        "noArticlesFound": "Không tìm thấy bài viết nào."
     }
 }

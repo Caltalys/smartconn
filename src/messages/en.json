@@ -226,5 +226,11 @@
             }
         ],
         "partners_title": "Our Partners"
+    },
+    "recruitment" : {
+        "title": "Recruitment",
+        "subtitle": "",
+        "read_more": "Read More",
+        "noArticlesFound": "No articles found."
     }
 }

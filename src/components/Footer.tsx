@@ -6,22 +6,17 @@ import Social from './Social';
 import { Link as ScrollLink } from 'react-scroll';
 import { RiMapPin2Fill, RiMailFill, RiPhoneFill } from 'react-icons/ri';
 import Link from 'next/link';
+import { FooterSection } from '@/lib/types';
 
-const Footer = () => {
+const Footer = ({ data }: { data?: FooterSection }) => {
     const t = useTranslations('footer');
     const tNav = useTranslations('navigation');
     const currentYear = new Date().getFullYear();
 
-    const navLinks = [
-        { href: '/', id: "home" },
-        { href: '/about', id: "about" },
-        { href: '/services', id: "services" }
-    ];
-
     const contactItems = [
-        { icon: <RiMapPin2Fill />, text: t('address') },
-        { icon: <RiPhoneFill />, text: t('phone'), href: `tel:${t('phone').replace(/\s/g, '')}` },
-        { icon: <RiMailFill />, text: t('email'), href: `mailto:${t('email')}` },
+        { icon: <RiMapPin2Fill />, text: data?.addredd || t('address'), href: '#' },
+        { icon: <RiPhoneFill />, text: data?.phone || t('phone'), href: `tel:${data?.phone || t('phone').replace(/\s/g, '')}` },
+        { icon: <RiMailFill />, text: data?.email || t('email'), href: `mailto:${data?.email || t('email')}` },
     ];
 
     return (
@@ -44,10 +39,10 @@ const Footer = () => {
                     <div className="hidden md:flex flex-col gap-6 items-start">
                         <h4 className="font-semibold text-lg">{t('quick_links')}</h4>
                         <ul className="flex flex-col gap-3 items-center md:items-start">
-                            {navLinks.map(link => (
+                            {data?.quickLinks.map(link => (
                                 <li key={link.id}>
                                     <Link href={link.href}>
-                                        {tNav(link.id)}
+                                        {link.label}
                                     </Link>
                                 </li>
                             ))}
@@ -57,7 +52,7 @@ const Footer = () => {
                     <div className="md:hidden flex flex-col gap-2 items-center">
                         <h4 className="font-semibold text-lg">{t('quick_links')}</h4>
                         <ul className="flex items-center">
-                            {navLinks.map(link => (
+                            {data?.quickLinks.map(link => (
                                 <li key={link.id} className="after:content-['/'] after:mx-2 last:after:content-none">
                                     <ScrollLink
                                         to={link.href}
@@ -67,7 +62,7 @@ const Footer = () => {
                                         duration={500}
                                         className="text-sm text-primary hover:text-accent cursor-pointer transition-colors"
                                     >
-                                        {tNav(link.id)}
+                                        {link.label}
                                     </ScrollLink>
                                 </li>
                             ))}
@@ -114,7 +109,7 @@ const Footer = () => {
             </div>
             {/* Copyright */}
             <div className="bg-primary/70 text-white text-center text-sm py-3 z-10">
-                <p>{t('copyright', { year: currentYear })}</p>
+                <p>{data?.copyright}</p>
             </div>
         </footer>
     );
