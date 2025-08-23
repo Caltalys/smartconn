@@ -191,6 +191,7 @@
         "categoriesSubtitle": "Khám phá các bài viết theo từng chủ đề.",
         "noCategoriesFound": "Không tìm thấy danh mục nào.",
         "noArticlesFound": "Không tìm thấy bài viết nào.",
+        "searchPlaceholder": "Tìm kiếm bài viết...",
         "viewAllArticles": "Xem tất cả",
         "items": []
     },

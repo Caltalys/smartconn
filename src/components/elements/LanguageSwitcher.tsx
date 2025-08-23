@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { useTransition } from 'react';
 
 export default function LanguageSwitcher() {

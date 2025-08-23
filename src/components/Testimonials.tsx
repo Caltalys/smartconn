@@ -10,7 +10,7 @@ import {
     CarouselPrevious,
 } from '@/components/ui/carousel';
 import Image from 'next/image';
-import Pretitle from './Pretitle';
+import Pretitle from './elements/Pretitle';
 import { motion } from 'framer-motion';
 
 // Define the type for a testimonial item

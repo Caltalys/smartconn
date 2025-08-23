@@ -97,9 +97,9 @@ const Hero = ({ data }: { data?: HeroSection }) => {
               <div className="relative aspect-video w-full max-w-2xl mx-auto">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
-                  src={`https://www.youtube.com/embed/${youtubeId}?rel=0&autoplay=1&mute=1`}
+                  src={`https://www.youtube.com/embed/${youtubeId}?rel=0&autoplay=0&mute=1`}
                   title={heading}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 ></iframe>
               </div>

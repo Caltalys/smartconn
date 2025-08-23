@@ -1,8 +1,8 @@
 import { getAllServices } from '@/lib/api';
 import { getTranslations } from 'next-intl/server';
-import Pagination from '@/components/Pagination';
-import Breadcrumbs from '@/components/Breadcrumbs';
-import Pretitle from '@/components/Pretitle';
+import Pagination from '@/components/elements/Pagination';
+import Breadcrumbs from '@/components/elements/Breadcrumbs';
+import Pretitle from '@/components/elements/Pretitle';
 import ServiceCard from '@/components/service/ServiceCard';
 
 interface ServicePageProps {

@@ -2,6 +2,17 @@
 import { strapi, type StrapiClient } from "@strapi/client";
 import type { AboutPage, Article, Articles, LandingPage, Service, Services } from "./types";
 
+type StrapiFilterValue =
+    | string
+    | number
+    | boolean
+    | { [key: string]: StrapiFilterValue }
+    | StrapiFilterValue[];
+
+type StrapiFilters = {
+    [key: string]: StrapiFilterValue;
+};
+
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 const strapiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
@@ -106,12 +117,23 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
 
 export const getAllArticles = async (
     locale: string,
-    { page = 1, pageSize = 10 }: { page?: number; pageSize?: number } = {}
+    { page = 1, pageSize = 10, query }: { page?: number; pageSize?: number; query?: string } = {}
 ): Promise<Articles> => {
     const client = getStrapiClient(locale).collection('articles');
+
+    const filters: StrapiFilters = {
+        category: { id: { $notIn: [6,7] } },
+    };
+    if (query) {
+        filters.$or = [
+            { title: { $containsi: query } },
+            { description: { $containsi: query } },
+            { category: { name: { $containsi: query } } },
+        ];
+    }
     const response = await client.find({
         locale: locale,
-        filters: { category: { id : { $ne: 6 }} },
+        filters,
         populate: ['cover', 'category', 'author'],
         sort: 'publishedAt:desc',
         pagination: { page, pageSize },

@@ -1,8 +1,8 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import Logo from './Logo';
-import Social from './Social';
+import Logo from './elements/Logo';
+import Social from './elements/Social';
 import { Link as ScrollLink } from 'react-scroll';
 import { RiMapPin2Fill, RiMailFill, RiPhoneFill } from 'react-icons/ri';
 import Link from 'next/link';
@@ -10,9 +10,6 @@ import { FooterSection } from '@/lib/types';
 
 const Footer = ({ data }: { data?: FooterSection }) => {
     const t = useTranslations('footer');
-    const tNav = useTranslations('navigation');
-    const currentYear = new Date().getFullYear();
-
     const contactItems = [
         { icon: <RiMapPin2Fill />, text: data?.addredd || t('address'), href: '#' },
         { icon: <RiPhoneFill />, text: data?.phone || t('phone'), href: `tel:${data?.phone || t('phone').replace(/\s/g, '')}` },

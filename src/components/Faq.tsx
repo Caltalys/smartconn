@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import Pretitle from './Pretitle';
+import Pretitle from './elements/Pretitle';
 import { motion } from 'framer-motion';
 
 // Define the type for a FAQ item for better type safety

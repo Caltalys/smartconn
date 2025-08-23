@@ -1,7 +1,7 @@
 
 import { FooterSection } from "@/lib/types";
 import Contact from "./Contact";
-import Social from "./Social";
+import Social from "./elements/Social";
 
 const Topbar = ({ data }: { data?: FooterSection }) => {
   return (

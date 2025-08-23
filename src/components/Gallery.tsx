@@ -15,7 +15,7 @@ import { motion } from "framer-motion";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
-import Pretitle from "./Pretitle";
+import Pretitle from "./elements/Pretitle";
 
 const SectionHeader = ({ title, subtitle }: { title: string; subtitle?: string }) => (
   <motion.div

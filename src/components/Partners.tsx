@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Pretitle from './Pretitle';
+import Pretitle from './elements/Pretitle';
 import Link from 'next/link';
 import {
     Carousel,

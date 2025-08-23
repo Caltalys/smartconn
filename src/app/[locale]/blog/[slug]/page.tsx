@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { getStrapiMedia } from '@/lib/utils';
 import { formatDate } from '@/lib/format-date';
 import BlockRenderer from '@/components/blog/BlockRenderer';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import Breadcrumbs from '@/components/elements/Breadcrumbs';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { RiArrowLeftLine } from 'react-icons/ri';

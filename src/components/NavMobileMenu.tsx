@@ -2,15 +2,15 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
-import Logo from "./Logo";
+import Logo from "./elements/Logo";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { useState } from "react";
 import { RiMenu3Fill, RiArrowDownSLine } from "react-icons/ri";
-import Social from "./Social";
+import Social from "./elements/Social";
 import { useServiceContext } from "@/context/ServiceContext";
 import { HeaderSection } from "@/lib/types";
 import { Link, usePathname } from "@/i18n/navigation";
-import LanguageSwitcher from "./LanguageSwitcher";
+import LanguageSwitcher from "./elements/LanguageSwitcher";
 
 const NavMobileMenu = ({ navigationLinks }: { navigationLinks?: HeaderSection }) => {
     const [isOpen, setIsOpen] = useState(false);

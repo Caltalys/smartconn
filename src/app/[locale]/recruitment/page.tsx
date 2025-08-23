@@ -1,14 +1,10 @@
 import { getRecruitmentArticles } from '@/lib/api';
 import { getTranslations } from 'next-intl/server';
-import Pretitle from '@/components/Pretitle';
+import Pretitle from '@/components/elements/Pretitle';
 import RecruitmentCard from '@/components/blog/RecruitmentCard';
 
 interface RecruitmentPageProps {
     params: Promise<{ locale: string }>;
-}
-
-export async function generateMetadata({ params }: RecruitmentPageProps) {
-    const { locale } = await params;
 }
 
 export default async function recruitmentPage({ params }: RecruitmentPageProps) {
@@ -33,7 +29,7 @@ export default async function recruitmentPage({ params }: RecruitmentPageProps) 
 
                 {hasArticles ? (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
                             {articles.map((article) => (
                                 <RecruitmentCard key={article.id} article={article} locale={locale} readMoreText={t('read_more')} />
                             ))}

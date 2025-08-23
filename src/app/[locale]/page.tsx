@@ -1,5 +1,5 @@
 import About from "@/components/About"
-import BackToTopButton from "@/components/BackToTopButton"
+import BackToTopButton from "@/components/elements/BackToTopButton"
 import Hero from "@/components/Hero"
 import Services from "@/components/Services"
 import Advantages from "@/components/Advantages"

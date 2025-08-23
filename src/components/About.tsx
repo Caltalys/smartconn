@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Pretitle from "./Pretitle";
+import Pretitle from "./elements/Pretitle";
 import { RiArrowRightUpLine } from "react-icons/ri";
 import { AboutSection, Cta } from "@/lib/types";
 import { getStrapiMedia } from "@/lib/utils";

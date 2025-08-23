@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Pretitle from "./Pretitle";
+import Pretitle from "./elements/Pretitle";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { RiArrowRightUpLine } from "react-icons/ri";
 import { FeatureItem, ServicesSection } from "@/lib/types";

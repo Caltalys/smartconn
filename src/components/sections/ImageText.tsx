@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import Pretitle from "../Pretitle";
+import Pretitle from "../elements/Pretitle";
 import { getStrapiMedia } from "@/lib/utils";
 import { Headline, Media } from "@/lib/types";
 

@@ -4,11 +4,11 @@ import Link from "next/link";
 import { usePathname } from "@/i18n/navigation";
 import { ChevronDown } from 'lucide-react';
 import { Link as ScrollLink } from "react-scroll";
-import Logo from "./Logo";
+import Logo from "./elements/Logo";
 import NavMobileMenu from "./NavMobileMenu";
 import { useServiceContext } from "@/context/ServiceContext";
 import { HeaderSection } from "@/lib/types";
-import LanguageSwitcher from "./LanguageSwitcher";
+import LanguageSwitcher from "./elements/LanguageSwitcher";
 
 const Header = ({ data }: { data?: HeaderSection }) => {
   const { setActiveService } = useServiceContext();

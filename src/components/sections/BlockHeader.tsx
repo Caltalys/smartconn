@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Pretitle from '../Pretitle';
+import Pretitle from '../elements/Pretitle';
 
 interface BlockHeaderProps {
     pretitle?: string;

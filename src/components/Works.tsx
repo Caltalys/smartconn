@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import Pretitle from './Pretitle';
+import Pretitle from './elements/Pretitle';
 import { Button } from './ui/button';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';

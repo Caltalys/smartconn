@@ -1,13 +1,14 @@
 import { getAllArticles } from '@/lib/api';
 import { getTranslations } from 'next-intl/server';
-import Pagination from '@/components/Pagination';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import Pagination from '@/components/elements/Pagination';
+import Breadcrumbs from '@/components/elements/Breadcrumbs';
 import ArticleCard from '@/components/blog/ArticleCard';
-import Pretitle from '@/components/Pretitle';
+import Pretitle from '@/components/elements/Pretitle';
+import BlogSearch from '@/components/blog/BlogSearch';
 
 interface BlogPageProps {
     params: Promise<{ locale: string }>;
-    searchParams?: Promise<{ page?: string }>;
+    searchParams?: Promise<{ page?: string; query?: string }>;
 }
 
 export async function generateMetadata({ params }: BlogPageProps) {
@@ -22,14 +23,16 @@ export async function generateMetadata({ params }: BlogPageProps) {
 export default async function BlogPage({ params, searchParams }: BlogPageProps) {
     const { locale } = await params;
     const sp = searchParams ? await searchParams : {};
+    const query = sp?.query || '';
     const t = await getTranslations({ locale, namespace: 'blog' });
     const tNav = await getTranslations({ locale, namespace: 'navigation' });
     const currentPage = Number(sp?.page) || 1;
-    const articlesPerPage = 10;
+    const articlesPerPage = 8;
 
     const articlesResponse = await getAllArticles(locale, {
         page: currentPage,
         pageSize: articlesPerPage,
+        query: query,
     });
 
     const articles = articlesResponse.data;
@@ -52,9 +55,11 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
                     <h2 className="mb-4">{t('subtitle')}</h2>
                 </div>
 
+                <BlogSearch />
+
                 {hasArticles ? (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
                             {articles.map((article) => (
                                 <ArticleCard key={article.id} article={article} locale={locale} readMoreText={t('read_more')} />
                             ))}

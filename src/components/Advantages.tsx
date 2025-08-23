@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import Pretitle from './Pretitle';
+import Pretitle from './elements/Pretitle';
 import { RiStarLine, RiTeamLine, RiToolsLine, RiGroup2Line } from 'react-icons/ri';
 import { AdvantagesSection } from '@/lib/types';
 
