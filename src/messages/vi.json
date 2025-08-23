@@ -227,6 +227,7 @@
         "title": "Tuyển dụng",
         "subtitle": "",
         "read_more": "Đọc thêm",
-        "noArticlesFound": "Không tìm thấy bài viết nào."
+        "noArticlesFound": "Không tìm thấy bài viết nào.",
+        "back_to_recruitment": "Quay lại danh sách tuyển dụng"
     }
 }

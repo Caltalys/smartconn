@@ -37,7 +37,7 @@ export async function generateMetadata(
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug, locale } = await params;
   const article = await getArticleBySlug(slug, locale);
-  const t = await getTranslations({ locale, namespace: 'blog' });
+  const t = await getTranslations({ locale, namespace: 'recruitment' });
   const tNav = await getTranslations({ locale, namespace: 'navigation' });
   
   if (!article) {
@@ -48,7 +48,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   const breadcrumbItems = [
     { label: tNav('home'), href: '/' },
-    { label: t('title'), href: '/blog' },
+    { label: t('title'), href: '/recruitment' },
     { label: article.title }
   ];
 
@@ -85,10 +85,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </div>
 
           <div className="mt-12 text-center">
-            <Link href="/blog">
+            <Link href="/recruitment">
               <Button variant="outline">
                 <RiArrowLeftLine className="mr-2 h-4 w-4" />
-                {t('back_to_blog')}
+                {t('back_to_recruitment')}
               </Button>
             </Link>
           </div>
