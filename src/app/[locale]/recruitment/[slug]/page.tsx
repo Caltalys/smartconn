@@ -67,7 +67,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             </div>
           </header>
 
-          {imageUrl && (
+          {/* {imageUrl && (
             <div className="relative w-full h-96 mb-8 rounded-lg overflow-hidden shadow-lg">
               <Image
                 src={imageUrl}
@@ -77,7 +77,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 priority
               />
             </div>
-          )}
+          )} */}
 
           <div className="prose prose-lg dark:prose-invert max-w-none">
             {/* <p className="lead text-xl font-medium">{article.description}</p> */}

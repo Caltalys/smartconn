@@ -44,7 +44,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound();
   }
 
-  const imageUrl = getStrapiMedia(article.cover?.url);
+  //const imageUrl = getStrapiMedia(article.cover?.url);
 
   const breadcrumbItems = [
     { label: tNav('home'), href: '/' },
@@ -54,7 +54,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <main className="py-4 xl:py-8">
-      <div className="container mx-auto px-6 max-w-4xl">
+      <div className="container mx-auto px-6 max-w-6xl">
         <article>
           <header className="mb-8">
             <Breadcrumbs items={breadcrumbItems} />
@@ -67,7 +67,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             </div>
           </header>
 
-          {imageUrl && (
+          {/* {imageUrl && (
             <div className="relative w-full h-96 mb-8 rounded-lg overflow-hidden shadow-lg">
               <Image
                 src={imageUrl}
@@ -77,9 +77,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 priority
               />
             </div>
-          )}
+          )} */}
 
-          <div className="prose prose-lg dark:prose-invert max-w-none">
+          <div className="prose md:prose-lg lg:prose-xl dark:prose-invert max-w-none ">
             {/* <p className="lead text-xl font-medium">{article.description}</p> */}
             {article.blocks && <BlockRenderer blocks={article.blocks} />}
           </div>

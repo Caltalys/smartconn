@@ -105,7 +105,8 @@ export const getLandingPage = async (locale: string): Promise<LandingPage> => {
         'partnerSection.items',
         'partnerSection.items.image',
         'footerSection.quickLinks',
-        'blocks'
+        'blocks.image',
+        'blocks.cta'
         ];
     const response = await client.find({
         locale: locale,

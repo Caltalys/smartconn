@@ -45,9 +45,15 @@ interface BlockRendererProps {
 }
 
 const RichText = ({ body }: { body: string }) => (
-  <div className="text-justify">
-    <ReactMarkdown>{body}</ReactMarkdown>
-  </div>
+    <div className="text-justify">
+        <ReactMarkdown
+            components={{
+                p: ({ node, ...props }) => <p className="mb-4" {...props} />,
+            }}
+        >
+            {body}
+        </ReactMarkdown>
+    </div>
 );
 
 const MediaComponent = ({ file }: { file: Media }) => {

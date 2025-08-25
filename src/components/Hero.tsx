@@ -99,7 +99,6 @@ const Hero = ({ data }: { data?: HeroSection }) => {
                   className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
                   src={`https://www.youtube.com/embed/${youtubeId}?rel=0&autoplay=0&mute=1`}
                   title={heading}
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 ></iframe>
               </div>

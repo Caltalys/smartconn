@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import Pretitle from "../elements/Pretitle";
 import { getStrapiMedia } from "@/lib/utils";
 import { Headline, Media } from "@/lib/types";
+import SmartButton from "../elements/SmartButton";
 
 export interface ImageTextProps {
-    headline?: Headline;
+    headline?: string;
     title?: string;
+    subtitle?: string;
     text?: string;
     image?: Media;
     imagePosition?: 'Left' | 'Right';
@@ -18,7 +20,7 @@ export interface ImageTextProps {
     };
 }
 
-const ImageText = ({ headline, title, text, image, imagePosition = 'Left' }: ImageTextProps) => {
+const ImageText = ({ headline, title, subtitle, text, image, imagePosition = 'Left', cta }: ImageTextProps) => {
 
     const imageUrl = image?.url ? getStrapiMedia(image.url) : undefined;
     const imageAlt = image?.alternativeText || title || "";
@@ -51,14 +53,15 @@ const ImageText = ({ headline, title, text, image, imagePosition = 'Left' }: Ima
                     )}
 
                     <div className={`flex flex-col items-center xl:items-start text-center xl:text-left ${textOrder}`}>
-                        {headline?.headline && <Pretitle text={headline.headline} />}
+                        {headline && <Pretitle text={headline} center={true}/>}
                         {title && <h2 className="mb-6">{title}</h2>}
+                        {subtitle && <h3 className="mb-6">{subtitle}</h3>}
                         <p className="mb-8 text-muted-foreground max-w-2xl">{text}</p>
-                        {/* {cta && cta.label && cta.href && (
+                        {cta && cta.label && cta.href && (
                             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-4">
                                 <SmartButton text={cta.label} href={cta.href} />
                             </div>
-                        )} */}
+                        )}
                     </div>
                 </div>
             </div>

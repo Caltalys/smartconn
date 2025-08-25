@@ -18,13 +18,13 @@ export default function ArticleCard({ article, locale, readMoreText }: ArticleCa
     return (
         <article className="overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-lg bg-white dark:bg-gray-800 flex flex-col h-full">
             <Link href={articleUrl}>
-                <div className="relative h-56 w-full">
+                <div className="relative w-full aspect-[16/9] lg:aspect-[4/3]">
                     {imageUrl ? (
                         <Image
                             src={imageUrl}
                             alt={article.cover?.alternativeText || article.title}
                             fill
-                            className="object-cover"
+                            className="object-cover aspect-[16/9] lg:aspect-[4/3]"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                     ) : (
@@ -37,7 +37,7 @@ export default function ArticleCard({ article, locale, readMoreText }: ArticleCa
             <div className="p-6 flex-grow flex flex-col">
                 <div className="mb-4 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                     {article.category ? (
-                        <Link href={categoryUrl} className="font-medium text-primary hover:underline">
+                        <Link href={categoryUrl} className="text-primary hover:underline">
                             {article.category.name}
                         </Link>
                     ) : <span />}
@@ -45,7 +45,7 @@ export default function ArticleCard({ article, locale, readMoreText }: ArticleCa
                         {formatDate(article.publishedAt, locale)}
                     </time>
                 </div>
-                <h3 className="mb-2 font-bold tracking-tight text-primary dark:text-white text-justify line-clamp-3">
+                <h3 className="mb-2 tracking-tight text-primary dark:text-white line-clamp-3">
                     <Link href={articleUrl} className="hover:underline">
                         {article.title}
                     </Link>

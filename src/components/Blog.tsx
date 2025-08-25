@@ -24,22 +24,19 @@ const Blog = ({ articles }: { articles?: Article[] }) => {
     const t = useTranslations('blog');
     const locale = useLocale();
 
-    const hasArticles = articles && articles.length > 0;
-
-    const items: BlogPost[] = hasArticles
-        ? articles.map(article => ({
-            slug: article.slug,
-            title: article.title,
-            description: article.description,
-            image: (article.cover?.url && getStrapiMedia(article.cover.url)) || '/post-placeholder.jpg',
-            category: article.category?.name || 'Uncategorized',
-            date: article.publishedAt ? new Date(article.publishedAt).toLocaleDateString(locale, {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            }) : 'No date',
-        }))
-        : (t.raw('items') as BlogPost[]);
+    // Chỉ sử dụng dữ liệu từ `articles` prop (API). Nếu không có, `items` sẽ là một mảng rỗng.
+    const items: BlogPost[] = (articles || []).map(article => ({
+        slug: article.slug,
+        title: article.title,
+        description: article.description,
+        image: (article.cover?.url && getStrapiMedia(article.cover.url)) || '/post-placeholder.jpg',
+        category: article.category?.name || 'Uncategorized',
+        date: article.publishedAt ? new Date(article.publishedAt).toLocaleDateString(locale, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        }) : 'No date',
+    }));
 
     return (
         <motion.section
@@ -57,46 +54,54 @@ const Blog = ({ articles }: { articles?: Article[] }) => {
                 </div>
 
                 {/* Blog Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-8">
-                    {items.map((post, index) => (
-                        <Card key={index} className="overflow-hidden shadow-lg flex flex-col group bg-primary/5 border-primary/10 py-0 gap-0">
-                            <CardHeader className="p-0">
-                                <div className="relative w-full h-60">
-                                    <Image
-                                        src={post.image}
-                                        alt={post.title}
-                                        fill
-                                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    />
-                                </div>
-                            </CardHeader>
-                            <CardContent className="p-6 flex-grow">
-                                <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
-                                    <span className="text-accent font-semibold">{post.category}</span>
-                                    <span>&bull;</span>
-                                    <span>{post.date}</span>
-                                </div>
-                                <CardTitle className="text-2xl mb-2 line-clamp-2">{post.title}</CardTitle>
-                                <p className="text-muted-foreground text-sm line-clamp-3">
-                                    {post.description}
-                                </p>
-                            </CardContent>
-                            <CardFooter className="p-6 pt-0">
-                                <Link href={`/blog/${post.slug}`} className="w-full">
-                                    <Button variant="outline" className="w-full hover:bg-accent hover:text-accent-foreground">
-                                        {t('read_more')}
-                                    </Button>
-                                </Link>
-                            </CardFooter>
-                        </Card>
-                    ))}
-                </div>
-                <div className="text-center mt-12">
-                    <Link href="/blog">
-                        <Button variant="default">{t('viewAllArticles')}</Button>
-                    </Link>
-                </div>
+                {items.length > 0 ? (
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-8">
+                            {items.map((post, index) => (
+                                <Card key={index} className="overflow-hidden shadow-lg flex flex-col group bg-primary/5 border-primary/10 py-0 gap-0">
+                                    <CardHeader className="p-0">
+                                        <div className="relative w-full aspect-[16/9] lg:aspect-[4/3]">
+                                            <Image
+                                                src={post.image}
+                                                alt={post.title}
+                                                fill
+                                                className="object-cover aspect-[16/9] lg:aspect-[4/3] group-hover:scale-105 transition-transform duration-300"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                            />
+                                        </div>
+                                    </CardHeader>
+                                    <CardContent className="p-6 flex-grow">
+                                        <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
+                                            <span className="text-accent font-semibold">{post.category}</span>
+                                            <span>&bull;</span>
+                                            <span>{post.date}</span>
+                                        </div>
+                                        <CardTitle className="text-2xl mb-2 line-clamp-2">{post.title}</CardTitle>
+                                        <p className="text-muted-foreground text-sm line-clamp-3">
+                                            {post.description}
+                                        </p>
+                                    </CardContent>
+                                    <CardFooter className="p-6 pt-0">
+                                        <Link href={`/blog/${post.slug}`} className="w-full">
+                                            <Button variant="outline" className="w-full hover:bg-accent hover:text-accent-foreground">
+                                                {t('read_more')}
+                                            </Button>
+                                        </Link>
+                                    </CardFooter>
+                                </Card>
+                            ))}
+                        </div>
+                        <div className="text-center mt-12">
+                            <Link href="/blog">
+                                <Button variant="default">{t('viewAllArticles')}</Button>
+                            </Link>
+                        </div>
+                    </>
+                ) : (
+                    <div className="text-center py-16">
+                        <p className="text-muted-foreground">{t('noArticlesFound')}</p>
+                    </div>
+                )}
             </div>
         </motion.section>
     );
