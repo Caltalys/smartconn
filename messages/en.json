@@ -1,0 +1,24 @@
+{
+  "common": {
+    "openMenu": "Open menu",
+    "switchToVietnamese": "Switch to Vietnamese",
+    "switchToEnglish": "Switch to English",
+    "toggleTheme": "Toggle theme",
+    "more": "More"
+  },
+  "footer": {
+    "quick_links": "Quick Links",
+    "contact_info": "Contact Info"
+  },
+  "blog": {
+    "title": "Blogs",
+    "subtitle": "All articles",
+    "noArticlesFound": "No articles found",
+    "searchPlaceholder": "Search articles",
+    "allCategories": "All Categories",
+    "back_to_blog": "Back to blog"
+  },
+  "navigation": {
+    "home": "Home"
+  }
+}

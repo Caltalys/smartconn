@@ -1,20 +1,35 @@
 'use client';
 
-import { createContext, useState, useContext, Dispatch, SetStateAction } from 'react';
+import { createContext, useState, useContext, Dispatch, SetStateAction, ReactNode } from 'react';
 
-interface ServiceContextType {
-  activeService: string;
-  setActiveService: Dispatch<SetStateAction<string>>;
-}
+// Context để chứa giá trị state.
+// Các component chỉ cần đọc state sẽ sử dụng context này.
+const ActiveServiceStateContext = createContext<string>('');
 
-const ServiceContext = createContext<ServiceContextType>({
-  activeService: '',
-  setActiveService: () => {},
-});
+// Context để chứa hàm dispatch (cập nhật state).
+// Các component chỉ cần cập nhật state sẽ sử dụng context này.
+const ActiveServiceDispatchContext = createContext<Dispatch<SetStateAction<string>>>(() => {});
 
-export const useServiceContext = () => useContext(ServiceContext);
+/**
+ * Custom hook để chỉ sử dụng giá trị state (`activeService`).
+ * Các component dùng hook này sẽ re-render khi `activeService` thay đổi.
+ */
+export const useActiveServiceState = () => useContext(ActiveServiceStateContext);
 
-export const ServiceProvider = ({ children }: { children: React.ReactNode }) => {
+/**
+ * Custom hook để chỉ sử dụng hàm dispatch (`setActiveService`).
+ * Các component dùng hook này sẽ KHÔNG re-render khi `activeService` thay đổi,
+ * giúp cải thiện hiệu suất.
+ */
+export const useActiveServiceDispatch = () => useContext(ActiveServiceDispatchContext);
+
+export const ServiceProvider = ({ children }: { children: ReactNode }) => {
   const [activeService, setActiveService] = useState('');
-  return <ServiceContext.Provider value={{ activeService, setActiveService }}>{children}</ServiceContext.Provider>;
+  return (
+    <ActiveServiceStateContext.Provider value={activeService}>
+      <ActiveServiceDispatchContext.Provider value={setActiveService}>
+        {children}
+      </ActiveServiceDispatchContext.Provider>
+    </ActiveServiceStateContext.Provider>
+  );
 };

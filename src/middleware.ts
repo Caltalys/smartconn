@@ -1,62 +1,19 @@
-import createMiddleware from 'next-intl/middleware';
-import {routing} from './i18n/routing';
- 
-export default createMiddleware(routing);
- 
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
+
+export default createMiddleware({
+  // Một danh sách tất cả các ngôn ngữ được hỗ trợ
+  locales: routing.locales,
+
+  // Được sử dụng khi không có ngôn ngữ nào khớp
+  defaultLocale: routing.defaultLocale,
+
+  // Không thêm tiền tố ngôn ngữ cho URL của ngôn ngữ mặc định
+  localePrefix: "as-needed",
+});
+
 export const config = {
-  // Match all pathnames except for
-  // - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
-  // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: '/((?!api|trpc|_next|_vercel|.*\\..*).*)'
+  // Bỏ qua tất cả các đường dẫn không cần quốc tế hóa. Ví dụ này bỏ qua các
+  // thư mục "api", "_next" và tất cả các tệp có phần mở rộng (ví dụ: favicon.ico)
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
 };
-// import { NextResponse } from "next/server";
-// import type { NextRequest } from "next/server";
-
-// import { i18n } from "./i18n-config";
-
-// import { match as matchLocale } from "@formatjs/intl-localematcher";
-// import Negotiator from "negotiator";
-
-// function getLocale(request: NextRequest): string | undefined {
-//     // Negotiator expects plain object so we need to transform headers
-//     const negotiatorHeaders: Record<string, string> = {};
-//     request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
-
-//     // @ts-ignore locales are readonly
-//     const locales: string[] = i18n.locales;
-
-//     // Use negotiator and intl-localematcher to get best locale
-//     let languages = new Negotiator({ headers: negotiatorHeaders }).languages(
-//         locales
-//     );
-
-//     const locale = matchLocale(languages, locales, i18n.defaultLocale);
-
-//     return locale;
-// }
-
-// export function middleware(request: NextRequest) {
-//     const pathname = request.nextUrl.pathname;
-
-//     // Check if there is any supported locale in the pathname
-//     const pathnameIsMissingLocale = i18n.locales.every(
-//         (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-//     );
-
-//     // Redirect if there is no locale
-//     if (pathnameIsMissingLocale) {
-//         const locale = getLocale(request);
-
-//         return NextResponse.redirect(
-//             new URL(
-//                 `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
-//                 request.url
-//             )
-//         );
-//     }
-// }
-
-// export const config = {
-//     // Matcher ignoring `/_next/` and `/api/`
-//     matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
-// };
