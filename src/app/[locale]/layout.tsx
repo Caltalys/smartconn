@@ -15,7 +15,7 @@ export function generateStaticParams() {
 }
 
 const montserrat = Montserrat({
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -34,12 +34,12 @@ export const metadata: Metadata = {
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 };
 
 
 export default async function RootLayout({ children, params }: Props) {
-  const { locale } = await params;
+  const { locale } = params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
@@ -53,7 +53,7 @@ export default async function RootLayout({ children, params }: Props) {
 
   return (
     <html lang={locale}>
-      <body className={`${montserrat.variable} ${lato.variable} font-sans antialiased`}>
+      <body className={`${montserrat.variable} ${lato.variable} antialiased`}>
         <div className="relative flex flex-col min-h-screen">
           <NextIntlClientProvider messages={messages}>
             <Topbar data={layoutData.topbar} />

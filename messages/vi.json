@@ -18,6 +18,12 @@
     "allCategories": "Tất cả danh mục",
     "back_to_blog": "Trở về trang bài viết"
   },
+  "services": {
+    "title": "Dịch vụ",
+    "subtitle": "Tất cả dịch vụ",
+    "noServicesFound": "Không tìm thấy dịch vụ nào",
+    "backToServices": "Trở về trang danh sách"
+  },
   "navigation": {
     "home": "Trang chủ"
   }

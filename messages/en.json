@@ -18,6 +18,12 @@
     "allCategories": "All Categories",
     "back_to_blog": "Back to blog"
   },
+  "services": {
+    "title": "Services",
+    "subtitle": "All services",
+    "noServicesFound": "No services found",
+    "backToServices": "Back to services"
+  },
   "navigation": {
     "home": "Home"
   }

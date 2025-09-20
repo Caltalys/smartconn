@@ -7,12 +7,12 @@ import { Article } from '@/types/strapi/collections/article';
 import BlogCategoryFilter from '@/components/blocks/BlogCategoryFilter';
 
 interface BlogPageProps {
-    params: Promise<{ locale: string }>;
-    searchParams?: Promise<{ page?: string; query?: string; category?: string }>;
+    params: { locale: string };
+    searchParams?: { page?: string; query?: string; category?: string };
 }
 
 export async function generateMetadata({ params }: BlogPageProps) {
-    const { locale } = await params;
+    const { locale } = params;
     const t = await getTranslations({ locale, namespace: 'blog' });
     return {
         title: t('title'),
@@ -21,12 +21,11 @@ export async function generateMetadata({ params }: BlogPageProps) {
 }
 
 export default async function BlogPage({ params, searchParams }: BlogPageProps) {
-    const { locale } = await params;
-    const sp = searchParams ? await searchParams : {};
-    const query = sp?.query || '';
-    const categorySlug = sp?.category || '';
+    const { locale } = params;
+    const query = searchParams?.query || '';
+    const categorySlug = searchParams?.category || '';
     const t = await getTranslations({ locale, namespace: 'blog' });
-    const currentPage = Number(sp?.page) || 1;
+    const currentPage = Number(searchParams?.page) || 1;
     const articlesPerPage = 10;
 
     // Lấy danh mục và bài viết song song để tối ưu hiệu suất

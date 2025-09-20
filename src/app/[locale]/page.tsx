@@ -2,7 +2,6 @@ import PageRenderer from '@/components/blocks/PageRenderer';
 import { fetchPageBySlug } from '@/lib/api/api-page';
 import { notFound } from 'next/navigation';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { AsyncBaseProps } from '@/types/global';
 import { cache } from 'react';
 import { getAllArticles } from '@/lib/api';
 import { BlogSectionData } from '@/types/strapi/sections/blog';
@@ -14,8 +13,12 @@ const getPageData = cache(async (slug: string, locale: string) => {
     return fetchPageBySlug(slug, locale);
 });
 
-export async function generateMetadata({ params }: AsyncBaseProps, parent: ResolvingMetadata): Promise<Metadata> {
-    const { locale } = await params;
+interface HomePageProps {
+    params: { locale: string };
+}
+
+export async function generateMetadata({ params }: HomePageProps, parent: ResolvingMetadata): Promise<Metadata> {
+    const { locale } = params;
     const homeSlug = locale === 'vi' ? 'trang-chu' : 'home';
     const pageData = await getPageData(homeSlug, locale);
 
@@ -38,8 +41,8 @@ export async function generateMetadata({ params }: AsyncBaseProps, parent: Resol
  *
  * @param params - Chứa thông tin về route, bao gồm `locale`.
  */
-export default async function HomePage({ params }: AsyncBaseProps) {
-    const { locale } = await params;
+export default async function HomePage({ params }: HomePageProps) {
+    const { locale } = params;
     const homeSlug = locale === 'vi' ? 'trang-chu' : 'home';
 
     // Tối ưu: Gọi song song cả dữ liệu trang và danh sách bài viết

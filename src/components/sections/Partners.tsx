@@ -48,7 +48,7 @@ const Partners = ({ data }: { data: PartnersSectionData }) => {
                                     <Link href={partner.href} target="_blank" rel="noopener noreferrer" className="relative h-32 w-full flex items-center justify-center group">
                                         <Image
                                             src={partner.logoUrl}
-                                            alt={partner.alt}
+                                            alt={partner.name || partner.alt}
                                             fill
                                             className="object-contain transition-transform duration-300 group-hover:scale-110"
                                             sizes="128px"

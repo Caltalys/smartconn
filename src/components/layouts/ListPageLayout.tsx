@@ -19,7 +19,7 @@ export default function ListPageLayout({
     return (
         <section className="py-4 xl:py-8">
             <div className="container mx-auto px-6">
-                <Breadcrumbs items={breadcrumbItems} />
+                {/* <Breadcrumbs items={breadcrumbItems} /> */}
                 {/* Title */}
                 {/* <div className="text-center mb-12">
                     <Pretitle text={title} center={true} />
