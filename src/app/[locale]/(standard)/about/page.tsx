@@ -2,9 +2,11 @@ import { fetchAboutPage } from "@/lib/api/api-about";
 import PageRenderer from "@/components/blocks/PageRenderer";
 import { notFound } from "next/navigation";
 import Pretitle from "@/components/elements/Pretitle";
+import { AsyncBaseProps } from "@/types/global";
 
-export default async function AboutPage({ params: { locale } }: { params: { locale: string } }) {
+export default async function AboutPage(params : AsyncBaseProps) {
   // Lấy dữ liệu từ Strapi trên server
+  const { locale } = await params.params;
   const aboutData = await fetchAboutPage(locale);
 
   if (!aboutData) {
