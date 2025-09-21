@@ -1,11 +1,14 @@
-'use client';
+import { RichTextBlock } from "@/lib/types";
+import {- `markdown-to-jsx` để render an toàn} from "markdown-to-jsx";
 
-import ReactMarkdown from "react-markdown";
+interface RichTextProps {
+  data: RichTextBlock;
+}
 
-const RichText = ({ body }: { body: string } ) => (
-  <div className="prose prose-lg max-w-none text-justify mx-auto py-8 px-6">
-    <ReactMarkdown>{body}</ReactMarkdown>
-  </div>
-);
-
-export default RichText;
+export default function RichText({ data }: RichTextProps) {
+  return (
+    <div className="prose lg:prose-xl max-w-none my-8">
+      <Markdown>{data.content}</Markdown>
+    </div>
+  );
+}

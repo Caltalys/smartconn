@@ -1,81 +1,7 @@
-export interface StrapiResponse<T> {
-  // For single types, the transformer flattens the data.
-  data: T | null;
-  meta?: Record<string, unknown>;
-}
-
-export interface StrapiResponseCollection<T> {
-  // The transformer flattens the 'attributes' so the data is an array of the entity itself.
-  data: T[];
-  meta: {
-    pagination: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
-}
-
 /**
- * Represents the default, non-transformed structure from Strapi API.
- * This project uses a transformer, so this type is generally not used directly in responses,
- * but it's kept for reference or for cases where the transformer is bypassed.
+ * Đại diện cho một phiên bản file cụ thể (ví dụ: thumbnail, small, medium) trong Strapi.
+ * Strapi có thể tạo ra nhiều kích thước cho một ảnh được tải lên.
  */
-export interface StrapiData<T> {
-  id: string | number;
-  attributes: T;
-}
-
-export interface Pagination {
-  page: number;
-  pageSize: number;
-  pageCount: number;
-  total: number;
-}
-
-export interface Meta {
-  pagination: Pagination;
-}
-
-export interface StrapiComponent {
-  id: number;
-  __component?: string;
-}
-export interface Block extends StrapiComponent {
-  [key: string]: unknown;
-}
-
-export interface StrapiPage {
-  id: number;
-  title: string;
-  slug: string;
-  metaTitle?: string | null;
-  metaDescription?: string | null;
-  metaImage?: Media | null;
-  contentSections: Block[]; // Block là type chung cho các component trong Dynamic Zone
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  locale: string;
-}
-
-export interface StrapiEntity {
-  id: number;
-  documentId: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string | null;
-  locale: string;
-}
-
-export interface Formats {
-  thumbnail: File;
-  medium: File;
-  small: File;
-  large?: File;
-}
-
 export interface File {
   name: string;
   hash: string;
@@ -89,6 +15,75 @@ export interface File {
   url: string;
 }
 
+/**
+ * Chứa tất cả các định dạng/kích thước khác nhau của một file media.
+ */
+export interface Formats {
+  thumbnail: File;
+  medium: File;
+  small: File;
+  large?: File;
+}
+
+/**
+ * Cấu trúc dữ liệu cho thông tin phân trang từ API Strapi.
+ */
+export interface Pagination {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+}
+
+/**
+ * Đối tượng "meta" chứa siêu dữ liệu cho một response từ API, thường là thông tin phân trang.
+ */
+export interface Meta {
+  pagination?: Pagination;
+}
+
+/**
+ * Interface cơ sở cho tất cả các "Component" trong Strapi.
+ * Một component là một khối nội dung có thể tái sử dụng.
+ */
+export interface StrapiComponent {
+  id: number;
+  __component?: string;
+}
+
+/**
+ * Mở rộng từ `StrapiComponent`, đại diện cho một khối nội dung linh hoạt trong Dynamic Zone.
+ * Cho phép chứa bất kỳ thuộc tính nào, hữu ích cho các component không cần định nghĩa tường minh.
+ */
+export interface Block extends StrapiComponent {
+  [key: string]: unknown;
+}
+
+/**
+ * Interface cơ sở chứa các trường metadata chung nhất cho hầu hết các loại nội dung Strapi.
+ * Phù hợp cho cả Single Types và Collection Types.
+ */
+export interface StrapiMetadata {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null;
+  locale: string;
+}
+
+/**
+ * Interface cơ sở cho các thực thể nội dung chính trong Strapi (ví dụ: Article, Page, Media).
+ * Chứa các trường siêu dữ liệu chung mà Strapi tự động thêm vào.
+ * Thường dùng cho Collection Types.
+ */
+export interface StrapiEntity extends StrapiMetadata {
+  documentId: string;
+}
+
+/**
+ * Đại diện cho một đối tượng media hoàn chỉnh trong Media Library của Strapi.
+ * Kế thừa từ `StrapiEntity` và thêm các thuộc tính đặc thù của file media.
+ */
 export interface Media extends StrapiEntity {
   name: string;
   alternativeText: string | null;
@@ -106,14 +101,22 @@ export interface Media extends StrapiEntity {
   provider_metadata: unknown;
 }
 
-export interface FooterSection extends StrapiComponent {
-  title: string | null;
-  facebookUrl: string | null;
-  twitterUrl: string | null;
-  instagramUrl: string | null;
-  linkedinUrl: string | null;
-  addredd: string | null;
-  phone: string | null;
-  email: string | null;
-  copyright: string | null;
+/**
+ * Cấu trúc response chung cho các API trả về một đối tượng đơn lẻ (Single Type).
+ * @template T Kiểu dữ liệu của đối tượng `data`.
+ */
+export interface StrapiResponse<T> {
+  // For single types, the transformer flattens the data.
+  data: T | null;
+  meta?: Meta | null;
+}
+
+/**
+ * Cấu trúc response chung cho các API trả về một danh sách (Collection Type).
+ * @template T Kiểu dữ liệu của mỗi phần tử trong mảng `data`.
+ */
+export interface StrapiResponseCollection<T> {
+  // The transformer flattens the 'attributes' so the data is an array of the entity itself.
+  data: T[];
+  meta: Meta;
 }

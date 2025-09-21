@@ -1,22 +1,15 @@
-import { SocialLinksData } from "../social";
+import { StrapiMetadata } from "../strapi";
+import { ContactInfoData, SocialLinksData } from "../shared";
 
 /**
  * Cấu trúc dữ liệu thô của Topbar từ API Strapi (đã qua transformer).
  * Nó bao gồm tất cả các trường được trả về, kể cả các liên kết mạng xã hội và metadata.
  * Đây là "Source of Truth" từ API.
  */
-export interface StrapiTopbar extends SocialLinksData {
-    id: number;
+export interface StrapiTopbar extends SocialLinksData, ContactInfoData, StrapiMetadata {
     message: string | null;
-    phoneNumber: string | null;
-    email: string | null;
-    address: string | null;
     ctaButtonText: string | null;
     ctaButtonUrl: string | null;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-    locale: string;
 }
 
 /**

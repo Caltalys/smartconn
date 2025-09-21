@@ -5,20 +5,13 @@ function mapTopbar(response: TopbarResponse): Topbar | null {
     const { data } = response;
     if (!data) return null;
 
-    // Dự án của bạn đang dùng transformer, nên ta truy cập trực tiếp.
-    return {
-        id: data.id,
-        message: data.message,
-        phoneNumber: data.phoneNumber,
-        email: data.email,
-        address: data.address,
-        ctaButtonText: data.ctaButtonText,
-        ctaButtonUrl: data.ctaButtonUrl,
-        facebookUrl: data.facebookUrl,
-        twitterUrl: data.twitterUrl,
-        instagramUrl: data.instagramUrl,
-        linkedinUrl: data.linkedinUrl,
-    };
+    // Sử dụng kỹ thuật destructuring với rest parameter (...) để loại bỏ các trường metadata.
+    // Cách này ngắn gọn và tự động tương thích khi kiểu `StrapiTopbar` thay đổi
+    // (ví dụ: thêm một link mạng xã hội mới), miễn là kiểu `Topbar` vẫn được định nghĩa bằng `Omit`.
+    const { createdAt, updatedAt, publishedAt, locale, ...topbarData } = data;
+
+    // `topbarData` giờ đây có kiểu khớp chính xác với `Topbar`.
+    return topbarData;
 }
 
 export async function fetchTopbar(locale: string): Promise<Topbar | null> {

@@ -7,6 +7,7 @@ import { getStrapiMedia } from "@/lib/utils";
 import { HeroSection } from "@/types/strapi/sections/hero";
 import SmartButton from "../elements/SmartButton";
 import { RiPlayFill } from "react-icons/ri";
+import ReactMarkdown from "react-markdown";
 // Ví dụ: Nếu bạn dùng Swiper.js
 // import { Swiper, SwiperSlide } from 'swiper/react';
 // import 'swiper/css';
@@ -46,7 +47,6 @@ const Hero = ({ data }: { data: HeroSection }) => {
   const heading = data.heading;
   const subtitle = data.subheading;
   const description = data.description;
-  const cta = data.ctas?.[0];
   const imageUrl = data.mediaImage?.image?.url ? getStrapiMedia(data.mediaImage.image.url) : null;
   const imageAlt = data.mediaImage?.alternativeText || subtitle || heading || "Hero Image";
   const youtubeId = data.mediaVideo?.youtubeId;
@@ -63,7 +63,6 @@ const Hero = ({ data }: { data: HeroSection }) => {
         alt=""
         fill
         priority
-        quality={50} // Giảm chất lượng cho ảnh nền bị mờ
         className="object-cover blur-sm scale-105 -z-20"
         aria-hidden="true"
       />
@@ -88,18 +87,22 @@ const Hero = ({ data }: { data: HeroSection }) => {
             >
               {subtitle}
             </motion.h1>}
-            {description && <motion.p
-              className="text-white max-w-lg lg:text-lg"
+            {description && <motion.div
+              // Thêm class `prose` để định dạng nội dung rich text
+              className="text-white max-w-lg lg:text-lg prose prose-invert"
               variants={itemVariants}
             >
-              {description}
-            </motion.p>}
-            {cta && <motion.div
+              {/* Sử dụng ReactMarkdown để render nội dung rich text một cách an toàn */}
+              <ReactMarkdown>{description}</ReactMarkdown>
+            </motion.div>}
+            {data.ctas && data.ctas.length > 0 && (
+            <motion.div
               className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
               variants={itemVariants}
             >
-              <SmartButton text={cta.label} href={cta.href} />
-            </motion.div>}
+              {data.ctas.map((cta) => <SmartButton key={cta.id} text={cta.label} href={cta.href} />)}
+            </motion.div>
+            )}
           </motion.div>
 
           {/* Media on the right */}

@@ -4,6 +4,7 @@
  */
 export * from './global';
 export * from './api-footer';
+export * from './api-about';
 export * from './api-navbar';
 export * from './api-topbar';
 export * from './api-page';

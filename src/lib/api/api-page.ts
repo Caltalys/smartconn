@@ -1,6 +1,4 @@
 import { strapiClient } from "../strapi-client";
-import { Page, PageCollectionResponse, StrapiPage } from "@/types/strapi/page";
-import { AnySection, AnyStrapiSection } from "@/types/strapi/page";
 import { HeroSection, StrapiHeroSection } from "@/types/strapi/sections/hero";
 import { StrapiLink, Link } from "@/types/strapi/elements/link";
 import { getStrapiMedia } from "../utils";
@@ -11,6 +9,8 @@ import { PartnerItem, PartnersSectionData, StrapiPartnerItem, StrapiPartnersSect
 import { BlogSectionData, StrapiBlogSection } from "@/types/strapi/sections/blog";
 import { Icon, StrapiIcon } from "@/types/strapi/elements/icon";
 import { getAllArticles } from ".";
+import { AnyContentBlock, AnyStrapiContentBlock, Page, PageCollectionResponse, StrapiPage, StrapiSharedBlock } from "@/types/strapi/single/page";
+import { Block } from "@/types/strapi/strapi";
 
 // --- Section Mappers ---
 
@@ -168,46 +168,48 @@ async function mapBlogSection(section: StrapiBlogSection, locale: string): Promi
     };
 }
 
-
 /**
  * Ánh xạ một mảng các section thô từ Strapi sang mảng section cho frontend.
  * Hoạt động như một bộ định tuyến mapper.
  * LƯU Ý: Hàm này đã được chuyển thành `async` để hỗ trợ các section cần fetch dữ liệu riêng (như Blog).
  */
-async function mapContentSections(sections: AnyStrapiSection[], locale: string): Promise<AnySection[]> {
+export async function mapContentSections(sections: AnyStrapiContentBlock[], locale: string): Promise<AnyContentBlock[]> {
     if (!sections) return [];
 
     const mappedSectionPromises = sections.map(section => {
-        switch (section.__component) {
-            case 'sections.hero':
-                // Các mapper đồng bộ được bọc trong Promise.resolve
-                return Promise.resolve(mapHeroSection(section));
-            case 'sections.about':
-                return Promise.resolve(mapAboutSection(section));
-            case 'sections.services':
-                return Promise.resolve(mapServicesSection(section));
-            case 'sections.advantages':
-                return Promise.resolve(mapAdvantagesSection(section));
-            case 'sections.partners':
-                return Promise.resolve(mapPartnersSection(section));
-            case 'sections.blog':
-                // Mapper bất đồng bộ được gọi trực tiếp
-                return mapBlogSection(section, locale);
-            // Thêm các case cho các section khác ở đây
-            default:
-                if (process.env.NODE_ENV === 'development') {
-                    console.warn(`mapContentSections: Không tìm thấy mapper cho section loại "${(section as { __component: string }).__component}". Section này sẽ được bỏ qua.`);
-                }
-                // Bỏ qua các section không xác định để đảm bảo an toàn kiểu.
-                return Promise.resolve(null);
+        if (section.__component.startsWith('sections.')) {
+            switch (section.__component) {
+                case 'sections.hero':
+                    return Promise.resolve(mapHeroSection(section));
+                case 'sections.about':
+                    return Promise.resolve(mapAboutSection(section));
+                case 'sections.services':
+                    return Promise.resolve(mapServicesSection(section));
+                case 'sections.advantages':
+                    return Promise.resolve(mapAdvantagesSection(section));
+                case 'sections.partners':
+                    return Promise.resolve(mapPartnersSection(section));
+                case 'sections.blog':
+                    return mapBlogSection(section, locale);
+                default:
+                    if (process.env.NODE_ENV === 'development') {
+                        console.warn(`mapContentSections: Không tìm thấy mapper cho section loại "${section.__component}".`);
+                    }
+                    return Promise.resolve(null);
+            }
+        } else if (section.__component.startsWith('shared.')) {
+            // Các shared block không cần mapping phức tạp, chỉ cần đảm bảo chúng là kiểu `Block`
+            return Promise.resolve(section as Block);
         }
+
+        return Promise.resolve(null);
     });
 
     // Chờ tất cả các promise được giải quyết
     const mappedSections = await Promise.all(mappedSectionPromises);
 
     // Lọc ra các section null (không được ánh xạ)
-    return mappedSections.filter((section): section is AnySection => section !== null);
+    return mappedSections.filter((section): section is AnyContentBlock => section !== null);
 }
 
 
@@ -266,7 +268,7 @@ export async function fetchPageBySlug(slug: string, locale: string): Promise<Pag
                 metaImage: true,
             },
         }) as unknown as PageCollectionResponse;
-
+        console.log(response);
         if (!response.data || response.data.length === 0) { return null; }
 
         // Gọi phiên bản async của mapPage và truyền locale vào

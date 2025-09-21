@@ -1,5 +1,4 @@
-import { AnyStrapiSection } from '@/types/strapi/page';
-import { StrapiEntity, Media, Block } from '@/types/strapi/strapi';
+import { Media, Block } from '@/types/strapi/strapi';
 
 /**
  * Represents the structure of a Service entity from Strapi.

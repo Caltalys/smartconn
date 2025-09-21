@@ -21,7 +21,6 @@ export async function generateMetadata({ params }: HomePageProps, parent: Resolv
     const { locale } = params;
     const homeSlug = locale === 'vi' ? 'trang-chu' : 'home';
     const pageData = await getPageData(homeSlug, locale);
-
     if (!pageData) return {};
 
     return {

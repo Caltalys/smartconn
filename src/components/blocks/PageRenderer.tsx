@@ -1,14 +1,17 @@
 import Hero from '@/components/sections/Hero';
 // Import các section component khác sẽ được thêm vào đây
 import About from '@/components/sections/About';
-import { AnySection } from '@/types/strapi/page';
+import { AnyContentBlock, SectionComponent } from '@/types/strapi/single/page';
 import Advantages from '../sections/Advantages';
 import Blog from '../sections/Blog';
 import Partners from '../sections/Partners';
 import Services from '../sections/Services';
+import BlockRenderer from './BlockRenderer';
+import { Block } from '@/types/strapi/strapi';
+import { JSX } from 'react';
 
 interface PageRendererProps {
-    sections: AnySection[];
+    sections: AnyContentBlock[];
 }
 
 /**
@@ -22,45 +25,60 @@ const PageRenderer = ({ sections }: PageRendererProps) => {
         return null;
     }
 
+    const content: JSX.Element[] = [];
+    let sharedBlocksBuffer: Block[] = [];
+
+    const flushSharedBlocks = (key: string | number) => {
+        if (sharedBlocksBuffer.length > 0) {
+            content.push(
+                <section key={`shared-group-${key}`} className="container mx-auto px-4 py-8 max-w-4xl">
+                    <BlockRenderer blocks={sharedBlocksBuffer} />
+                </section>
+            );
+            sharedBlocksBuffer = [];
+        }
+    };
+
+    sections.forEach((section, index) => {
+        const key = `${section.__component}-${section.id}`;
+
+        if (section.__component?.startsWith('sections.')) {
+            flushSharedBlocks(index); // Xả buffer block dùng chung trước khi render section mới
+            const sectionData = section as SectionComponent;
+            switch (sectionData.__component) {
+                case 'sections.hero':
+                    content.push(<Hero key={key} data={sectionData} />);
+                    break;
+                case 'sections.about':
+                    content.push(<About key={key} data={sectionData} />);
+                    break;
+                case 'sections.advantages':
+                    content.push(<Advantages key={key} data={sectionData} />);
+                    break;
+                case 'sections.services':
+                    content.push(<Services key={key} data={sectionData} />);
+                    break;
+                case 'sections.partners':
+                    content.push(<Partners key={key} data={sectionData} />);
+                    break;
+                case 'sections.blog':
+                    content.push(<Blog key={key} data={sectionData} />);
+                    break;
+                default:
+                    if (process.env.NODE_ENV === 'development') {
+                        console.warn(`PageRenderer: Không tìm thấy component cho section loại "${section.__component}".`);
+                    }
+                    break;
+            }
+        } else {
+            sharedBlocksBuffer.push(section as Block);
+        }
+    });
+
+    flushSharedBlocks('last'); // Xả nốt buffer còn lại ở cuối
+
     return (
-        <main>
-            {sections.map((section) => {
-                const key = `${section.__component}-${section.id}`;
-
-                switch (section.__component) {
-                    case 'sections.hero':
-                        // Dữ liệu section đã được map ở tầng API,
-                        // nên ta có thể truyền thẳng vào component.
-                        return <Hero key={key} data={section} />;
-
-                    case 'sections.about':
-                        return <About key={key} data={section} />;
-
-                    case 'sections.advantages':
-                        return <Advantages key={key} data={section} />;
-
-                    case 'sections.services':
-                        return <Services key={key} data={section} />;
-
-                    case 'sections.partners':
-                        return <Partners key={key} data={section} />;
-
-                    case 'sections.blog':
-                        return <Blog key={key} data={section} />;
-
-                    default:
-                        // Log một cảnh báo ở môi trường development nếu gặp section không xác định
-                        if (process.env.NODE_ENV === 'development') {
-                            // TypeScript đã thu hẹp kiểu của `section` thành `never` vì tất cả các
-                            // trường hợp đã biết trong `AnySection` đã được xử lý.
-                            // Để log ra `__component` của một section không xác định (có thể tồn tại lúc runtime),
-                            // chúng ta cần ép kiểu nó về một kiểu rộng hơn để truy cập thuộc tính.
-                            console.warn(`PageRenderer: Không tìm thấy component cho section loại "${(section as { __component: string }).__component}".`);
-                        }
-                        return null;
-                }
-            })}
-        </main>
+        <main>{content}</main>
     );
 };
 
