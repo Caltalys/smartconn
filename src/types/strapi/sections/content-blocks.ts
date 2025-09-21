@@ -1,7 +1,6 @@
 import {
   isStrapiAboutSection,
   isStrapiAdvantagesSection,
-  isStrapiBlogSection,
   isStrapiHeroSection,
   isStrapiImageBlock,
   isStrapiListItemBlock,
@@ -31,7 +30,6 @@ import {
   mapAdvantagesSection,
   StrapiAdvantagesSection,
 } from "./advantages";
-import { BlogSectionData, StrapiBlogSection } from "./blog";
 import { HeroSection, mapHeroSection, StrapiHeroSection } from "./hero";
 import {
   mapPartnersSection,
@@ -54,7 +52,7 @@ export type AnyStrapiContentBlock =
   | StrapiServicesSection
   | StrapiAdvantagesSection
   | StrapiPartnersSection
-  | StrapiBlogSection
+  //   | StrapiBlogSection
   | StrapiSharedBlock; // ← StrapiSharedBlock đã là union của tất cả shared block
 
 /**
@@ -76,7 +74,7 @@ export type AnyContentBlock =
   | ServicesSectionData
   | AdvantagesSectionData
   | PartnersSectionData
-  | BlogSectionData
+  //   | BlogSectionData
   | AnySharedBlock; // ← AnySharedBlock đã là union của tất cả shared block
 
 /**
@@ -137,13 +135,13 @@ export async function mapContentSections(
       if (isStrapiRichtextVideoBlock(section)) {
         return mapRichtextVideoBlock(section);
       }
-      if (isStrapiBlogSection(section)) {
-        // Lưu ý: Việc mapping cho Blog section yêu cầu gọi API để lấy bài viết.
-        // Logic này nên được đặt ở tầng API (`lib/api`) thay vì ở đây để tránh circular dependency.
-      }
+      //   if (isStrapiBlogSection(section)) {
+      // Lưu ý: Việc mapping cho Blog section yêu cầu gọi API để lấy bài viết.
+      // Logic này nên được đặt ở tầng API (`lib/api`) thay vì ở đây để tránh circular dependency.
+      //   }
 
       console.warn(
-        `[mapContentSections] Unknown section/block type: ${section.__component}`
+        `[mapContentSections] Unknown section/block type: ${(section as UnknownStrapiContentBlock).__component}`
       );
       return null;
     } catch (error) {
