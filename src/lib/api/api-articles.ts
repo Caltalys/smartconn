@@ -4,6 +4,8 @@ import { getStrapiMedia } from "../utils";
 import { Author, StrapiAuthor } from "@/types/strapi/collections/author";
 import { Category, StrapiCategory } from "@/types/strapi/collections/category";
 import { Article, StrapiArticle } from "@/types/strapi/collections/article";
+import { mapContentSections } from "./api-page";
+import { AnySharedBlock } from "@/types/strapi/blocks/shared";
 
 // --- Mappers ---
 
@@ -33,8 +35,13 @@ function mapCategory(category: StrapiCategory | null): Category | null {
 
 /**
  * Ánh xạ dữ liệu thô của một Article từ Strapi sang cấu trúc dữ liệu sạch cho frontend.
+ * Hàm này là async để xử lý việc ánh xạ các block trong dynamic zone.
  */
-export function mapArticle(article: StrapiArticle): Article {
+export async function mapArticle(article: StrapiArticle, locale: string): Promise<Article> {
+    const mappedBlocks = article.blocks
+        ? await mapContentSections(article.blocks, locale)
+        : [];
+
     return {
         id: article.id,
         title: article.title,
@@ -43,7 +50,8 @@ export function mapArticle(article: StrapiArticle): Article {
         cover: article.cover,
         author: mapAuthor(article.author),
         category: mapCategory(article.category),
-        blocks: article.blocks,
+        // Ép kiểu an toàn vì chúng ta giả định dynamic zone của Article chỉ chứa các shared block.
+        blocks: mappedBlocks as AnySharedBlock[],
         publishedAt: article.publishedAt,
     };
 }
@@ -77,8 +85,20 @@ export async function getAllArticles(
             populate: ['cover', 'category', 'author', 'author.avatar'],
         }) as unknown as ArticlesResponse;
 
+        // Ánh xạ thủ công cho danh sách, không cần map `blocks` để tối ưu hiệu suất.
+        const articles: Article[] = response.data.map((article) => ({
+            id: article.id,
+            title: article.title,
+            description: article.description,
+            slug: article.slug,
+            cover: article.cover,
+            author: mapAuthor(article.author),
+            category: mapCategory(article.category),
+            blocks: [], // Trả về mảng rỗng cho trang danh sách để khớp với kiểu `Article`
+            publishedAt: article.publishedAt,
+        }));
         return {
-            data: response.data.map(mapArticle),
+            data: articles,
             meta: response.meta,
         };
     } catch (error) {
@@ -96,14 +116,30 @@ export async function getArticleBySlug(slug: string, locale: string): Promise<Ar
         const response = await client.collection('articles').find({
             locale,
             filters: { slug: { $eq: slug } },
-            populate: ['cover', 'category', 'author', 'author.avatar', 'blocks'],
+            // Cập nhật populate để lấy đủ dữ liệu cho các block lồng nhau
+            populate: {
+                cover: true,
+                category: true,
+                author: { populate: ['avatar'] },
+                blocks: {
+                    on: {
+                        'shared.image': { populate: { image: true } },
+                        'shared.media': { populate: { file: true } },
+                        'shared.slider': { populate: { slides: { populate: { image: true } } } },
+                        'shared.list-item': { populate: { items: { populate: { image: true, cta: true, icon: { populate: { iconImage: true } } } } } },
+                        'shared.richtext-video': { populate: { video: true } },
+                        'shared.richtext-image': { populate: { image: true } },
+                        'shared.quote': true,
+                        'shared.rich-text': true,
+                        'shared.video': true,
+                    }
+                }
+            },
         }) as unknown as StrapiResponseCollection<StrapiArticle>;
 
-        if (!response.data || response.data.length === 0) {
-            return null;
-        }
+        if (!response.data || response.data.length === 0) return null;
 
-        return mapArticle(response.data[0]);
+        return await mapArticle(response.data[0], locale);
     } catch (error) {
         console.error(`API Error: Could not fetch article with slug "${slug}".`, error);
         return null;
