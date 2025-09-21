@@ -1,39 +1,79 @@
-import { AnySharedBlock } from "../blocks/shared";
-import { StrapiAuthor, Author } from "./author";
-import { Media } from "../strapi";
-import { Category, StrapiCategory } from "./category";
-import { StrapiSharedBlock } from "../single/page";
+import { getStrapiMedia } from "@/lib/utils";
+import { AnySharedBlock, mapBlocks, StrapiSharedBlock } from "../blocks";
+import {
+  StrapiMedia,
+  StrapiResponse,
+  StrapiResponseCollection,
+} from "../strapi";
 
-/**
- * Dữ liệu thô của một Article từ API Strapi (đã qua transformer).
- */
-export interface StrapiArticle {
-    id: number;
-    title: string;
-    description: string | null;
-    slug: string;
-    cover: Media | null;
-    author: StrapiAuthor | null;
-    category: StrapiCategory | null;
-    blocks: StrapiSharedBlock[] | null;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string | null;
-    locale: string;
+export interface StrapiAuthor {
+  id: number;
+  name: string;
+  avatar: StrapiMedia | null;
 }
 
-/**
- * Dữ liệu Article đã được ánh xạ cho frontend.
- * Đây là kiểu dữ liệu chính được sử dụng trong các component.
- */
-export type Article = {
-    id: number;
-    title: string;
-    description: string | null;
+export interface StrapiCategory {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export interface StrapiArticle {
+  id: number;
+  title: string;
+  description: string | null;
+  slug: string;
+  cover: StrapiMedia | null;
+  author: StrapiAuthor;
+  category: StrapiCategory;
+  blocks: StrapiSharedBlock[];
+}
+
+// Mapped for frontend
+export interface Article {
+  id: number;
+  title: string;
+  description: string;
+  slug: string;
+  coverUrl: string | null;
+  coverAlt: string;
+  author: {
+    name: string;
+    avatarUrl: string | null;
+  };
+  category: {
+    name: string;
     slug: string;
-    cover: Media | null;
-    author: Author | null;
-    category: Category | null;
-    blocks: AnySharedBlock[] | null;
-    publishedAt: string | null;
-};
+  };
+  blocks: AnySharedBlock[];
+}
+
+/** Lớp vỏ (wrapper) của Strapi cho một tài liệu đơn lẻ. */
+export type ArticleResponse = StrapiResponse<Article>;
+
+/**
+ * Lớp vỏ (wrapper) của Strapi cho một danh sách (collection) các tài liệu.
+ */
+export type ArticleCollectionResponse = StrapiResponseCollection<Article>;
+
+export function mapArticle(article: StrapiArticle): Article {
+  return {
+    id: article.id,
+    title: article.title,
+    description: article.description ?? "",
+    slug: article.slug,
+    coverUrl: article.cover ? getStrapiMedia(article.cover.url) : null,
+    coverAlt: article.cover?.alternativeText ?? article.title,
+    author: {
+      name: article.author.name,
+      avatarUrl: article.author.avatar
+        ? getStrapiMedia(article.author.avatar.url)
+        : null,
+    },
+    category: {
+      name: article.category.name,
+      slug: article.category.slug,
+    },
+    blocks: mapBlocks(article.blocks),
+  };
+}

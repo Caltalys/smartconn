@@ -1,5 +1,5 @@
-import { ImageBlock } from "@/lib/types";
 import NextImage from "next/image";
+import { ImageBlock } from "./types";
 
 interface ImageProps {
   data: ImageBlock;

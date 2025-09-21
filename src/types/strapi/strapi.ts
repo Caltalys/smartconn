@@ -84,7 +84,7 @@ export interface StrapiEntity extends StrapiMetadata {
  * Đại diện cho một đối tượng media hoàn chỉnh trong Media Library của Strapi.
  * Kế thừa từ `StrapiEntity` và thêm các thuộc tính đặc thù của file media.
  */
-export interface Media extends StrapiEntity {
+export interface StrapiMedia extends StrapiEntity {
   name: string;
   alternativeText: string | null;
   caption: string | null;

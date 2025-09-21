@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
-import { SliderBlock } from '@/lib/types';
 import NextImage from 'next/image';
+import { useCallback, useEffect, useState } from 'react';
+import { SliderBlock } from './types';
 
 interface SliderProps {
   data: SliderBlock;
@@ -79,9 +79,8 @@ export default function Slider({ data }: SliderProps) {
           <button
             key={index}
             onClick={() => scrollTo(index)}
-            className={`embla__dot w-3 h-3 rounded-full transition-colors ${
-              index === selectedIndex ? 'bg-white' : 'bg-white/50 hover:bg-white/75'
-            }`}
+            className={`embla__dot w-3 h-3 rounded-full transition-colors ${index === selectedIndex ? 'bg-white' : 'bg-white/50 hover:bg-white/75'
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

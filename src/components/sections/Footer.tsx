@@ -1,11 +1,11 @@
 'use client';
 
-import { RiMapPin2Fill, RiPhoneFill, RiMailFill } from "react-icons/ri";
-import { Footer as FooterData } from "@/types/strapi/sections/footer";
+import { Footer as FooterData } from "@/types/strapi/single/footer";
+import { RiMailFill, RiMapPin2Fill, RiPhoneFill } from "react-icons/ri";
 import ContactInfoList, { ContactItem } from "./footer/ContactInfoList";
+import Copyright from "./footer/Copyright";
 import FooterInfo from "./footer/FooterInfo";
 import QuickLinksList from "./footer/QuickLinksList";
-import Copyright from "./footer/Copyright";
 
 
 type FooterProps = {

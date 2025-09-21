@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { motion, Variants } from "framer-motion";
-import Image from 'next/image';
 import { getStrapiMedia } from "@/lib/utils";
 import { HeroSection } from "@/types/strapi/sections/hero";
-import SmartButton from "../elements/SmartButton";
+import { motion, Variants } from "framer-motion";
+import Image from 'next/image';
+import { useState } from "react";
 import { RiPlayFill } from "react-icons/ri";
 import ReactMarkdown from "react-markdown";
+import SmartButton from "../elements/SmartButton";
 // Ví dụ: Nếu bạn dùng Swiper.js
 // import { Swiper, SwiperSlide } from 'swiper/react';
 // import 'swiper/css';
@@ -37,12 +37,11 @@ const itemVariants: Variants = {
 };
 
 const Hero = ({ data }: { data: HeroSection }) => {
+  const [playVideo, setPlayVideo] = useState(false);
+
   if (!data) {
-    // Hoặc render một fallback UI
     return null;
   }
-
-  const [playVideo, setPlayVideo] = useState(false);
 
   const heading = data.heading;
   const subtitle = data.subheading;
@@ -77,7 +76,7 @@ const Hero = ({ data }: { data: HeroSection }) => {
             initial="hidden"
             animate="visible"
           >
-            {heading && <motion.h1 variants={itemVariants} 
+            {heading && <motion.h1 variants={itemVariants}
               className="font-bold uppercase tracking-wide text-white text-3xl sm:text-4xl lg:text-5xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
               {heading}
             </motion.h1>}
@@ -96,12 +95,12 @@ const Hero = ({ data }: { data: HeroSection }) => {
               <ReactMarkdown>{description}</ReactMarkdown>
             </motion.div>}
             {data.ctas && data.ctas.length > 0 && (
-            <motion.div
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
-              variants={itemVariants}
-            >
-              {data.ctas.map((cta) => <SmartButton key={cta.id} text={cta.label} href={cta.href} />)}
-            </motion.div>
+              <motion.div
+                className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
+                variants={itemVariants}
+              >
+                {data.ctas.map((cta) => <SmartButton key={cta.id} text={cta.label} href={cta.href} />)}
+              </motion.div>
             )}
           </motion.div>
 
@@ -148,20 +147,20 @@ const Hero = ({ data }: { data: HeroSection }) => {
               </div>
             ) : data.mediaType === 'image' && imageUrl && (
               <div className="relative w-full max-w-sm sm:max-w-md xl:max-w-lg aspect-square">
-                  {/* Decorative blob/circle */}
-                  <div className="w-full h-full bg-secondary absolute -top-4 -right-4 -z-10 rounded-lg"></div>
-                  {/* Image container */}
-                  <div className="relative w-full h-full rounded-lg overflow-hidden shadow-2xl">
-                    <Image
-                      src={imageUrl}
-                      alt={imageAlt}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 639px) 100vw, (max-width: 1279px) 448px, 512px"
-                      priority
-                    />
-                  </div>
+                {/* Decorative blob/circle */}
+                <div className="w-full h-full bg-secondary absolute -top-4 -right-4 -z-10 rounded-lg"></div>
+                {/* Image container */}
+                <div className="relative w-full h-full rounded-lg overflow-hidden shadow-2xl">
+                  <Image
+                    src={imageUrl}
+                    alt={imageAlt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 639px) 100vw, (max-width: 1279px) 448px, 512px"
+                    priority
+                  />
                 </div>
+              </div>
             )}
           </motion.div>
         </div>

@@ -1,27 +1,39 @@
-import { StrapiComponent, Media } from "../strapi";
-import { StrapiLink, Link } from "../elements/link";
+import { getStrapiMedia } from "@/lib/utils";
+import { Link, mapLink, StrapiLink } from "../elements/link";
+import { StrapiMedia } from "../strapi";
 
-/**
- * Cấu trúc dữ liệu thô của About Section từ Strapi.
- * API ID: sections.about
- */
-export interface StrapiAboutSection extends StrapiComponent {
-  __component: 'sections.about';
+// Raw Strapi Type
+export interface StrapiAboutSection {
+  __component: "sections.about";
+  id: number;
   title?: string | null;
   heading: string;
   description?: string | null;
   ctas: StrapiLink[];
-  image: Media;
+  image: { data: StrapiMedia };
 }
 
-/**
- * Cấu trúc dữ liệu của About Section đã được ánh xạ cho frontend.
- */
-export type AboutSectionData = Omit<StrapiAboutSection, 'ctas' | 'image' | 'heading'> & {
+// Mapped Frontend Type
+export interface AboutSectionData {
+  __component: "sections.about";
+  id: number;
   pretitle: string;
   title: string;
   description: string;
   ctas: Link[];
   imageUrl: string;
   imageAlt: string;
-};
+}
+
+export function mapAboutSection(section: StrapiAboutSection): AboutSectionData {
+  return {
+    __component: section.__component,
+    id: section.id,
+    pretitle: section.title ?? "",
+    title: section.heading,
+    description: section.description ?? "",
+    ctas: (section.ctas ?? []).map(mapLink),
+    imageUrl: getStrapiMedia(section.image?.data?.url) ?? "/fallback-about.jpg",
+    imageAlt: section.image?.data?.alternativeText ?? section.heading,
+  };
+}

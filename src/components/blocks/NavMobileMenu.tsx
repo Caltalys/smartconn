@@ -1,13 +1,13 @@
 'use client';
 
+import { Navbar } from "@/types/strapi/collections/navbar";
 import { useState } from "react";
 import { RiMenu3Fill } from "react-icons/ri";
-import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
 import LanguageSwitcher from "../elements/LanguageSwitcher";
 import Logo from "../elements/Logo";
-import { Navbar } from "@/types/strapi/sections/navbar";
-import Social from "./Social";
 import MobileNavItem from "../sections/header/MobileNavItem";
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import Social from "./Social";
 
 const NavMobileMenu = ({ data }: { data?: Navbar | null }) => {
     const [isOpen, setIsOpen] = useState(false);

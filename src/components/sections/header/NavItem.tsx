@@ -1,8 +1,8 @@
-import { NavbarItem as NavbarItemType } from "@/types/strapi/sections/navbar";
+import { useActiveServiceDispatch } from "@/context/ServiceContext";
+import { NavbarItem as NavbarItemType } from "@/types/strapi/collections/navbar";
 import { ChevronDown } from "lucide-react";
 import DropdownMenu from "./DropdownMenu";
 import NavLink from "./NavLink";
-import { useActiveServiceDispatch } from "@/context/ServiceContext";
 
 type NavItemProps = {
     item: NavbarItemType;

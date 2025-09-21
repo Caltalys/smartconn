@@ -1,6 +1,5 @@
 // src/components/layouts/ListPageLayout.tsx
-import Breadcrumbs, { BreadcrumbItem } from '@/components/blocks/Breadcrumbs';
-import Pretitle from '@/components/elements/Pretitle';
+import { BreadcrumbItem } from '@/components/blocks/Breadcrumbs';
 import React from 'react';
 
 interface ListPageLayoutProps {
@@ -11,9 +10,6 @@ interface ListPageLayoutProps {
 }
 
 export default function ListPageLayout({
-    title,
-    subtitle,
-    breadcrumbItems,
     children,
 }: ListPageLayoutProps) {
     return (

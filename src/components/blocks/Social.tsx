@@ -1,6 +1,6 @@
-import { RiFacebookFill, RiInstagramFill, RiLinkedinFill, RiTwitterFill } from "react-icons/ri";
+import { SocialLinksData } from "@/types/strapi/shared";
 import type { IconType } from "react-icons";
-import { SocialLinksData } from "@/types/strapi/social";
+import { RiFacebookFill, RiInstagramFill, RiLinkedinFill, RiTwitterFill } from "react-icons/ri";
 
 // Define the shape of a social link for better type safety and maintainability
 type SocialLink = {
@@ -22,12 +22,12 @@ type SocialProps = {
  */
 const Social = ({ containerStyle, iconStyle, data }: SocialProps) => {
     // Centralize social link data in an array. This makes it easy to add, remove, or modify links.
-const socialLinks: SocialLink[] = [
-    { name: 'Facebook', href: data?.facebookUrl || '#', Icon: RiFacebookFill },
-    { name: 'Twitter', href: data?.twitterUrl || '#', Icon: RiTwitterFill },
-    { name: 'Instagram', href: data?.instagramUrl || '#', Icon: RiInstagramFill },
-    { name: 'LinkedIn', href: data?.linkedinUrl || '#', Icon: RiLinkedinFill },
-];
+    const socialLinks: SocialLink[] = [
+        { name: 'Facebook', href: data?.facebookUrl || '#', Icon: RiFacebookFill },
+        { name: 'Twitter', href: data?.twitterUrl || '#', Icon: RiTwitterFill },
+        { name: 'Instagram', href: data?.instagramUrl || '#', Icon: RiInstagramFill },
+        { name: 'LinkedIn', href: data?.linkedinUrl || '#', Icon: RiLinkedinFill },
+    ];
     return (
         <div className={containerStyle || 'flex items-center gap-4'}>
             {socialLinks.map(({ name, href, Icon }) => (

@@ -1,11 +1,10 @@
 'use client';
 
-import { NavbarItem as NavbarItemType } from "@/types/strapi/sections/navbar";
-import { RiArrowDownSLine } from "react-icons/ri";
+import { NavbarItem as NavbarItemType } from "@/types/strapi/collections/navbar";
 import { AnimatePresence } from "framer-motion";
+import { RiArrowDownSLine } from "react-icons/ri";
 import MobileSubMenu from "./MobileSubMenu";
 import NavLink from "./NavLink";
-import { useActiveServiceDispatch } from "@/context/ServiceContext";
 
 type MobileNavItemProps = {
     item: NavbarItemType;
@@ -15,7 +14,6 @@ type MobileNavItemProps = {
 };
 
 const MobileNavItem = ({ item, isSubMenuOpen, onToggleSubMenu, closeSheet }: MobileNavItemProps) => {
-    const setActiveService = useActiveServiceDispatch();
     const hasChildren = item.children && item.children.length > 0;
 
     if (hasChildren) {

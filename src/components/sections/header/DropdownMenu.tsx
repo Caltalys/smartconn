@@ -1,4 +1,4 @@
-import { NavbarItem } from "@/types/strapi/sections/navbar";
+import { NavbarItem } from "@/types/strapi/collections/navbar";
 import NavLink from "./NavLink";
 
 type DropdownMenuProps = {

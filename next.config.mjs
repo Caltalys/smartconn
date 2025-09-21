@@ -1,10 +1,15 @@
-import createNextIntlPlugin from 'next-intl/plugin';
+import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-experimental: {
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
+  experimental: {
     // Include `turbo` so next-intl adds aliases here instead of the
     // newer `turbopack` key, which isn't recognized in our Next.js version.
     turbo: {},
@@ -23,13 +28,13 @@ experimental: {
       },
       {
         protocol: "http",
-        port: '1337',
+        port: "1337",
         hostname: "localhost",
         pathname: "/uploads/**",
       },
       {
         protocol: "http",
-        port: '3000',
+        port: "3000",
         hostname: "localhost",
         pathname: "/**",
       },

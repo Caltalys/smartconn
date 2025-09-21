@@ -1,5 +1,5 @@
 import LanguageSwitcher from "@/components/elements/LanguageSwitcher";
-import { Navbar } from "@/types/strapi/sections/navbar";
+import { Navbar } from "@/types/strapi/collections/navbar";
 import NavItem from "./NavItem";
 
 type DesktopNavProps = {

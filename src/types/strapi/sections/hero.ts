@@ -1,80 +1,56 @@
+import { Link, mapLink, StrapiLink } from "../elements/link";
+import { ImageBlock, mapImageBlock, StrapiImageBlock } from "../shared/image";
+import {
+  mapSliderBlock,
+  SliderBlock,
+  StrapiSliderBlock,
+} from "../shared/slider";
+import { mapVideoBlock, StrapiVideoBlock, VideoBlock } from "../shared/video";
 
-import { Link, StrapiLink } from "../elements/link";
-import { Slide, StrapiSlide } from "../elements/slide";
-import { Media, StrapiComponent } from "../strapi";
-
-// --- Các component Media (dùng trong Hero Section) ---
-
-/**
- * Cấu trúc dữ liệu thô của Media Image.
- * API ID: shared.image
- */
-export interface StrapiMediaImage extends StrapiComponent {
-  image: Media;
-  alternativeText?: string | null;
-  layout: 'background' | 'side-image';
-}
-
-/**
- * Cấu trúc dữ liệu của Media Image đã được ánh xạ cho frontend.
- */
-export type MediaImage = Omit<StrapiMediaImage, '__component'>;
-
-/**
- * Cấu trúc dữ liệu thô của Media Video.
- * API ID: shared.video
- */
-export interface StrapiMediaVideo extends StrapiComponent {
-  youtubeId: string;
-  layout: 'background' | 'side-video';
-}
-
-/**
- * Cấu trúc dữ liệu của Media Video đã được ánh xạ cho frontend.
- */
-export type MediaVideo = Omit<StrapiMediaVideo, '__component'>;
-
-/**
- * Cấu trúc dữ liệu thô của Media Slider.
- * API ID: shared.slider
- */
-export interface StrapiMediaSlider extends StrapiComponent {
-  slides: StrapiSlide[];
-}
-
-/**
- * Cấu trúc dữ liệu của Media Slider đã được ánh xạ cho frontend.
- */
-export type MediaSlider = Omit<StrapiMediaSlider, '__component' | 'slides'> & {
-    slides: Slide[];
-};
-
-
-// --- Component Hero Section ---
-
-/**
- * Cấu trúc dữ liệu thô của Hero Section từ Strapi.
- * API ID: sections.hero
- */
-export interface StrapiHeroSection extends StrapiComponent {
-  __component: 'sections.hero';
+// Raw Strapi Type
+export interface StrapiHeroSection {
+  __component: "sections.hero";
+  id: number;
   heading: string;
   subheading?: string | null;
-  description?: string | null; // Rich Text
+  description: string;
   ctas: StrapiLink[];
-  layout: 'text-left' | 'text-center' | 'text-right';
-  mediaType: 'image' | 'video' | 'slider' | 'none';
-  mediaImage?: StrapiMediaImage | null;
-  mediaVideo?: StrapiMediaVideo | null;
-  mediaSlider?: StrapiMediaSlider | null;
+  layout: "text-left" | "text-center" | "text-right";
+  mediaType: "image" | "video" | "slider" | "none";
+  mediaImage?: StrapiImageBlock | null;
+  mediaVideo?: StrapiVideoBlock | null;
+  mediaSlider?: StrapiSliderBlock | null;
 }
 
-/**
- * Cấu trúc dữ liệu của Hero Section đã được ánh xạ cho frontend.
- */
-export type HeroSection = Omit<StrapiHeroSection, 'mediaImage' | 'mediaVideo' | 'mediaSlider' | 'ctas'> & {
+// Mapped Frontend Type
+export interface HeroSection {
+  __component: "sections.hero";
+  id: number;
+  title: string;
+  subtitle: string | null;
+  description: string; // Markdown or HTML
   ctas: Link[];
-  mediaImage?: MediaImage | null;
-  mediaVideo?: MediaVideo | null;
-  mediaSlider?: MediaSlider | null;
-};
+  layout: "text-left" | "text-center" | "text-right";
+  mediaType: "image" | "video" | "slider" | "none";
+  mediaImage?: ImageBlock | null;
+  mediaVideo?: VideoBlock | null;
+  mediaSlider?: SliderBlock | null;
+}
+
+export function mapHeroSection(section: StrapiHeroSection): HeroSection {
+  return {
+    __component: section.__component,
+    id: section.id,
+    title: section.heading,
+    subtitle: section.subheading ?? null,
+    description: section.description,
+    ctas: (section.ctas ?? []).map(mapLink),
+    layout: section.layout,
+    mediaType: section.mediaType,
+    mediaImage: section.mediaImage ? mapImageBlock(section.mediaImage) : null,
+    mediaVideo: section.mediaVideo ? mapVideoBlock(section.mediaVideo) : null,
+    mediaSlider: section.mediaSlider
+      ? mapSliderBlock(section.mediaSlider)
+      : null,
+  };
+}

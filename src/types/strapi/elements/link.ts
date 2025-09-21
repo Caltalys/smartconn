@@ -1,24 +1,28 @@
-import { StrapiComponent } from "../strapi";
-
-/**
- * Cấu trúc dữ liệu thô của một Link Component từ Strapi.
- * API ID: element.link
- */
-export interface StrapiLink extends StrapiComponent {
-  text: string;
+// Raw Strapi Type
+export interface StrapiLink {
+  __component: "elements.link";
+  id: number;
   url: string;
-  target: '_blank' | '_self' | '_parent' | '_top';
+  target: "_blank" | "_self" | "_parent" | "_top";
+  text: string;
   isExternal: boolean;
 }
 
-/**
- * Cấu trúc dữ liệu của một Link đã được ánh xạ cho frontend.
- * Tên trường được đổi để nhất quán hơn (text -> label, url -> href).
- */
+// Mapped Frontend Type
 export interface Link {
-    id: number;
-    label: string;
-    href: string;
-    target: '_blank' | '_self' | '_parent' | '_top';
-    isExternal: boolean;
+  id: number;
+  href: string;
+  target: "_blank" | "_self" | "_parent" | "_top";
+  label: string;
+  isExternal: boolean;
+}
+
+export function mapLink(strapiLink: StrapiLink): Link {
+  return {
+    id: strapiLink.id,
+    href: strapiLink.url,
+    target: strapiLink.target,
+    label: strapiLink.text,
+    isExternal: strapiLink.isExternal,
+  };
 }

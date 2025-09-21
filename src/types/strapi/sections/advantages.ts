@@ -1,26 +1,38 @@
-import { StrapiComponent } from '../strapi';
-import { FeatureItem, StrapiFeatureItem } from './services';
+import {
+  FeatureItem,
+  mapFeatureItem,
+  StrapiFeatureItem,
+} from "../elements/feature-item";
 
-/**
- * Cấu trúc dữ liệu thô của Advantages Section từ Strapi.
- * API ID: sections.advantages
- */
-export interface StrapiAdvantagesSection extends StrapiComponent {
-    __component: 'sections.advantages';
-    title?: string | null; // Sẽ được map thành pretitle
-    heading: string; // Sẽ được map thành title
-    description?: string | null;
-    items: StrapiFeatureItem[];
+// Raw Strapi Type
+export interface StrapiAdvantagesSection {
+  __component: "sections.advantages";
+  id: number;
+  title?: string | null;
+  heading: string;
+  description?: string | null;
+  items: StrapiFeatureItem[];
 }
 
-/**
- * Cấu trúc dữ liệu của Advantages Section đã được ánh xạ cho frontend.
- */
-export type AdvantagesSectionData = {
-    id: number;
-    __component: 'sections.advantages';
-    pretitle: string;
-    title: string;
-    description: string;
-    items: FeatureItem[];
-};
+// Mapped Frontend Type
+export interface AdvantagesSectionData {
+  __component: "sections.advantages";
+  id: number;
+  pretitle: string;
+  title: string;
+  description: string;
+  items: FeatureItem[];
+}
+
+export function mapAdvantagesSection(
+  section: StrapiAdvantagesSection
+): AdvantagesSectionData {
+  return {
+    __component: section.__component,
+    id: section.id,
+    pretitle: section.title ?? "",
+    title: section.heading,
+    description: section.description ?? "",
+    items: (section.items ?? []).map(mapFeatureItem),
+  };
+}

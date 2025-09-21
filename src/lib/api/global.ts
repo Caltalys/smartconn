@@ -1,14 +1,14 @@
-import { Footer } from "@/types/strapi/sections/footer";
-import { Navbar } from "@/types/strapi/sections/navbar";
+import { Navbar } from "@/types/strapi/collections/navbar";
 import { Topbar } from "@/types/strapi/sections/topbar";
+import { Footer } from "@/types/strapi/single/footer";
 import { fetchFooter } from "./api-footer";
 import { fetchAllNavbars } from "./api-navbar";
 import { fetchTopbar } from "./api-topbar";
 
 export interface GlobalLayoutData {
-    topbar: Topbar | null;
-    navbar: Navbar | null;
-    footer: Footer | null;
+  topbar: Topbar | null;
+  navbar: Navbar | null;
+  footer: Footer | null;
 }
 
 /**
@@ -19,18 +19,20 @@ export interface GlobalLayoutData {
  * @param locale The locale to fetch data for.
  * @returns An object containing the data for the layout components.
  */
-export async function fetchGlobalLayoutData(locale: string): Promise<GlobalLayoutData> {
-    // Use Promise.all to fetch all data in parallel, improving performance.
-    const [topbarData, footerData, navbars] = await Promise.all([
-        fetchTopbar(locale),
-        fetchFooter(locale),
-        fetchAllNavbars(locale),
-    ]);
+export async function fetchGlobalLayoutData(
+  locale: string
+): Promise<GlobalLayoutData> {
+  // Use Promise.all to fetch all data in parallel, improving performance.
+  const [topbarData, footerData, navbars] = await Promise.all([
+    fetchTopbar(locale),
+    fetchFooter(locale),
+    fetchAllNavbars(locale),
+  ]);
 
-    return {
-        topbar: topbarData,
-        footer: footerData,
-        // The API returns an array of navbars, but we typically only use the first one for the main header.
-        navbar: navbars?.[0] || null,
-    };
+  return {
+    topbar: topbarData,
+    footer: footerData,
+    // The API returns an array of navbars, but we typically only use the first one for the main header.
+    navbar: navbars?.[0] || null,
+  };
 }

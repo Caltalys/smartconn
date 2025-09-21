@@ -1,3 +1,19 @@
 {
-    "postman.settings.dotenv-detection-notification-visibility": false
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  // Giúp VSCode hiểu tsconfig khi lint
+  "eslint.workingDirectories": [{ "mode": "auto" }]
 }

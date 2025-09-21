@@ -1,12 +1,11 @@
-import { strapiClient } from "../strapi-client";
 import type {
   Navbar,
-  NavbarResponse,
   NavbarCollectionResponse,
   NavbarItem,
+  NavbarResponse,
   StrapiNavbarItem,
-} from "../../types/strapi/sections/navbar";
-
+} from "../../types/strapi/collections/navbar";
+import { strapiClient } from "../strapi-client";
 
 /**
  * --------------------------
@@ -65,23 +64,21 @@ export async function fetchAllNavbars(locale?: string): Promise<Navbar[]> {
   const client = strapiClient(locale);
 
   try {
-    const resp = (await client
-      .collection("navbars")
-      .find({
-        ...(locale && { locale }),
-        populate: {
-          items: {
-            populate: {
-              children: {
-                // Populate đệ quy đến 3 cấp. Có thể cần tăng nếu menu sâu hơn.
-                populate: { children: true },
-              },
+    const resp = (await client.collection("navbars").find({
+      ...(locale && { locale }),
+      populate: {
+        items: {
+          populate: {
+            children: {
+              // Populate đệ quy đến 3 cấp. Có thể cần tăng nếu menu sâu hơn.
+              populate: { children: true },
             },
           },
         },
-      })) as unknown as NavbarCollectionResponse;
+      },
+    })) as unknown as NavbarCollectionResponse;
 
-    // Lọc ra các kết quả null từ mapNavbar nếu có (để đảm bảo an toàn kiểu) 
+    // Lọc ra các kết quả null từ mapNavbar nếu có (để đảm bảo an toàn kiểu)
     return resp.data
       .map((doc) => mapNavbar({ data: doc, meta: {} }))
       .filter((navbar): navbar is Navbar => navbar !== null);
@@ -104,21 +101,19 @@ export async function fetchNavbar(
   const client = strapiClient(locale);
 
   try {
-    const resp = (await client
-      .collection("navbars")
-      .findOne(id, {
-        ...(locale && { locale }),
-        populate: {
-          items: {
-            populate: {
-              children: {
-                // Populate đệ quy đến 3 cấp.
-                populate: { children: true },
-              },
+    const resp = (await client.collection("navbars").findOne(id, {
+      ...(locale && { locale }),
+      populate: {
+        items: {
+          populate: {
+            children: {
+              // Populate đệ quy đến 3 cấp.
+              populate: { children: true },
             },
           },
         },
-      })) as unknown as NavbarResponse | null;
+      },
+    })) as unknown as NavbarResponse | null;
 
     if (!resp) return null;
 

@@ -1,8 +1,8 @@
 "use client";
 
+import { Navbar } from "@/types/strapi/collections/navbar";
 import React from "react";
 import NavMobileMenu from "../blocks/NavMobileMenu";
-import { Navbar } from "@/types/strapi/sections/navbar";
 import Logo from "../elements/Logo";
 import DesktopNav from "./header/DesktopNav";
 

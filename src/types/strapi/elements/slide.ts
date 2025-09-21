@@ -1,16 +1,39 @@
-import { Media, StrapiComponent } from "../strapi";
+import { getStrapiMedia } from "@/lib/utils";
+import { StrapiMedia } from "../strapi";
 
-/**
- * Cấu trúc dữ liệu thô của một Slide.
- * API ID: elements.slide
- */
-export interface StrapiSlide extends StrapiComponent {
-    image: Media;
-    alternativeText?: string | null;
-    caption?: string | null;
+// Raw Strapi Type
+export interface StrapiSlide {
+  __component: "elements.slide";
+  id: number;
+  image: StrapiMedia;
+  alternativeText?: string | null;
+  caption?: string | null;
 }
 
-/**
- * Cấu trúc dữ liệu của một Slide đã được ánh xạ cho frontend.
- */
-export type Slide = Omit<StrapiSlide, '__component'>;
+// Mapped Frontend Type
+export interface Slide {
+  id: number;
+  image: {
+    url: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+  alternativeText: string | null;
+  caption: string | null;
+}
+
+export function mapSlide(slide: StrapiSlide): Slide {
+  const img = slide.image;
+  return {
+    id: slide.id,
+    image: {
+      url: getStrapiMedia(img?.url) ?? "",
+      alt: img?.alternativeText ?? "",
+      width: img?.width ?? 0,
+      height: img?.height ?? 0,
+    },
+    alternativeText: slide.alternativeText ?? null,
+    caption: slide.caption ?? null,
+  };
+}

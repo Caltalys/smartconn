@@ -1,24 +1,31 @@
-import { Media, StrapiComponent } from "../strapi";
+import { getStrapiMedia } from "@/lib/utils";
+import { StrapiMedia } from "../strapi";
 
-/**
- * Cấu trúc dữ liệu thô của một Icon component từ Strapi.
- * API ID: elements.icon
- */
-export interface StrapiIcon extends StrapiComponent {
-    __component: 'elements.icon';
-    name?: string | null;
-    iconImage?: Media | null;
-    svgContent?: string | null;
-    iconName?: string | null; // Tên icon từ thư viện react-icons, ví dụ: "RiStarFill"
+// Raw Strapi Type
+export interface StrapiIcon {
+  __component: "elements.icon";
+  id: number;
+  name?: string | null;
+  iconName?: string | null;
+  iconImage?: StrapiMedia | null;
+  svgContent?: string | null;
 }
 
-/**
- * Cấu trúc dữ liệu của Icon đã được ánh xạ cho frontend.
- */
-export type Icon = {
-    id: number;
-    name: string;
-    imageUrl?: string | null;
-    svgContent?: string | null;
-    iconName?: string | null;
-};
+// Mapped Frontend Type
+export interface Icon {
+  id: number;
+  name: string;
+  iconName: string | null;
+  imageUrl: string | null;
+  svgContent: string | null;
+}
+
+export function mapIcon(icon: StrapiIcon): Icon {
+  return {
+    id: icon.id,
+    name: icon.name ?? "",
+    iconName: icon.iconName ?? null,
+    imageUrl: icon.iconImage ? getStrapiMedia(icon.iconImage.url) : null,
+    svgContent: icon.svgContent ?? null,
+  };
+}

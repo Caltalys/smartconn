@@ -1,10 +1,10 @@
 import ArticleCard from '@/components/blocks/ArticleCard';
+import BlogCategoryFilter from '@/components/blocks/BlogCategoryFilter';
 import BlogSearch from '@/components/blocks/BlogSearch';
 import Pagination from '@/components/blocks/Pagination';
 import { getAllArticles, getAllCategories } from '@/lib/api';
-import { getTranslations } from 'next-intl/server';
 import { Article } from '@/types/strapi/collections/article';
-import BlogCategoryFilter from '@/components/blocks/BlogCategoryFilter';
+import { getTranslations } from 'next-intl/server';
 
 interface BlogPageProps {
     params: Promise<{ locale: string, page?: string; query?: string, category?: string }>;
@@ -38,7 +38,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
     ]);
 
     const articles = articlesResponse.data;
-    const pageCount = articlesResponse.meta.pagination.pageCount;
+    const pageCount = articlesResponse?.meta?.pagination?.pageCount;
 
     const hasArticles = articles && articles.length > 0;
 
@@ -55,7 +55,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
                             <ArticleCard key={article.id} article={article} locale={locale} />
                         ))}
                     </div>
-                    <Pagination pageCount={pageCount} />
+                    {pageCount && pageCount > 1 && <Pagination pageCount={pageCount} />}
                 </>
             ) : (
                 <div className="text-center py-16"><p className="text-muted-foreground">{t('noArticlesFound')}</p></div>

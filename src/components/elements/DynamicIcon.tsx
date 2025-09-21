@@ -1,12 +1,13 @@
 'use client';
 
-import Image from 'next/image';
-import * as RiIcons from 'react-icons/ri';
 import { Icon } from '@/types/strapi/elements/icon';
+import Image from 'next/image';
+import type { IconType } from 'react-icons';
+import * as RiIcons from 'react-icons/ri';
 
 // Cần thiết cho việc tải icon động
 type IconMap = {
-    [key: string]: React.ComponentType<any>;
+    [key: string]: IconType;
 };
 
 interface DynamicIconProps {

@@ -1,8 +1,8 @@
 'use client';
 
-import { motion } from "framer-motion";
-import { NavbarItem } from "@/types/strapi/sections/navbar";
 import { useActiveServiceDispatch } from "@/context/ServiceContext";
+import { NavbarItem } from "@/types/strapi/collections/navbar";
+import { motion } from "framer-motion";
 import NavLink from "./NavLink";
 
 type MobileSubMenuProps = {
