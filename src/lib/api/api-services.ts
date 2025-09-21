@@ -1,36 +1,37 @@
 import { strapiClient } from "../strapi-client";
+import { Service, StrapiService, ServiceCollectionResponse } from "@/types/strapi/collections/service";
 import { StrapiResponseCollection } from "@/types/strapi/strapi";
-import { getStrapiMedia } from "../utils";
-import { Service, StrapiService } from "@/types/strapi/collections/service";
+import { mapContentSections } from "./api-page";
+import { AnySharedBlock } from "@/types/strapi/blocks/shared";
 
 // --- Mappers ---
 
 /**
  * Ánh xạ dữ liệu thô của một Service từ Strapi sang cấu trúc dữ liệu sạch cho frontend.
+ * Hàm này là async để có thể xử lý việc ánh xạ các dynamic zone blocks.
  */
-export function mapService(article: StrapiService): Service {
+export async function mapService(strapiService: StrapiService, locale: string): Promise<Service> {
+    // Sử dụng mapContentSections để ánh xạ các block trong dynamic zone
+    const mappedBlocks = strapiService.blocks
+        ? await mapContentSections(strapiService.blocks, locale)
+        : [];
+
     return {
-        id: article.id,
-        title: article.title,
-        description: article.description,
-        slug: article.slug,
-        cover: article.cover,
-        blocks: article.blocks,
-        publishedAt: article.publishedAt,
+        ...strapiService,
+        // Ép kiểu ở đây là an toàn vì chúng ta giả định dynamic zone của Service chỉ chứa các shared block.
+        blocks: mappedBlocks as AnySharedBlock[],
     };
 }
 
 // --- API Fetchers ---
 
-interface ServicesResponse extends StrapiResponseCollection<StrapiService> {}
-
 /**
- * Lấy tất cả bài viết, hỗ trợ phân trang và tìm kiếm.
+ * Lấy tất cả các dịch vụ, hỗ trợ phân trang và tìm kiếm.
  */
 export async function getAllServices(
     locale: string,
     params: { page?: number; pageSize?: number; query?: string } = {}
-): Promise<{ data: Service[]; meta: any }> {
+): Promise<ServiceCollectionResponse> {
     const client = strapiClient(locale);
     const { page = 1, pageSize = 10, query = '' } = params;
 
@@ -38,20 +39,20 @@ export async function getAllServices(
         const response = await client.collection('services').find({
             locale,
             sort: 'publishedAt:desc',
-            pagination: {
-                page,
-                pageSize,
-            },
+            pagination: { page, pageSize },
             filters: {
                 ...(query && { title: { $containsi: query } }),
             },
             populate: ['cover'],
-        }) as unknown as ServicesResponse;
+        }) as unknown as StrapiResponseCollection<StrapiService>;
 
-        return {
-            data: response.data.map(mapService),
-            meta: response.meta,
-        };
+        // Ánh xạ thủ công cho danh sách, không cần map `blocks` để tối ưu hiệu suất.
+        const services = response.data.map((service) => ({
+            ...service,
+            blocks: [], // Trả về mảng rỗng cho trang danh sách để khớp với kiểu `Service`
+        }));
+
+        return { data: services, meta: response.meta };
     } catch (error) {
         console.error("API Error: Could not fetch services.", error);
         return { data: [], meta: { pagination: { page: 1, pageSize, pageCount: 1, total: 0 } } };
@@ -59,7 +60,7 @@ export async function getAllServices(
 }
 
 /**
- * Lấy một bài viết duy nhất dựa vào slug.
+ * Lấy một dịch vụ duy nhất dựa vào slug.
  */
 export async function getServiceBySlug(slug: string, locale: string): Promise<Service | null> {
     const client = strapiClient(locale);
@@ -67,14 +68,32 @@ export async function getServiceBySlug(slug: string, locale: string): Promise<Se
         const response = await client.collection('services').find({
             locale,
             filters: { slug: { $eq: slug } },
-            populate: ['cover', 'blocks'],
+            // Cập nhật populate để lấy đủ dữ liệu cho các block lồng nhau
+            populate: {
+                cover: true,
+                blocks: {
+                    on: {
+                        'shared.image': { populate: { image: true } },
+                        'shared.media': { populate: { file: true } },
+                        'shared.slider': { populate: { slides: { populate: { image: true } } } },
+                        'shared.list-item': { populate: { items: { populate: { image: true, cta: true, icon: { populate: { iconImage: true } } } } } },
+                        'shared.richtext-video': { populate: { video: true } },
+                        'shared.richtext-image': { populate: { image: true } },
+                        // Populate cho các block đơn giản không có relation lồng nhau
+                        'shared.quote': true,
+                        'shared.rich-text': true,
+                        'shared.video': true,
+                    }
+                }
+            }
         }) as unknown as StrapiResponseCollection<StrapiService>;
 
         if (!response.data || response.data.length === 0) {
             return null;
         }
 
-        return mapService(response.data[0]);
+        // Gọi hàm mapService phiên bản async mới
+        return await mapService(response.data[0], locale);
     } catch (error) {
         console.error(`API Error: Could not fetch service with slug "${slug}".`, error);
         return null;

@@ -1,15 +1,10 @@
 import Pretitle from '@/components/elements/Pretitle';
 import ListPageLayout from '@/components/layouts/ListPageLayout';
+import { AsyncProps, BaseProps } from '@/types/global';
 import { getTranslations } from 'next-intl/server';
 
-interface BlogLayoutProps {
-    children: React.ReactNode;
-    params: {
-        locale: string;
-    };
-}
-
-export default async function BlogLayout({ children, params: { locale } }: BlogLayoutProps) {
+export default async function BlogLayout({ params, children }: AsyncProps) {
+    const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'blog' });
     const tNav = await getTranslations({ locale, namespace: 'navigation' });
 

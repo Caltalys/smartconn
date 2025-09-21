@@ -7,12 +7,11 @@ import { Article } from '@/types/strapi/collections/article';
 import BlogCategoryFilter from '@/components/blocks/BlogCategoryFilter';
 
 interface BlogPageProps {
-    params: { locale: string };
-    searchParams?: { page?: string; query?: string; category?: string };
+    params: Promise<{ locale: string, page?: string; query?: string, category?: string }>;
 }
 
 export async function generateMetadata({ params }: BlogPageProps) {
-    const { locale } = params;
+    const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'blog' });
     return {
         title: t('title'),
@@ -20,12 +19,11 @@ export async function generateMetadata({ params }: BlogPageProps) {
     };
 }
 
-export default async function BlogPage({ params, searchParams }: BlogPageProps) {
-    const { locale } = params;
-    const query = searchParams?.query || '';
-    const categorySlug = searchParams?.category || '';
+export default async function BlogPage({ params }: BlogPageProps) {
+    const { locale, page, query, category } = await params;
+    const categorySlug = category || '';
     const t = await getTranslations({ locale, namespace: 'blog' });
-    const currentPage = Number(searchParams?.page) || 1;
+    const currentPage = Number(page) || 1;
     const articlesPerPage = 10;
 
     // Lấy danh mục và bài viết song song để tối ưu hiệu suất
@@ -33,7 +31,7 @@ export default async function BlogPage({ params, searchParams }: BlogPageProps) 
         getAllArticles(locale, {
             page: currentPage,
             pageSize: articlesPerPage,
-            query: query,
+            query: query || '',
             categorySlug: categorySlug,
         }),
         getAllCategories(locale),

@@ -1,13 +1,10 @@
-import Pretitle from '@/components/elements/Pretitle';
 import ListPageLayout from '@/components/layouts/ListPageLayout';
+import { AsyncProps } from '@/types/global';
 import { getTranslations } from 'next-intl/server';
 
-interface ServiceLayoutProps {
-    children: React.ReactNode;
-    params: { locale: string };
-}
 
-export default async function ServiceLayout({ children, params: { locale } }: ServiceLayoutProps) {
+export default async function ServiceLayout({ params, children }: AsyncProps) {
+    const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'services' });
     const tNav = await getTranslations({ locale, namespace: 'navigation' });
 

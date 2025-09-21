@@ -12,17 +12,15 @@ import { Button } from '@/components/ui/button';
 import { RiArrowLeftLine } from 'react-icons/ri';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-interface ArticlePageProps {
-  params: {
-    slug: string;
-    locale: string;
-  };
+interface ArticleDetailPageProps {
+    params: Promise<{ locale: string, slug: string }>;
 }
 
+
 export async function generateMetadata(
-  { params }: ArticlePageProps
+  { params }: ArticleDetailPageProps
 ): Promise<Metadata> {
-  const { slug, locale } = params; 
+  const { slug, locale } = await params; 
   const article = await getArticleBySlug(slug, locale);
 
   if (!article) {
@@ -44,8 +42,8 @@ export async function generateMetadata(
   };
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { slug, locale } = params;
+export default async function ArticlePage({ params }: ArticleDetailPageProps) {
+  const { slug, locale } = await params;
   const article = await getArticleBySlug(slug, locale);
   const t = await getTranslations({ locale, namespace: 'blog' });
   const tNav = await getTranslations({ locale, namespace: 'navigation' });

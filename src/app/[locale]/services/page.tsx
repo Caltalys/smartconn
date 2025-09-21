@@ -5,12 +5,11 @@ import { Service } from '@/types/strapi/collections/service';
 import ServiceCard from '@/components/blocks/ServiceCard';
 
 interface ServicePageProps {
-    params: { locale: string };
-    searchParams?: { page?: string; query?: string };
+    params: Promise<{ locale: string, page?: string; query?: string }>;
 }
 
 export async function generateMetadata({ params }: ServicePageProps) {
-    const { locale } = params;
+    const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'services' });
     return {
         title: t('title'),
@@ -18,11 +17,10 @@ export async function generateMetadata({ params }: ServicePageProps) {
     };
 }
 
-export default async function ServicesPage({ params, searchParams }: ServicePageProps) {
-    const { locale } = params;
-    const query = searchParams?.query || '';
+export default async function ServicesPage({ params }: ServicePageProps) {
+    const { locale, page, query } = await params;
     const t = await getTranslations({ locale, namespace: 'services' });
-    const currentPage = Number(searchParams?.page) || 1;
+    const currentPage = Number(page) || 1;
     const servicesPerPage = 10;
 
     // Lấy danh mục và bài viết song song để tối ưu hiệu suất
@@ -30,12 +28,12 @@ export default async function ServicesPage({ params, searchParams }: ServicePage
         getAllServices(locale, {
             page: currentPage,
             pageSize: servicesPerPage,
-            query: query
+            query: query || ''
         }),
     ]);
 
     const services = servicesResponse.data;
-    const pageCount = servicesResponse.meta.pagination.pageCount;
+    const pageCount = servicesResponse.meta?.pagination?.pageCount;
 
     const hasServices = services && services.length > 0;
 
@@ -48,7 +46,7 @@ export default async function ServicesPage({ params, searchParams }: ServicePage
                             <ServiceCard key={service.id} service={service} locale={locale} />
                         ))}
                     </div>
-                    <Pagination pageCount={pageCount} />
+                    { pageCount && pageCount > 1 && (<Pagination pageCount={pageCount} />) }
                 </>
             ) : (
                 <div className="text-center py-16"><p className="text-muted-foreground">{t('noServicesFound')}</p></div>

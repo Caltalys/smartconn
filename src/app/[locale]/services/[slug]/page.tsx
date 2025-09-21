@@ -11,17 +11,14 @@ import { Button } from '@/components/ui/button';
 import { RiArrowLeftLine } from 'react-icons/ri';
 import { getServiceBySlug } from '@/lib/api/api-services';
 
-interface ServicePageProps {
-    params: {
-        slug: string;
-        locale: string;
-    };
+interface ServiceDetailPageProps {
+    params: Promise<{ locale: string, slug: string }>;
 }
 
 export async function generateMetadata(
-    { params }: ServicePageProps
+    { params }: ServiceDetailPageProps
 ): Promise<Metadata> {
-    const { slug, locale } = params;
+    const { slug, locale } = await params;
     const service = await getServiceBySlug(slug, locale);
 
     if (!service) {
@@ -43,8 +40,8 @@ export async function generateMetadata(
     };
 }
 
-export default async function ServicePage({ params }: ServicePageProps) {
-    const { slug, locale } = params;
+export default async function ServicePage({ params }: PageProps<"/[locale]/services/[slug]">) {
+    const { slug, locale } = await params;
     const service = await getServiceBySlug(slug, locale);
     const t = await getTranslations({ locale, namespace: 'services' });
     const tNav = await getTranslations({ locale, namespace: 'navigation' });
