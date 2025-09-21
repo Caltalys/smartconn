@@ -1,6 +1,7 @@
 import { fetchAboutPage } from "@/lib/api/api-about";
 import PageRenderer from "@/components/blocks/PageRenderer";
 import { notFound } from "next/navigation";
+import Pretitle from "@/components/elements/Pretitle";
 
 export default async function AboutPage({ params: { locale } }: { params: { locale: string } }) {
   // Lấy dữ liệu từ Strapi trên server
@@ -11,14 +12,13 @@ export default async function AboutPage({ params: { locale } }: { params: { loca
   }
 
   const { title, subtitle, blocks } = aboutData;
+  console.log(blocks);
 
   return (
     <main className="container mx-auto px-4 py-12">
       <header className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-          {title}
-        </h1>
-        <p className="mt-4 text-lg text-gray-600">{subtitle}</p>
+        <Pretitle text={title} center/>
+        <h1 className="mt-4 font-bold text-4xl uppercase">{subtitle}</h1>
       </header>
 
       {/*

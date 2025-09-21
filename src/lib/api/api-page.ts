@@ -1,5 +1,6 @@
 import { strapiClient } from "../strapi-client";
 import { HeroSection, StrapiHeroSection } from "@/types/strapi/sections/hero";
+import { Slide, StrapiSlide } from "@/types/strapi/elements/slide";
 import { StrapiLink, Link } from "@/types/strapi/elements/link";
 import { getStrapiMedia } from "../utils";
 import { AboutSectionData, StrapiAboutSection } from "@/types/strapi/sections/about";
@@ -9,8 +10,8 @@ import { PartnerItem, PartnersSectionData, StrapiPartnerItem, StrapiPartnersSect
 import { BlogSectionData, StrapiBlogSection } from "@/types/strapi/sections/blog";
 import { Icon, StrapiIcon } from "@/types/strapi/elements/icon";
 import { getAllArticles } from ".";
-import { AnyContentBlock, AnyStrapiContentBlock, Page, PageCollectionResponse, StrapiPage, StrapiSharedBlock } from "@/types/strapi/single/page";
-import { Block } from "@/types/strapi/strapi";
+import { AnyContentBlock, AnyStrapiContentBlock, Page, PageCollectionResponse, StrapiPage } from "@/types/strapi/single/page";
+import { SharedImageBlock, SharedListItemBlock, SharedMediaBlock, SharedQuoteBlock, SharedRichTextBlock, SharedRichtextImageBlock, SharedRichtextVideoBlock, SharedSliderBlock, SharedVideoBlock } from "@/types/strapi/blocks/shared";
 
 // --- Section Mappers ---
 
@@ -168,6 +169,173 @@ async function mapBlogSection(section: StrapiBlogSection, locale: string): Promi
     };
 }
 
+// --- Shared Block Mappers ---
+
+// Helper function to convert Strapi's blocks to Markdown
+function blocksToMarkdown(blocks: any[] | null): string {
+    if (!blocks) return "";
+    return blocks.map(block => {
+        switch (block.type) {
+            case 'paragraph':
+                return block.children.map((child: any) => {
+                    let text = child.text;
+                    if (child.bold) text = `**${text}**`;
+                    if (child.italic) text = `*${text}*`;
+                    if (child.underline) text = `<u>${text}</u>`;
+                    return text;
+                }).join('');
+            case 'heading':
+                return `${'#'.repeat(block.level)} ${block.children.map((child: any) => child.text).join('')}`;
+            case 'list':
+                const listChar = block.format === 'ordered' ? '1.' : '*';
+                return block.children.map((listItem: any, index: number) => 
+                    `${block.format === 'ordered' ? `${index + 1}.` : '*'} ${listItem.children.map((child: any) => child.text).join('')}`
+                ).join('\n');
+            default:
+                if (process.env.NODE_ENV === 'development') {
+                    console.warn(`blocksToMarkdown: Unknown block type "${block.type}"`);
+                }
+                return '';
+        }
+    }).join('\n\n');
+}
+
+/**
+ * Ánh xạ dữ liệu thô của một Quote Block.
+ */
+function mapSharedQuote(block: any): SharedQuoteBlock {
+    return {
+        id: block.id,
+        __component: 'shared.quote',
+        quote: block.body || "",
+        author: block.author || null,
+    };
+}
+
+/**
+ * Ánh xạ dữ liệu thô của một Rich Text Block.
+ */
+function mapSharedRichText(block: any): SharedRichTextBlock {
+    return {
+        id: block.id,
+        __component: 'shared.rich-text',
+        body: block.body || "",
+    };
+}
+
+/**
+ * Ánh xạ dữ liệu thô của một Slide.
+ */
+function mapSlide(slide: StrapiSlide): Slide {
+    return {
+        id: slide.id,
+        image: slide.image, // Giả định transformer đã làm phẳng
+        alternativeText: slide.alternativeText || null,
+        caption: slide.caption || null,
+    };
+}
+
+/**
+ * Ánh xạ dữ liệu thô của một Slider Block.
+ */
+function mapSharedSlider(block: any): SharedSliderBlock {
+    return {
+        id: block.id,
+        __component: 'shared.slider',
+        slides: (block.slides || []).map(mapSlide),
+    };
+}
+
+/**
+ * Ánh xạ dữ liệu thô của một List Item Block.
+ */
+function mapSharedListItem(block: any): SharedListItemBlock {
+    return {
+        id: block.id,
+        __component: 'shared.list-item',
+        pretitle: block.title || "",
+        title: block.heading || "",
+        itemJustify: block.itemJustify || 'center',
+        items: (block.items || []).map(mapFeatureItem), // Tái sử dụng mapFeatureItem
+    };
+}
+
+/**
+ * Ánh xạ dữ liệu thô của một Video Block.
+ */
+function mapSharedVideo(block: any): SharedVideoBlock | null {
+    if (!block) {
+        return null;
+    }
+    return {
+        id: block.id,
+        __component: 'shared.video',
+        youtubeId: block.youtubeId,
+        layout: block.layout || null,
+    };
+}
+
+/**
+ * Ánh xạ dữ liệu thô của một Image Block.
+ */
+function mapSharedImage(block: any): SharedImageBlock {
+    return {
+        id: block.id,
+        __component: 'shared.image',
+        image: block.image,
+        alternativeText: block.alternativeText || null,
+        layout: block.layout || null,
+    };
+}
+
+/**
+ * Ánh xạ dữ liệu thô của một Media Block.
+ */
+function mapSharedMedia(block: any): SharedMediaBlock {
+    // Dữ liệu đã được transformer làm phẳng, chỉ cần đảm bảo đúng kiểu.
+    return {
+        id: block.id,
+        __component: 'shared.media',
+        file: block.file,
+    };
+}
+
+/**
+ * Ánh xạ dữ liệu thô của một Richtext Video Block.
+ */
+function mapSharedRichtextVideo(block: any): SharedRichtextVideoBlock | null {
+    console.log(block);
+
+    const mappedVideo = mapSharedVideo(block.video);
+    if (!mappedVideo) {
+        console.warn(`mapSharedRichtextVideo: 'video' component is missing, not populated, or invalid for block id ${block.id}. This block will be skipped.`);
+        return null;
+    }
+    
+    return {
+        id: block.id,
+        __component: 'shared.richtext-video',
+        pretitle: block.title || "",
+        title: block.heading || "",
+        content: blocksToMarkdown(block.content),
+        video: mappedVideo,
+    };
+}
+
+/**
+ * Ánh xạ dữ liệu thô của một Richtext Image Block.
+ */
+function mapSharedRichtextImage(block: any): SharedRichtextImageBlock {
+    return {
+        id: block.id,
+        __component: 'shared.richtext-image',
+        pretitle: block.title || "",
+        title: block.heading || "",
+        content: blocksToMarkdown(block.content),
+        image: block.image, // Đã có định dạng Media đúng
+    };
+}
+
 /**
  * Ánh xạ một mảng các section thô từ Strapi sang mảng section cho frontend.
  * Hoạt động như một bộ định tuyến mapper.
@@ -177,32 +345,48 @@ export async function mapContentSections(sections: AnyStrapiContentBlock[], loca
     if (!sections) return [];
 
     const mappedSectionPromises = sections.map(section => {
-        if (section.__component.startsWith('sections.')) {
-            switch (section.__component) {
-                case 'sections.hero':
-                    return Promise.resolve(mapHeroSection(section));
-                case 'sections.about':
-                    return Promise.resolve(mapAboutSection(section));
-                case 'sections.services':
-                    return Promise.resolve(mapServicesSection(section));
-                case 'sections.advantages':
-                    return Promise.resolve(mapAdvantagesSection(section));
-                case 'sections.partners':
-                    return Promise.resolve(mapPartnersSection(section));
-                case 'sections.blog':
-                    return mapBlogSection(section, locale);
-                default:
-                    if (process.env.NODE_ENV === 'development') {
-                        console.warn(`mapContentSections: Không tìm thấy mapper cho section loại "${section.__component}".`);
-                    }
-                    return Promise.resolve(null);
-            }
-        } else if (section.__component.startsWith('shared.')) {
-            // Các shared block không cần mapping phức tạp, chỉ cần đảm bảo chúng là kiểu `Block`
-            return Promise.resolve(section as Block);
-        }
+        switch (section.__component) {
+            // Section Mappers
+            case 'sections.hero':
+                return Promise.resolve(mapHeroSection(section));
+            case 'sections.about':
+                return Promise.resolve(mapAboutSection(section));
+            case 'sections.services':
+                return Promise.resolve(mapServicesSection(section));
+            case 'sections.advantages':
+                return Promise.resolve(mapAdvantagesSection(section));
+            case 'sections.partners':
+                return Promise.resolve(mapPartnersSection(section));
+            case 'sections.blog':
+                return mapBlogSection(section, locale); // Async mapper
 
-        return Promise.resolve(null);
+            // Shared Block Mappers
+            case 'shared.quote':
+                return Promise.resolve(mapSharedQuote(section));
+            case 'shared.rich-text':
+                return Promise.resolve(mapSharedRichText(section));
+            case 'shared.slider':
+                return Promise.resolve(mapSharedSlider(section));
+            case 'shared.list-item':
+                return Promise.resolve(mapSharedListItem(section));
+            case 'shared.video':
+                return Promise.resolve(mapSharedVideo(section));
+            case 'shared.image':
+                return Promise.resolve(mapSharedImage(section));
+            case 'shared.media':
+                return Promise.resolve(mapSharedMedia(section));
+            case 'shared.richtext-video':
+                return Promise.resolve(mapSharedRichtextVideo(section as any));
+            case 'shared.richtext-image':
+                return Promise.resolve(mapSharedRichtextImage(section));
+
+            default:
+                if (process.env.NODE_ENV === 'development') {
+                    // Không sủa dòng log này
+                    console.warn(`mapContentSections: Không tìm thấy mapper cho component loại "${(section as { __component: string }).__component}". Section này sẽ được bỏ qua.`);
+                }
+                return Promise.resolve(null);
+        }
     });
 
     // Chờ tất cả các promise được giải quyết
@@ -252,23 +436,59 @@ export async function fetchPageBySlug(slug: string, locale: string): Promise<Pag
                             populate: { ctas: true, mediaImage: { populate: { image: true } }, mediaVideo: true, mediaSlider: { populate: { slides: { populate: { image: true } } } } }
                         },
                         'sections.about': {
-                            populate: '*'
+                            populate: { ctas: true, image: true }
                         },
                         'sections.services': {
-                            populate: { services: { populate: ['image', 'cta'] } }
+                            populate: {
+                                services: {
+                                    populate: {
+                                        image: true,
+                                        cta: true
+                                    }
+                                }
+                            }
                         },
                         'sections.advantages': {
-                            populate: { items: { populate: ['image', 'cta', 'icon', 'icon.iconImage'] } }
+                            populate: {
+                                items: {
+                                    populate: {
+                                        image: true,
+                                        cta: true,
+                                        icon: {
+                                            populate: {
+                                                iconImage: true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         },
                         'sections.partners': {
-                            populate: { items: { populate: ['image'] } }
-                        }
-                    }
+                            populate: {
+                                items: {
+                                    populate: {
+                                        image: true
+                                    }
+                                }
+                            }
+                        },
+                        'shared.image': { populate: { image: true } },
+                        'shared.media': { populate: { file: true } },
+                        'shared.slider': {
+                            populate: {
+                                slides: {
+                                    populate: { image: true }
+                                }
+                            }
+                        },
+                        'shared.list-item': { populate: { items: { populate: { image: true, cta: true, icon: { populate: { iconImage: true } } } } } },
+                        'shared.richtext-video': { populate: { video: true } },
+                        'shared.richtext-image': { populate: { image: true } }
+                    },
                 },
                 metaImage: true,
             },
         }) as unknown as PageCollectionResponse;
-        console.log(response);
         if (!response.data || response.data.length === 0) { return null; }
 
         // Gọi phiên bản async của mapPage và truyền locale vào

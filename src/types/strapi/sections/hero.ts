@@ -1,5 +1,6 @@
 
 import { Link, StrapiLink } from "../elements/link";
+import { Slide, StrapiSlide } from "../elements/slide";
 import { Media, StrapiComponent } from "../strapi";
 
 // --- Các component Media (dùng trong Hero Section) ---
@@ -32,21 +33,6 @@ export interface StrapiMediaVideo extends StrapiComponent {
  * Cấu trúc dữ liệu của Media Video đã được ánh xạ cho frontend.
  */
 export type MediaVideo = Omit<StrapiMediaVideo, '__component'>;
-
-/**
- * Cấu trúc dữ liệu thô của một Slide.
- * API ID: elements.slide
- */
-export interface StrapiSlide extends StrapiComponent {
-    image: Media;
-    alternativeText?: string | null;
-    caption?: string | null;
-}
-
-/**
- * Cấu trúc dữ liệu của một Slide đã được ánh xạ cho frontend.
- */
-export type Slide = Omit<StrapiSlide, '__component'>;
 
 /**
  * Cấu trúc dữ liệu thô của Media Slider.

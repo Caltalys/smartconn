@@ -1,4 +1,5 @@
 import { AboutSectionData, StrapiAboutSection } from "../sections/about";
+import { AnySharedBlock } from "../blocks/shared";
 import {
   AdvantagesSectionData,
   StrapiAdvantagesSection,
@@ -25,7 +26,11 @@ export interface StrapiSharedBlock extends Block {
     | "shared.rich-text"
     | "shared.slider"
     | "shared.video"
-    | "shared.image";
+    | "shared.image"
+    | "shared.media"
+    | "shared.richtext-video"
+    | "shared.richtext-image"
+    | "shared.list-item";
   [key: string]: any; // Cho phép các thuộc tính như 'text', 'content', 'slides', v.v.
 }
 
@@ -38,20 +43,18 @@ export type StrapiSectionComponent =
   | StrapiPartnersSection
   | StrapiBlogSection;
 
-/** Union type cho tất cả các component section đã được ánh xạ cho frontend. */
-export type SectionComponent =
+/** Union type cho BẤT KỲ component đã được ánh xạ nào để PageRenderer render. */
+export type AnyContentBlock =
   | HeroSection
   | AboutSectionData
   | ServicesSectionData
   | AdvantagesSectionData
   | PartnersSectionData
-  | BlogSectionData;
+  | BlogSectionData
+  | AnySharedBlock;
 
-/** Union type cho BẤT KỲ component thô nào trong Dynamic Zone. */
+/** Union type cho BẤT KỲ component thô nào trong Dynamic Zone của Strapi. */
 export type AnyStrapiContentBlock = StrapiSectionComponent | StrapiSharedBlock;
-
-/** Union type cho BẤT KỲ component đã được ánh xạ nào để PageRenderer render. */
-export type AnyContentBlock = SectionComponent | Block;
 
 /**
  * Cấu trúc dữ liệu thô của một Page từ API Strapi (đã qua transformer).

@@ -1,4 +1,5 @@
-import { AnyContentBlock, AnyStrapiContentBlock, StrapiSectionComponent } from "@/types/strapi/single/page";
+import { AnySharedBlock } from "@/types/strapi/blocks/shared";
+import { StrapiSharedBlock } from "@/types/strapi/single/page";
 import { strapiClient } from "../strapi-client";
 import { mapContentSections } from "./api-page";
 
@@ -9,7 +10,7 @@ interface StrapiAboutPageData {
   id: number;
   title: string;
   subtitle: string | null;
-  blocks: AnyStrapiContentBlock[];
+  blocks: StrapiSharedBlock[];
 }
 
 /**
@@ -19,7 +20,7 @@ export interface AboutPage {
   id: number;
   title: string;
   subtitle: string | null;
-  blocks: AnyContentBlock[];
+  blocks: AnySharedBlock[];
 }
 
 /** Lớp vỏ (wrapper) của Strapi cho một document đơn lẻ. */
@@ -28,44 +29,20 @@ interface AboutPageResponse {
   meta: Record<string, unknown>;
 }
 
-/**
- * Chuyển đổi cấu trúc Rich Text (mảng các block) từ Strapi thành một chuỗi Markdown.
- * @param blocks - Mảng các block từ trường Rich Text.
- * @returns Một chuỗi Markdown.
- */
-function richTextToString(blocks: any[] | null): string {
-  if (!blocks) return '';
-  return blocks
-    .map((block) => {
-      if (block.type === 'paragraph') {
-        return block.children.map((child: any) => child.text).join('');
-      }
-      // TODO: Có thể mở rộng để xử lý các loại block khác như list, heading...
-      return '';
-    })
-    .join('\n\n');
-}
-
 async function mapAboutPage(response: AboutPageResponse, locale: string): Promise<AboutPage | null> {
   const { data } = response;
   if (!data) return null;
 
-  // Xử lý đặc biệt cho các block trong trang "About" nếu cần
-  // Ví dụ: chuyển đổi Rich Text thành Markdown cho các section cụ thể
-  const processedBlocks = (data.blocks || []).map(block => {
-    if (block.__component === 'sections.hero' && Array.isArray(block.description)) {
-      // Tạo một bản sao của block để tránh thay đổi dữ liệu gốc
-      const newBlock = { ...block, description: richTextToString(block.description) };
-      return newBlock as StrapiSectionComponent;
-    }
-    return block;
-  });
+  // Dynamic Zone của trang "About" giờ chỉ chứa các shared block.
+  // Chúng ta có thể ánh xạ trực tiếp bằng hàm mapContentSections đã có.
+  const mappedBlocks = await mapContentSections(data.blocks || [], locale);
 
   return {
     id: data.id,
     title: data.title,
     subtitle: data.subtitle,
-    blocks: await mapContentSections(processedBlocks, locale),
+    // Ép kiểu an toàn vì chúng ta biết trang "About" chỉ chứa các shared block.
+    blocks: mappedBlocks as AnySharedBlock[],
   };
 }
 
@@ -78,31 +55,33 @@ export async function fetchAboutPage(locale: string): Promise<AboutPage | null> 
   try {
     const response = await client.single("about").find({
       locale,
-      // Populate một cách tường minh thay vì dùng '*'
       populate: {
         blocks: {
           on: {
-            'sections.hero': {
-              populate: { ctas: true, mediaImage: { populate: { image: true } }, mediaVideo: true, mediaSlider: { populate: { slides: { populate: { image: true } } } } }
+            // Populate for shared components with nested relations
+            'shared.image': { populate: { image: true } },
+            'shared.media': { populate: { file: true } },
+            'shared.slider': {
+              populate: {
+                slides: {
+                  populate: { image: true }
+                }
+              }
             },
-            'sections.about': {
-              populate: { ctas: true, image: true }
+            'shared.list-item': {
+              populate: {
+                items: {
+                  populate: ['image', 'cta', 'icon', 'icon.iconImage']
+                }
+              }
             },
-            'sections.services': {
-              populate: { services: { populate: ['image', 'cta', 'icon', 'icon.iconImage'] } }
-            },
-            'sections.advantages': {
-              populate: { items: { populate: ['image', 'cta', 'icon', 'icon.iconImage'] } }
-            },
-            'sections.partners': {
-              populate: { items: { populate: ['image'] } }
-            },
-            // Populate cho các shared components nếu cần
-            'shared.quote': true,
+            'shared.richtext-video': { populate: { video: true } },
+            'shared.richtext-image': { populate: { image: true } }
           }
         }
-      },
+      }
     }) as unknown as AboutPageResponse;
+    
     return await mapAboutPage(response, locale);
   } catch (error) {
     console.error("API Error: Could not fetch about page data.", error);
