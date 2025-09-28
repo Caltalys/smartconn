@@ -14,7 +14,6 @@ export interface StrapiAboutSection extends StrapiComponent {
 
 // Mapped Frontend Type
 export interface AboutSectionData extends StrapiComponent {
-  __component: "sections.about";
   pretitle: string;
   title: string;
   description: string;

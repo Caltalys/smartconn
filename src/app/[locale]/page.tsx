@@ -14,7 +14,6 @@ const getPageData = cache(async (slug: string, locale: string) => {
     return fetchPageBySlug(slug, locale);
 });
 
-
 export async function generateMetadata({ params }: AsyncBaseProps, parent: ResolvingMetadata): Promise<Metadata> {
     const { locale } = await params;
     const homeSlug = locale === 'vi' ? 'trang-chu' : 'home';

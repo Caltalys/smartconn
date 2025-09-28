@@ -1,14 +1,24 @@
 "use client";
 
 import { AnyContentBlock } from "@/types/strapi/blocks/content-blocks";
-import { isAboutSection, isAdvantagesSection, isHeroSection, isImageBlock, isMediaBlock, isPartnersSection, isQuoteBlock, isRichTextBlock, isRichtextImageBlock, isRichtextVideoBlock, isServicesSection, isSliderBlock, isVideoBlock } from "@/utils/type-guards";
-import { JSX } from "react";
-import About from "../sections/About";
-import Advantages from "../sections/Advantages";
-import Hero from "../sections/Hero";
-import Partners from "../sections/Partners";
-import Services from "../sections/Services";
-import BlockRenderer from "./BlockRenderer";
+import {
+    isAboutSection,
+    isAdvantagesSection,
+    isContentBlock,
+    isHeroSection,
+    isPartnersSection,
+    isServicesSection,
+} from "@/utils/type-guards";
+import { useMemo } from "react";
+import AboutSection from "../sections/About";
+import AdvantagesSection from "../sections/Advantages";
+import HeroSection from "../sections/Hero";
+import PartnersSection from "../sections/Partners";
+import ServicesSection from "../sections/Services";
+import ContentContainer from "./ContentContainer";
+
+// Union type for grouped sections
+type GroupedSection = { type: "section"; component: AnyContentBlock } | { type: "content"; blocks: AnyContentBlock[] };
 
 interface PageRendererProps {
     sections: AnyContentBlock[];
@@ -19,63 +29,50 @@ export default function PageRenderer({ sections }: PageRendererProps) {
         return null;
     }
 
-    const content: JSX.Element[] = [];
-    let sharedBlocksBuffer: AnyContentBlock[] = [];
-
-    const flushSharedBlocks = (key: string | number) => {
-        if (sharedBlocksBuffer.length > 0) {
-            content.push(
-                <section key={`shared-group-${key}`} className="container mx-auto px-4 py-8 max-w-4xl">
-                    <BlockRenderer blocks={sharedBlocksBuffer} />
-                </section>
-            );
-            sharedBlocksBuffer = [];
-        }
+    const componentsMap = {
+        "sections.hero": HeroSection,
+        "sections.about": AboutSection,
+        "sections.services": ServicesSection,
+        "sections.advantages": AdvantagesSection,
+        "sections.partners": PartnersSection,
     };
 
-    sections.forEach((section, index) => {
-        const key = `${section.__component}-${section.id}`;
+    // Use useMemo to group sections only when the `sections` prop changes.
+    const groupedSections = useMemo(() => {
+        return sections.reduce<GroupedSection[]>((acc, section) => {
+            const isFullWidthSection = isHeroSection(section) || isAboutSection(section) || isServicesSection(section) || isAdvantagesSection(section) || isPartnersSection(section);
 
-        // --- Xử lý Section ---
-        if (isHeroSection(section)) {
-            flushSharedBlocks(index);
-            content.push(<Hero key={key} data={section} />);
-        } else if (isAboutSection(section)) {
-            flushSharedBlocks(index);
-            content.push(<About key={key} data={section} />);
-        } else if (isServicesSection(section)) {
-            flushSharedBlocks(index);
-            content.push(<Services key={key} data={section} />);
-        } else if (isAdvantagesSection(section)) {
-            flushSharedBlocks(index);
-            content.push(<Advantages key={key} data={section} />);
-        } else if (isPartnersSection(section)) {
-            flushSharedBlocks(index);
-            content.push(<Partners key={key} data={section} />);
-        }
-        // --- Xử lý Shared Block ---
-        else if (
-            isQuoteBlock(section) ||
-            isRichTextBlock(section) ||
-            isImageBlock(section) ||
-            isSliderBlock(section) ||
-            isVideoBlock(section) ||
-            isMediaBlock(section) ||
-            isRichtextImageBlock(section) ||
-            isRichtextVideoBlock(section)
-        ) {
-            sharedBlocksBuffer.push(section);
-        }
-        // --- Xử lý Unknown Block ---
-        else {
-            if (process.env.NODE_ENV === "development") {
-                console.warn(`PageRenderer: Unknown section/block type "${section.__component}"`);
+            if (isFullWidthSection) {
+                acc.push({ type: "section", component: section });
+            } else if (isContentBlock(section)) {
+                const lastElement = acc[acc.length - 1];
+                if (lastElement?.type === "content") {
+                    lastElement.blocks.push(section);
+                } else {
+                    acc.push({ type: "content", blocks: [section] });
+                }
             }
-        }
-    });
+            return acc;
+        }, []);
+    }, [sections]);
 
-    // Xả nốt buffer ở cuối
-    flushSharedBlocks("last");
+    return (
+        <main className="flex-grow">
+            {groupedSections.map((group, index) => {
+                if (group.type === "section") {
+                    const Component = componentsMap[group.component.__component as keyof typeof componentsMap];
+                    const key = `${group.component.__component}-${group.component.id}`;
+                    // @ts-ignore - We know the data type matches the component
+                    return Component ? <Component key={key} data={group.component} /> : null;
+                }
 
-    return <>{content}</>;
+                if (group.type === "content") {
+                    return <ContentContainer key={`content-group-${index}`} blocks={group.blocks} />;
+                }
+
+                return null;
+            }
+            )}
+        </main>
+    );
 }

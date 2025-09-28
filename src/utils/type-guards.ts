@@ -1,3 +1,5 @@
+import { AnyContentBlock } from "@/types/strapi/blocks/content-blocks";
+import { AnyDynamicBlock } from "@/types/strapi/blocks/dynamic-blocks";
 import {
   AboutSectionData,
   StrapiAboutSection,
@@ -236,6 +238,39 @@ export function isRichtextVideoBlock(
     isObject(block) &&
     "video" in block &&
     "content" in block
+  );
+}
+
+/**
+ * Kiểm tra xem một block có phải là một trong các loại "shared block" đã được ánh xạ hay không.
+ * Đây là một hàm hợp nhất (union type guard) để đơn giản hóa logic trong renderer.
+ */
+export function isContentBlock(block: unknown): block is AnyContentBlock {
+  return (
+    isQuoteBlock(block) ||
+    isRichTextBlock(block) ||
+    isImageBlock(block) ||
+    isSliderBlock(block) ||
+    isVideoBlock(block) ||
+    isMediaBlock(block) ||
+    isListItemBlock(block) ||
+    isRichtextImageBlock(block) ||
+    isRichtextVideoBlock(block)
+  );
+}
+
+/**
+ * Kiểm tra xem một block có phải là một trong các loại "section" đã được ánh xạ hay không.
+ * Các section này thường chiếm toàn bộ chiều rộng trang.
+ */
+export function isSection(block: unknown): block is AnyDynamicBlock {
+  return (
+    isHeroSection(block) ||
+    isAboutSection(block) ||
+    isServicesSection(block) ||
+    isAdvantagesSection(block) ||
+    isPartnersSection(block)
+    // Thêm isBlogSection(block) ở đây nếu cần
   );
 }
 
