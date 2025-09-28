@@ -6,7 +6,7 @@ import { memo } from "react";
 import RichText from "./RichText";
 
 const RichtextImageComponent = ({ data }: { data: RichtextImageBlock }) => {
-    const { title, heading, body, image } = data;
+    const { title, heading, image } = data;
     const imageUrl = getStrapiMedia(image?.url);
 
     return (
@@ -14,7 +14,7 @@ const RichtextImageComponent = ({ data }: { data: RichtextImageBlock }) => {
             <div className="order-2 md:order-1">
                 {title && <Pretitle text={title} />}
                 {title && <h2 className="text-2xl sm:text-3xl font-bold mb-4">{heading}</h2>}
-                <RichText body={body} />
+                <RichText data={data.body} />
             </div>
             <div className="order-1 md:order-2">
                 {imageUrl && (

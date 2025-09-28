@@ -6,7 +6,6 @@ import {
 } from "@/types/strapi/collections/service";
 import { StrapiResponseCollection } from "@/types/strapi/strapi";
 import { strapiClient } from "../strapi-client";
-import { getStrapiMedia } from "../utils";
 
 // --- API Fetchers ---
 
@@ -29,24 +28,17 @@ export async function getAllServices(
         ...(query && { title: { $containsi: query } }),
       },
       populate: ["cover"],
-    })) as unknown as ServiceCollectionResponse;
+    })) as unknown as StrapiResponseCollection<StrapiService>;
 
     if (!response.data) {
-      return null;
+      return {
+        data: [],
+        meta: { pagination: { page: 1, pageSize, pageCount: 1, total: 0 } },
+      };
     }
 
     // Ánh xạ thủ công cho danh sách để tối ưu, không cần map `blocks`.
-    const services = response.data.map((service) => {
-      const strapiService = service as unknown as StrapiService;
-      return {
-        ...strapiService,
-        coverUrl: strapiService.cover
-          ? getStrapiMedia(strapiService.cover.url)
-          : null,
-        coverAlt: strapiService.cover?.alternativeText ?? strapiService.title,
-        blocks: [], // Trả về mảng rỗng cho trang danh sách để khớp với kiểu `Service`
-      };
-    });
+    const services = response.data.map(mapService);
 
     return { data: services, meta: response.meta };
   } catch (error) {
@@ -102,7 +94,7 @@ export async function getServiceBySlug(
       },
     })) as unknown as StrapiResponseCollection<StrapiService>;
 
-    if (!response.data || response.data.length === 0) {
+    if (!response.data) {
       return null;
     }
 

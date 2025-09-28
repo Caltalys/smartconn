@@ -60,12 +60,6 @@ export interface StrapiBlock extends StrapiComponent {
 }
 
 /**
- * Kiểu dự phòng cho các block chưa được định nghĩa.
- * Dùng trong trường hợp API trả về block mới mà frontend chưa hỗ trợ.
- */
-export interface UnknownStrapiBlock extends StrapiBlock {}
-
-/**
  * Interface cơ sở chứa các trường metadata chung nhất cho hầu hết các loại nội dung Strapi.
  * Phù hợp cho cả Single Types và Collection Types.
  */

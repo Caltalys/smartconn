@@ -6,7 +6,6 @@ import { getArticleBySlug } from '@/lib/api';
 import { formatDate } from '@/lib/format-date';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { RiArrowLeftLine } from 'react-icons/ri';
@@ -78,7 +77,7 @@ export default async function ArticlePage({ params }: ArticleDetailPageProps) {
             </div>
           </header>
 
-          {article.coverUrl && (
+          {/* {article.coverUrl && (
             <div className="relative w-full aspect-video mb-8 rounded-lg overflow-hidden shadow-lg">
               <Image
                 src={article.coverUrl}
@@ -88,7 +87,7 @@ export default async function ArticlePage({ params }: ArticleDetailPageProps) {
                 priority
               />
             </div>
-          )}
+          )} */}
 
           <div className="prose md:prose-lg lg:prose-xl dark:prose-invert max-w-none">
             {/* <p className="lead text-xl text-muted-foreground">{article.description}</p> */}

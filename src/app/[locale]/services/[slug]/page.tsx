@@ -1,15 +1,14 @@
-import { notFound } from 'next/navigation';
+import BlockRenderer from '@/components/blocks/BlockRenderer';
+import Breadcrumbs from '@/components/blocks/Breadcrumbs';
+import { Button } from '@/components/ui/button';
+import { getServiceBySlug } from '@/lib/api/api-services';
+import { formatDate } from '@/lib/format-date';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import { getStrapiMedia } from '@/lib/utils';
-import { formatDate } from '@/lib/format-date';
-import BlockRenderer from '@/components/blocks/BlockRenderer';
-import Breadcrumbs from '@/components/blocks/Breadcrumbs';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { notFound } from 'next/navigation';
 import { RiArrowLeftLine } from 'react-icons/ri';
-import { getServiceBySlug } from '@/lib/api/api-services';
 
 interface ServiceDetailPageProps {
     params: Promise<{ locale: string, slug: string }>;
@@ -25,7 +24,7 @@ export async function generateMetadata(
         return {};
     }
 
-    const imageUrl = getStrapiMedia(service.cover?.url);
+    const imageUrl = service.coverUrl;
 
     return {
         title: service.title,
@@ -50,7 +49,7 @@ export default async function ServicePage({ params }: PageProps<"/[locale]/servi
         notFound();
     }
 
-    const imageUrl = getStrapiMedia(service.cover?.url);
+    const imageUrl = service.coverUrl;
 
     const breadcrumbItems = [
         { label: tNav('home'), href: `/${locale}` },
@@ -76,7 +75,7 @@ export default async function ServicePage({ params }: PageProps<"/[locale]/servi
                         <div className="relative w-full aspect-video mb-8 rounded-lg overflow-hidden shadow-lg">
                             <Image
                                 src={imageUrl}
-                                alt={service.cover?.alternativeText || service.title}
+                                alt={service.coverAlt || service.title}
                                 fill
                                 className="object-cover"
                                 priority

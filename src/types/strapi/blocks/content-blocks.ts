@@ -70,6 +70,7 @@ export interface UnknownBlock extends StrapiBlock {}
 export function mapContentBlocks(
   blocks: AnyStrapiContentBlock[]
 ): AnyContentBlock[] {
+  if (!blocks) return [];
   return blocks
     .map((block) => {
       switch (block.__component) {

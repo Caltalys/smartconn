@@ -6,7 +6,7 @@ export interface StrapiRichtextVideoBlock extends StrapiComponent {
   __component: "shared.richtext-video";
   title: string;
   heading: string;
-  content: string; // Strapi Blocks
+  body: string; // Strapi Blocks
   video: StrapiVideoBlock;
 }
 
@@ -34,7 +34,6 @@ export function mapRichtextVideoBlock(
       ...block,
       pretitle: block.title,
       title: block.heading,
-      body: block.content,
       video: mappedVideo,
     };
   } catch (error) {

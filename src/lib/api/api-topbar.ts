@@ -11,7 +11,6 @@ export async function fetchTopbar(locale: string): Promise<Topbar | null> {
     const response = (await client.single("topbar").find({
       ...(locale && { locale }),
     })) as unknown as TopbarResponse;
-    console.log(response);
     return mapTopbar(response.data);
   } catch (error) {
     console.error("API Error: Could not fetch topbar data.", error);

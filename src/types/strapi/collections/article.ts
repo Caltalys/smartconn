@@ -30,7 +30,7 @@ export interface Article extends StrapiEntity {
   slug: string;
   coverUrl: string | null;
   coverAlt: string;
-  author: Author;
+  author: Author | null;
   category: Category;
   blocks: AnyContentBlock[];
   publishedAt: string | null;
@@ -49,7 +49,7 @@ export function mapArticle(article: StrapiArticle): Article {
     ...article,
     coverUrl: article.cover ? getStrapiMedia(article.cover.url) : null,
     coverAlt: article.cover?.alternativeText ?? article.title,
-    author: mapAuthor(article.author),
+    author: article.author ? mapAuthor(article.author) : null,
     category: mapCategory(article.category),
     blocks: mapContentBlocks(article.blocks),
   };

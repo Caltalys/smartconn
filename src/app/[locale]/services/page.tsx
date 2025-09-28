@@ -1,8 +1,8 @@
 import Pagination from '@/components/blocks/Pagination';
-import { getTranslations } from 'next-intl/server';
+import ServiceCard from '@/components/blocks/ServiceCard';
 import { getAllServices } from '@/lib/api/api-services';
 import { Service } from '@/types/strapi/collections/service';
-import ServiceCard from '@/components/blocks/ServiceCard';
+import { getTranslations } from 'next-intl/server';
 
 interface ServicePageProps {
     params: Promise<{ locale: string, page?: string; query?: string }>;
@@ -32,8 +32,8 @@ export default async function ServicesPage({ params }: ServicePageProps) {
         }),
     ]);
 
-    const services = servicesResponse.data;
-    const pageCount = servicesResponse.meta?.pagination?.pageCount;
+    const services = servicesResponse?.data;
+    const pageCount = servicesResponse?.meta?.pagination?.pageCount;
 
     const hasServices = services && services.length > 0;
 
@@ -46,7 +46,7 @@ export default async function ServicesPage({ params }: ServicePageProps) {
                             <ServiceCard key={service.id} service={service} locale={locale} />
                         ))}
                     </div>
-                    { pageCount && pageCount > 1 && (<Pagination pageCount={pageCount} />) }
+                    {pageCount && pageCount > 1 && (<Pagination pageCount={pageCount} />)}
                 </>
             ) : (
                 <div className="text-center py-16"><p className="text-muted-foreground">{t('noServicesFound')}</p></div>

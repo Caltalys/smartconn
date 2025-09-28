@@ -6,7 +6,7 @@ export interface StrapiRichtextImage extends StrapiComponent {
   __component: "shared.richtext-image";
   title: string;
   heading: string;
-  content: string; // Strapi Blocks (Rich Text)
+  body: string; // Strapi Blocks (Rich Text)
   image: BaseMedia;
 }
 
@@ -30,7 +30,6 @@ export function mapRichtextImageBlock(
 
   return {
     ...block,
-    body: block.content, //Array.isArray(block.content) ? blocksToMarkdown(block.content) : "",
     image: {
       url: getStrapiMedia(img?.url) ?? "",
       alt: img?.alternativeText ?? block.heading,

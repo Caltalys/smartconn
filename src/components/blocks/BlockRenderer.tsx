@@ -40,7 +40,7 @@ export default function BlockRenderer({ blocks }: BlockRendererProps) {
           return <Quote key={key} pretitle={block.title} quote={block.quote} author={block.author ?? ""} />;
         }
         if (isRichTextBlock(block)) {
-          return <RichText key={key} body={block.body} />;
+          return <RichText key={key} data={block.body} />;
         }
         if (isImageBlock(block)) {
           return <ImageComponent key={key} data={block} />;

@@ -1,6 +1,5 @@
 import { getStrapiMedia } from "@/lib/utils";
 import { BaseMedia, StrapiEntity } from "../strapi";
-import { StrapiArticle } from "./article";
 
 /**
  * Kiểu dữ liệu thô của Author từ Strapi.
@@ -9,7 +8,6 @@ export interface StrapiAuthor extends StrapiEntity {
   name: string;
   email: string;
   avatar: BaseMedia | null;
-  articles?: StrapiArticle[];
 }
 
 /**
@@ -25,7 +23,8 @@ export interface Author extends StrapiEntity {
  * @param author - Dữ liệu thô của author.
  * @returns Dữ liệu author đã được ánh xạ.
  */
-export function mapAuthor(author: StrapiAuthor): Author {
+export function mapAuthor(author: StrapiAuthor): Author | null {
+  if (!author) return null;
   return {
     ...author,
     avatarUrl: author.avatar ? getStrapiMedia(author.avatar.url) : null,

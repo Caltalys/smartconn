@@ -2,7 +2,7 @@ import Image from "next/image";
 import { memo } from "react";
 import ReactMarkdown from 'react-markdown';
 
-const RichTextComponent = ({ body }: { body: string }) => (
+const RichTextComponent = ({ data }: { data: string }) => (
     // Thêm class `prose` từ Tailwind Typography để định dạng văn bản đẹp hơn
     <div className="prose dark:prose-invert max-w-none">
         <ReactMarkdown
@@ -30,7 +30,7 @@ const RichTextComponent = ({ body }: { body: string }) => (
                 },
             }}
         >
-            {body}
+            {data}
         </ReactMarkdown>
     </div>
 );

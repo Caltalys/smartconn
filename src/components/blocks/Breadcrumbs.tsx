@@ -16,8 +16,8 @@ export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps)
     <nav aria-label="Breadcrumb" className={`mb-6 ${className}`}>
       <ol className="flex items-center space-x-2 text-sm">
         {items.map((item, index) => (
-          <Fragment key={item.label}>
-            <li>
+          <Fragment key={index}>
+            <li key={item.label}>
               {item.href ? (
                 <Link href={item.href} className="text-muted-foreground hover:text-primary transition-colors">
                   {item.label}
@@ -26,7 +26,7 @@ export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps)
                 <span className="font-medium text-foreground">{item.label}</span>
               )}
             </li>
-            {index < items.length - 1 && <li aria-hidden="true" className="text-muted-foreground">/</li>}
+            {index < items.length - 1 && <li key={`separator-${index}`} aria-hidden="true" className="text-muted-foreground">/</li>}
           </Fragment>
         ))}
       </ol>

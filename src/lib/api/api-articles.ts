@@ -4,10 +4,7 @@ import {
   mapArticle,
   StrapiArticle,
 } from "@/types/strapi/collections/article";
-import {
-  StrapiResponse,
-  StrapiResponseCollection,
-} from "@/types/strapi/strapi";
+import { StrapiResponseCollection } from "@/types/strapi/strapi";
 import { strapiClient } from "../strapi-client";
 
 /**
@@ -41,7 +38,9 @@ export async function getAllArticles(
     })) as unknown as StrapiResponseCollection<StrapiArticle>;
 
     // Ánh xạ thủ công cho danh sách, không cần map `blocks` để tối ưu hiệu suất.
-    const articles: Article[] = response.data.map(mapArticle);
+    const articles: Article[] = response.data.map((article) =>
+      mapArticle(article)
+    );
     return {
       data: articles,
       meta: response.meta,
@@ -95,12 +94,12 @@ export async function getArticleBySlug(
           },
         },
       },
-    })) as unknown as StrapiResponse<StrapiArticle>;
-
+    })) as unknown as StrapiResponseCollection<StrapiArticle>;
+    console.log(response);
     if (!response.data) return null;
 
     // mapArticle là hàm đồng bộ, không cần await
-    return mapArticle(response.data);
+    return mapArticle(response.data[0]);
   } catch (error) {
     console.error(
       `API Error: Could not fetch article with slug "${slug}".`,

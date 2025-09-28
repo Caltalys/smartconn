@@ -37,7 +37,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
         getAllCategories(locale),
     ]);
 
-    const articles = articlesResponse.data;
+    const articles = articlesResponse?.data;
     const pageCount = articlesResponse?.meta?.pagination?.pageCount;
 
     const hasArticles = articles && articles.length > 0;
