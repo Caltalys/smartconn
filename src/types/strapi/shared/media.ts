@@ -1,35 +1,21 @@
-import { StrapiMedia } from "../strapi";
+import { BaseMedia, StrapiComponent } from "../strapi";
 
 // Raw Strapi Type
-export interface StrapiMediaBlock {
+export interface StrapiMedia extends StrapiComponent {
   __component: "shared.media";
-  id: number;
-  file: StrapiMedia;
+  file: BaseMedia;
 }
 
 // Mapped Frontend Type
-export interface MediaBlock {
+export interface MediaBlock extends StrapiComponent {
   __component: "shared.media";
-  id: number;
-  file: {
-    url: string;
-    alt: string;
-    width: number;
-    height: number;
-  };
+  file: BaseMedia;
 }
 
-export function mapMediaBlock(block: StrapiMediaBlock): MediaBlock {
+export function mapMediaBlock(block: StrapiMedia): MediaBlock {
   const file = block.file;
 
   return {
-    __component: block.__component,
-    id: block.id,
-    file: {
-      url: file.url,
-      alt: file.alternativeText ?? "",
-      width: file.width,
-      height: file.height,
-    },
+    ...block,
   };
 }

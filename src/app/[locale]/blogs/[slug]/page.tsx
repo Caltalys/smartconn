@@ -1,33 +1,30 @@
+import BlockRenderer from '@/components/blocks/BlockRenderer';
+import Breadcrumbs from '@/components/blocks/Breadcrumbs';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import { getArticleBySlug } from '@/lib/api';
-import { notFound } from 'next/navigation';
+import { formatDate } from '@/lib/format-date';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import { getStrapiMedia } from '@/lib/utils';
-import { formatDate } from '@/lib/format-date';
-import BlockRenderer from '@/components/blocks/BlockRenderer';
-import Breadcrumbs from '@/components/blocks/Breadcrumbs';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { notFound } from 'next/navigation';
 import { RiArrowLeftLine } from 'react-icons/ri';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface ArticleDetailPageProps {
-    params: Promise<{ locale: string, slug: string }>;
+  params: Promise<{ locale: string, slug: string }>;
 }
 
 
 export async function generateMetadata(
   { params }: ArticleDetailPageProps
 ): Promise<Metadata> {
-  const { slug, locale } = await params; 
+  const { slug, locale } = await params;
   const article = await getArticleBySlug(slug, locale);
 
   if (!article) {
     return {};
   }
-
-  const imageUrl = getStrapiMedia(article.cover?.url);
 
   return {
     title: article.title,
@@ -35,7 +32,7 @@ export async function generateMetadata(
     openGraph: {
       title: article.title,
       description: article.description ?? undefined,
-      images: imageUrl ? [imageUrl] : [],
+      images: article.coverUrl ? [article.coverUrl] : [],
       type: 'article',
       publishedTime: article.publishedAt ?? undefined,
     },
@@ -47,12 +44,10 @@ export default async function ArticlePage({ params }: ArticleDetailPageProps) {
   const article = await getArticleBySlug(slug, locale);
   const t = await getTranslations({ locale, namespace: 'blog' });
   const tNav = await getTranslations({ locale, namespace: 'navigation' });
-  
+
   if (!article) {
     notFound();
   }
-
-  const imageUrl = getStrapiMedia(article.cover?.url);
 
   const breadcrumbItems = [
     { label: tNav('home'), href: `/${locale}` },
@@ -83,11 +78,11 @@ export default async function ArticlePage({ params }: ArticleDetailPageProps) {
             </div>
           </header>
 
-          {imageUrl && (
+          {article.coverUrl && (
             <div className="relative w-full aspect-video mb-8 rounded-lg overflow-hidden shadow-lg">
               <Image
-                src={imageUrl}
-                alt={article.cover?.alternativeText || article.title}
+                src={article.coverUrl}
+                alt={article.coverAlt}
                 fill
                 className="object-cover"
                 priority

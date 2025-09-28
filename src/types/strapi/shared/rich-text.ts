@@ -1,21 +1,18 @@
+import { StrapiComponent } from "../strapi";
+
 // Raw Strapi Type
-export interface StrapiRichTextBlock {
+export interface StrapiRichText extends StrapiComponent {
   __component: "shared.rich-text";
-  id: number;
   body: string; // rich text content (HTML or Markdown)
 }
 
 // Mapped Frontend Type
-export interface RichTextBlock {
-  __component: "shared.rich-text";
-  id: number;
+export interface RichTextBlock extends StrapiComponent {
   body: string;
 }
 
-export function mapRichTextBlock(block: StrapiRichTextBlock): RichTextBlock {
+export function mapRichTextBlock(block: StrapiRichText): RichTextBlock {
   return {
-    __component: block.__component,
-    id: block.id,
-    body: block.body,
+    ...block,
   };
 }

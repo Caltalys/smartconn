@@ -1,53 +1,11 @@
 import type {
   Navbar,
   NavbarCollectionResponse,
-  NavbarItem,
   NavbarResponse,
-  StrapiNavbarItem,
-} from "../../types/strapi/collections/navbar";
+  StrapiNavbar,
+} from "@/types/strapi/collections/navbar";
+import { mapNavbar } from "@/types/strapi/collections/navbar";
 import { strapiClient } from "../strapi-client";
-
-/**
- * --------------------------
- *  Mapper functions
- * --------------------------
- */
-
-/**
- * Ánh xạ đệ quy một mảng các `StrapiNavbarItem` sang một mảng các `NavbarItem`.
- * Hàm này đảm bảo rằng cấu trúc dữ liệu được làm phẳng và đơn giản hóa cho frontend,
- * bao gồm cả việc xử lý các mục con lồng nhau.
- * @param items - Mảng các `StrapiNavbarItem` thô từ API.
- * @returns Mảng các `NavbarItem` đã được ánh xạ, hoặc một mảng rỗng nếu đầu vào không hợp lệ.
- */
-function mapNavbarItems(items: StrapiNavbarItem[]): NavbarItem[] {
-  if (!items) return [];
-  return items.map((item) => ({
-    id: item.id,
-    title: item.title,
-    subtitle: item.subtitle,
-    url: item.url,
-    // Gọi đệ quy để ánh xạ các item con
-    children: mapNavbarItems(item.children),
-  }));
-}
-
-/**
- * Ánh xạ một `NavbarResponse` thô từ API thành một đối tượng `Navbar` sạch,
- * sẵn sàng để sử dụng trong các component.
- * @param resp - Đối tượng `NavbarResponse` từ Strapi.
- * @returns Một đối tượng `Navbar` đã được ánh xạ, hoặc `null` nếu không có dữ liệu.
- */
-export function mapNavbar(resp: NavbarResponse): Navbar | null {
-  if (!resp.data) return null;
-  const { id, name, items } = resp.data;
-
-  return {
-    id,
-    name,
-    items: mapNavbarItems(items),
-  };
-}
 
 /**
  * --------------------------
@@ -60,7 +18,7 @@ export function mapNavbar(resp: NavbarResponse): Navbar | null {
  * @param locale - (Tùy chọn) Ngôn ngữ của nội dung cần lấy.
  * @returns Một mảng các đối tượng `Navbar` đã được ánh xạ.
  */
-export async function fetchAllNavbars(locale?: string): Promise<Navbar[]> {
+export async function fetchAllNavbars(locale: string): Promise<Navbar[]> {
   const client = strapiClient(locale);
 
   try {
@@ -80,7 +38,7 @@ export async function fetchAllNavbars(locale?: string): Promise<Navbar[]> {
 
     // Lọc ra các kết quả null từ mapNavbar nếu có (để đảm bảo an toàn kiểu)
     return resp.data
-      .map((doc) => mapNavbar({ data: doc, meta: {} }))
+      .map((navbar) => mapNavbar(navbar))
       .filter((navbar): navbar is Navbar => navbar !== null);
   } catch (error) {
     console.error("API Error: Could not fetch navbars.", error);
@@ -117,7 +75,7 @@ export async function fetchNavbar(
 
     if (!resp) return null;
 
-    return mapNavbar(resp);
+    return mapNavbar(resp.data as StrapiNavbar | null);
   } catch (error) {
     console.error(`API Error: Could not fetch navbar with id "${id}".`, error);
     return null;

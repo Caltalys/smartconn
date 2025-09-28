@@ -1,15 +1,13 @@
-import type { Metadata } from "next";
-import { Montserrat, Lato } from "next/font/google";
-import "./globals.css";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { routing } from "@/i18n/routing";
-import { notFound } from "next/navigation";
-import { getMessages, setRequestLocale } from "next-intl/server";
-import { fetchGlobalLayoutData } from "@/lib/api";
-import Footer from "@/components/sections/Footer";
-import Header from "@/components/sections/Header";
 import Topbar from "@/components/sections/Topbar";
+import { routing } from "@/i18n/routing";
+import { fetchGlobalLayoutData } from "@/lib/api";
 import { AsyncProps } from "@/types/global";
+import type { Metadata } from "next";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
+import { Lato, Montserrat } from "next/font/google";
+import { notFound } from "next/navigation";
+import "./globals.css";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -52,11 +50,11 @@ export default async function RootLayout({ children, params }: AsyncProps) {
         <div className="relative flex flex-col min-h-screen">
           <NextIntlClientProvider messages={messages}>
             <Topbar data={layoutData.topbar} />
-            <Header data={layoutData.navbar} />
+            {/* <Header data={layoutData.navbar} />
             <main className="flex-grow">
               {children}
             </main>
-            <Footer data={layoutData.footer} />
+            <Footer data={layoutData.footer} /> */}
           </NextIntlClientProvider>
         </div>
       </body>

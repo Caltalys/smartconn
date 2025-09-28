@@ -1,9 +1,9 @@
 // types/strapi/entities/menu-item.ts
 
 import { Icon, mapIcon, StrapiIcon } from "../elements/icon";
+import { StrapiEntity } from "../strapi";
 
-export interface StrapiMenuItem {
-  id: number;
+export interface StrapiMenuItem extends StrapiEntity {
   title: string;
   subtitle: string | null;
   url: string;
@@ -13,8 +13,7 @@ export interface StrapiMenuItem {
 }
 
 // Mapped for frontend
-export interface MenuItem {
-  id: number;
+export interface MenuItem extends StrapiEntity {
   title: string;
   subtitle: string | null;
   url: string;
@@ -24,10 +23,7 @@ export interface MenuItem {
 
 export function mapMenuItem(item: StrapiMenuItem): MenuItem {
   return {
-    id: item.id,
-    title: item.title,
-    subtitle: item.subtitle,
-    url: item.url,
+    ...item,
     icon: item.icon ? mapIcon(item.icon) : null,
     children: (item.children ?? []).map(mapMenuItem), // ← đệ quy
   };

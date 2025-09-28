@@ -1,22 +1,19 @@
 import { getStrapiMedia } from "@/lib/utils";
-import { StrapiMedia } from "../strapi";
+import { BaseMedia, StrapiComponent } from "../strapi";
 
 // Raw Strapi Type
-export interface StrapiRichtextImageBlock {
+export interface StrapiRichtextImage extends StrapiComponent {
   __component: "shared.richtext-image";
-  id: number;
   title: string;
   heading: string;
   content: string; // Strapi Blocks (Rich Text)
-  image: StrapiMedia;
+  image: BaseMedia;
 }
 
 // Mapped Frontend Type
-export interface RichtextImageBlock {
-  __component: "shared.richtext-image";
-  id: number;
-  pretitle: string;
+export interface RichtextImageBlock extends StrapiComponent {
   title: string;
+  heading: string;
   body: string; // Markdown or HTML
   image: {
     url: string;
@@ -27,15 +24,12 @@ export interface RichtextImageBlock {
 }
 
 export function mapRichtextImageBlock(
-  block: StrapiRichtextImageBlock
+  block: StrapiRichtextImage
 ): RichtextImageBlock {
   const img = block.image;
 
   return {
-    __component: block.__component,
-    id: block.id,
-    pretitle: block.title,
-    title: block.heading,
+    ...block,
     body: block.content, //Array.isArray(block.content) ? blocksToMarkdown(block.content) : "",
     image: {
       url: getStrapiMedia(img?.url) ?? "",

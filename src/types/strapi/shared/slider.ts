@@ -1,23 +1,20 @@
 import { mapSlide, Slide, StrapiSlide } from "../elements/slide";
+import { StrapiComponent } from "../strapi";
 
 // Raw Strapi Type
-export interface StrapiSliderBlock {
+export interface StrapiSliderBlock extends StrapiComponent {
   __component: "shared.slider";
-  id: number;
   slides: StrapiSlide[];
 }
 
 // Mapped Frontend Type
-export interface SliderBlock {
-  __component: "shared.slider";
-  id: number;
+export interface SliderBlock extends StrapiComponent {
   slides: Slide[];
 }
 
 export function mapSliderBlock(block: StrapiSliderBlock): SliderBlock {
   return {
-    __component: block.__component,
-    id: block.id,
+    ...block,
     slides: (block.slides ?? []).map(mapSlide),
   };
 }

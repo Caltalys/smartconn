@@ -1,22 +1,20 @@
 import { getStrapiMedia } from "@/lib/utils";
 import { Link, mapLink, StrapiLink } from "../elements/link";
-import { StrapiMedia } from "../strapi";
+import { BaseMedia, StrapiComponent } from "../strapi";
 
 // Raw Strapi Type
-export interface StrapiAboutSection {
+export interface StrapiAboutSection extends StrapiComponent {
   __component: "sections.about";
-  id: number;
   title?: string | null;
   heading: string;
   description?: string | null;
   ctas: StrapiLink[];
-  image: { data: StrapiMedia };
+  image: { data: BaseMedia };
 }
 
 // Mapped Frontend Type
-export interface AboutSectionData {
+export interface AboutSectionData extends StrapiComponent {
   __component: "sections.about";
-  id: number;
   pretitle: string;
   title: string;
   description: string;
@@ -27,8 +25,7 @@ export interface AboutSectionData {
 
 export function mapAboutSection(section: StrapiAboutSection): AboutSectionData {
   return {
-    __component: section.__component,
-    id: section.id,
+    ...section,
     pretitle: section.title ?? "",
     title: section.heading,
     description: section.description ?? "",

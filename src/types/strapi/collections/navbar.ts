@@ -1,14 +1,16 @@
-import { StrapiResponse, StrapiResponseCollection } from "../strapi";
+import {
+  StrapiEntity,
+  StrapiResponse,
+  StrapiResponseCollection,
+} from "../strapi";
 import { mapMenuItem, MenuItem, StrapiMenuItem } from "./menu-item";
-export interface StrapiNavbar {
-  id: number;
+export interface StrapiNavbar extends StrapiEntity {
   name: string;
   items: StrapiMenuItem[];
 }
 
 // Mapped for frontend
-export interface Navbar {
-  id: number;
+export interface Navbar extends StrapiEntity {
   name: string;
   items: MenuItem[]; // ← mapped from StrapiMenuItem
 }
@@ -21,10 +23,11 @@ export type NavbarResponse = StrapiResponse<StrapiNavbar>;
  */
 export type NavbarCollectionResponse = StrapiResponseCollection<StrapiNavbar>;
 
-export function mapNavbar(navbar: StrapiNavbar): Navbar {
+export function mapNavbar(navbar: StrapiNavbar | null): Navbar | null {
+  if (!navbar) return null;
+
   return {
-    id: navbar.id,
-    name: navbar.name,
+    ...navbar,
     items: (navbar.items ?? []).map(mapMenuItem),
   };
 }

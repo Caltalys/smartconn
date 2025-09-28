@@ -47,17 +47,23 @@ export interface Meta {
  * Một component là một khối nội dung có thể tái sử dụng.
  */
 export interface StrapiComponent {
+  __component: string;
   id: number;
-  __component?: string;
 }
 
 /**
  * Mở rộng từ `StrapiComponent`, đại diện cho một khối nội dung linh hoạt trong Dynamic Zone.
  * Cho phép chứa bất kỳ thuộc tính nào, hữu ích cho các component không cần định nghĩa tường minh.
  */
-export interface Block extends StrapiComponent {
+export interface StrapiBlock extends StrapiComponent {
   [key: string]: unknown;
 }
+
+/**
+ * Kiểu dự phòng cho các block chưa được định nghĩa.
+ * Dùng trong trường hợp API trả về block mới mà frontend chưa hỗ trợ.
+ */
+export interface UnknownStrapiBlock extends StrapiBlock {}
 
 /**
  * Interface cơ sở chứa các trường metadata chung nhất cho hầu hết các loại nội dung Strapi.
@@ -84,7 +90,7 @@ export interface StrapiEntity extends StrapiMetadata {
  * Đại diện cho một đối tượng media hoàn chỉnh trong Media Library của Strapi.
  * Kế thừa từ `StrapiEntity` và thêm các thuộc tính đặc thù của file media.
  */
-export interface StrapiMedia extends StrapiEntity {
+export interface BaseMedia extends StrapiComponent {
   name: string;
   alternativeText: string | null;
   caption: string | null;
@@ -99,6 +105,23 @@ export interface StrapiMedia extends StrapiEntity {
   previewUrl: string | null;
   provider: string;
   provider_metadata: unknown;
+}
+
+/**
+ * Cấu trúc dữ liệu cho các liên kết mạng xã hội.
+ */
+export interface SocialLinksData {
+  facebookUrl?: string | null;
+  twitterUrl?: string | null;
+  instagramUrl?: string | null;
+  linkedinUrl?: string | null;
+}
+
+/** Cấu trúc dữ liệu cho thông tin liên hệ cơ bản. */
+export interface ContactInfoData {
+  phoneNumber: string | null;
+  email: string | null;
+  address: string | null;
 }
 
 /**

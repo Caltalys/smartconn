@@ -1,6 +1,7 @@
-export interface StrapiButton {
+import { StrapiComponent } from "../strapi";
+
+export interface StrapiButton extends StrapiComponent {
   __component: "elements.button";
-  id: number;
   label: string;
   subLabel?: string | null;
   ariaLabel?: string | null;
@@ -10,12 +11,11 @@ export interface StrapiButton {
   target: "_blank" | "_self";
 }
 
-export interface Button {
-  id: number;
+export interface Button extends StrapiComponent {
   label: string;
-  subLabel: string | null;
-  ariaLabel: string | null;
-  style: string | null;
+  subLabel?: string | null;
+  ariaLabel?: string | null;
+  style?: string | null;
   href: string;
   isExternal: boolean;
   target: "_blank" | "_self";
@@ -23,13 +23,7 @@ export interface Button {
 
 export function mapButton(button: StrapiButton): Button {
   return {
-    id: button.id,
-    label: button.label,
-    subLabel: button.subLabel ?? null,
-    ariaLabel: button.ariaLabel ?? null,
-    style: button.style ?? null,
+    ...button,
     href: button.url,
-    isExternal: button.isExternal,
-    target: button.target,
   };
 }

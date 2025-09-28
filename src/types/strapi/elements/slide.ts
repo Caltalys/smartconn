@@ -1,18 +1,16 @@
 import { getStrapiMedia } from "@/lib/utils";
-import { StrapiMedia } from "../strapi";
+import { BaseMedia, StrapiComponent } from "../strapi";
 
 // Raw Strapi Type
-export interface StrapiSlide {
+export interface StrapiSlide extends StrapiComponent {
   __component: "elements.slide";
-  id: number;
-  image: StrapiMedia;
-  alternativeText?: string | null;
-  caption?: string | null;
+  image: BaseMedia;
+  alternativeText: string | null;
+  caption: string | null;
 }
 
 // Mapped Frontend Type
-export interface Slide {
-  id: number;
+export interface Slide extends StrapiComponent {
   image: {
     url: string;
     alt: string;
@@ -26,14 +24,12 @@ export interface Slide {
 export function mapSlide(slide: StrapiSlide): Slide {
   const img = slide.image;
   return {
-    id: slide.id,
+    ...slide,
     image: {
       url: getStrapiMedia(img?.url) ?? "",
       alt: img?.alternativeText ?? "",
       width: img?.width ?? 0,
       height: img?.height ?? 0,
     },
-    alternativeText: slide.alternativeText ?? null,
-    caption: slide.caption ?? null,
   };
 }

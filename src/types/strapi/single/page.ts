@@ -1,36 +1,33 @@
-import { mapContentSections } from "@/lib/api";
 import { getStrapiMedia } from "@/lib/utils";
 import {
-  AnyContentBlock,
-  AnyStrapiContentBlock,
-} from "../sections/content-blocks";
+  AnyDynamicBlock,
+  AnyStrapiDynamicBlock,
+  mapDynamicBlock,
+} from "../blocks/dynamic-blocks";
 import {
-  StrapiMedia,
+  BaseMedia,
+  StrapiEntity,
   StrapiResponse,
   StrapiResponseCollection,
 } from "../strapi";
 
-export interface StrapiPage {
-  id: number;
+export interface StrapiPage extends StrapiEntity {
   title: string;
   slug: string;
   metaTitle: string | null;
   metaDescription: string | null;
-  metaImage: StrapiMedia | null;
-  contentSections: AnyStrapiContentBlock[];
+  metaImage: BaseMedia | null;
+  contentSections: AnyStrapiDynamicBlock[];
 }
 
 // Mapped for frontend
-export interface Page {
-  id: number;
+export interface Page extends StrapiEntity {
   title: string;
   slug: string;
-  meta: {
-    title: string | null;
-    description: string | null;
-    image: string | null;
-  };
-  sections: AnyContentBlock[]; // ← mapped sections
+  metaTitle: string | null;
+  metaDescription: string | null;
+  metaImage: string | null;
+  contentSections: AnyDynamicBlock[]; // ← mapped sections
 }
 
 /** Lớp vỏ (wrapper) của Strapi cho một tài liệu đơn lẻ. */
@@ -41,16 +38,11 @@ export type PageResponse = StrapiResponse<Page>;
  */
 export type PageCollectionResponse = StrapiResponseCollection<Page>;
 
-export async function mapPage(page: StrapiPage, locale: string): Promise<Page> {
+export async function mapPage(page: StrapiPage | null): Promise<Page | null> {
+  if (!page) return null;
   return {
-    id: page.id,
-    title: page.title,
-    slug: page.slug,
-    meta: {
-      title: page.metaTitle,
-      description: page.metaDescription,
-      image: page.metaImage ? getStrapiMedia(page.metaImage.url) : null,
-    },
-    sections: await mapContentSections(page.contentSections, locale),
+    ...page,
+    metaImage: page.metaImage ? getStrapiMedia(page.metaImage.url) : null,
+    contentSections: await mapDynamicBlock(page.contentSections),
   };
 }

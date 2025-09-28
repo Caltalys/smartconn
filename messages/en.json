@@ -26,5 +26,12 @@
   },
   "navigation": {
     "home": "Home"
+  },
+  "home": {
+    "blogSection": {
+      "pretitle": "News & Events",
+      "title": "Latest Articles",
+      "viewAllButton": "View All"
+    }
   }
 }

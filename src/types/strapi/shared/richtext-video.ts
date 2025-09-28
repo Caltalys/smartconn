@@ -1,9 +1,9 @@
+import { StrapiComponent } from "../strapi";
 import { mapVideoBlock, StrapiVideoBlock, VideoBlock } from "./video";
 
 // Raw Strapi Type
-export interface StrapiRichtextVideoBlock {
+export interface StrapiRichtextVideoBlock extends StrapiComponent {
   __component: "shared.richtext-video";
-  id: number;
   title: string;
   heading: string;
   content: string; // Strapi Blocks
@@ -11,9 +11,7 @@ export interface StrapiRichtextVideoBlock {
 }
 
 // Mapped Frontend Type
-export interface RichtextVideoBlock {
-  __component: "shared.richtext-video";
-  id: number;
+export interface RichtextVideoBlock extends StrapiComponent {
   pretitle: string;
   title: string;
   body: string; // Markdown or HTML
@@ -33,8 +31,7 @@ export function mapRichtextVideoBlock(
     }
 
     return {
-      __component: block.__component,
-      id: block.id,
+      ...block,
       pretitle: block.title,
       title: block.heading,
       body: block.content,

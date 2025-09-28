@@ -14,7 +14,31 @@ import {
   isStrapiSliderBlock,
   isStrapiVideoBlock,
 } from "@/utils/type-guards";
-import { AnySharedBlock, StrapiSharedBlock } from "../blocks";
+import {
+  AboutSectionData,
+  mapAboutSection,
+  StrapiAboutSection,
+} from "../sections/about";
+import {
+  AdvantagesSectionData,
+  mapAdvantagesSection,
+  StrapiAdvantagesSection,
+} from "../sections/advantages";
+import {
+  HeroSection,
+  mapHeroSection,
+  StrapiHeroSection,
+} from "../sections/hero";
+import {
+  mapPartnersSection,
+  PartnersSectionData,
+  StrapiPartnersSection,
+} from "../sections/partners";
+import {
+  mapServicesSection,
+  ServicesSectionData,
+  StrapiServicesSection,
+} from "../sections/services";
 import { mapImageBlock } from "../shared/image";
 import { mapListItemBlock } from "../shared/list-item";
 import { mapMediaBlock } from "../shared/media";
@@ -24,71 +48,48 @@ import { mapRichtextImageBlock } from "../shared/richtext-image";
 import { mapRichtextVideoBlock } from "../shared/richtext-video";
 import { mapSliderBlock } from "../shared/slider";
 import { mapVideoBlock } from "../shared/video";
-import { AboutSectionData, mapAboutSection, StrapiAboutSection } from "./about";
-import {
-  AdvantagesSectionData,
-  mapAdvantagesSection,
-  StrapiAdvantagesSection,
-} from "./advantages";
-import { HeroSection, mapHeroSection, StrapiHeroSection } from "./hero";
-import {
-  mapPartnersSection,
-  PartnersSectionData,
-  StrapiPartnersSection,
-} from "./partners";
-import {
-  mapServicesSection,
-  ServicesSectionData,
-  StrapiServicesSection,
-} from "./services";
+import { StrapiBlock } from "../strapi";
+import { AnyContentBlock, AnyStrapiContentBlock } from "./content-blocks";
 
 /**
  * Union type cho tất cả các block (section + shared) thô từ Strapi Dynamic Zone.
  * Dùng trong tầng data fetching và mapping.
  */
-export type AnyStrapiContentBlock =
+export type AnyStrapiDynamicBlock =
   | StrapiHeroSection
   | StrapiAboutSection
   | StrapiServicesSection
   | StrapiAdvantagesSection
   | StrapiPartnersSection
   //   | StrapiBlogSection
-  | StrapiSharedBlock; // ← StrapiSharedBlock đã là union của tất cả shared block
+  | AnyStrapiContentBlock; // ← StrapiSharedBlock đã là union của tất cả shared block
 
 /**
  * Kiểu dự phòng cho các block chưa được định nghĩa.
  */
-export interface UnknownStrapiContentBlock {
-  __component: string;
-  id: number;
-  [key: string]: unknown;
-}
+export interface UnknownStrapiDynamicBlock extends StrapiBlock {}
 
 /**
  * Union type cho tất cả các block (section + shared) đã được ánh xạ cho frontend.
  * Dùng trong PageRenderer và BlockRenderer để render UI.
  */
-export type AnyContentBlock =
+export type AnyDynamicBlock =
   | HeroSection
   | AboutSectionData
   | ServicesSectionData
   | AdvantagesSectionData
   | PartnersSectionData
-  //   | BlogSectionData
-  | AnySharedBlock; // ← AnySharedBlock đã là union của tất cả shared block
+  // | BlogSectionData
+  | AnyContentBlock; // ← AnySharedBlock đã là union của tất cả shared block
 
 /**
  * Kiểu dự phòng cho các block chưa được hỗ trợ trong frontend.
  */
-export interface UnknownContentBlock {
-  __component: string;
-  id: number;
-}
+export interface UnknownDynamicBlock extends StrapiBlock {}
 
-export async function mapContentSections(
-  sections: AnyStrapiContentBlock[],
-  locale: string
-): Promise<AnyContentBlock[]> {
+export async function mapDynamicBlock(
+  sections: AnyStrapiDynamicBlock[]
+): Promise<AnyDynamicBlock[]> {
   if (!sections) return [];
 
   const mappedSectionPromises = sections.map(async (section) => {
@@ -135,13 +136,12 @@ export async function mapContentSections(
       if (isStrapiRichtextVideoBlock(section)) {
         return mapRichtextVideoBlock(section);
       }
-      //   if (isStrapiBlogSection(section)) {
-      // Lưu ý: Việc mapping cho Blog section yêu cầu gọi API để lấy bài viết.
-      // Logic này nên được đặt ở tầng API (`lib/api`) thay vì ở đây để tránh circular dependency.
-      //   }
+      // if (isStrapiBlogSection(section)) {
+      //   return mapBlogSection(section, locale);
+      // }
 
       console.warn(
-        `[mapContentSections] Unknown section/block type: ${(section as UnknownStrapiContentBlock).__component}`
+        `[mapContentSections] Unknown section/block type: ${(section as UnknownStrapiDynamicBlock).__component}`
       );
       return null;
     } catch (error) {
@@ -155,7 +155,7 @@ export async function mapContentSections(
 
   const mappedSections = await Promise.all(mappedSectionPromises);
   const filteredSections = mappedSections.filter(
-    (section): section is AnyContentBlock => section !== null
+    (section): section is AnyDynamicBlock => section !== null
   );
 
   return filteredSections;

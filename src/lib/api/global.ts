@@ -1,6 +1,6 @@
 import { Navbar } from "@/types/strapi/collections/navbar";
-import { Topbar } from "@/types/strapi/sections/topbar";
 import { Footer } from "@/types/strapi/single/footer";
+import { Topbar } from "@/types/strapi/single/topbar";
 import { fetchFooter } from "./api-footer";
 import { fetchAllNavbars } from "./api-navbar";
 import { fetchTopbar } from "./api-topbar";

@@ -3,11 +3,11 @@ import {
   mapFeatureItem,
   StrapiFeatureItem,
 } from "../elements/feature-item";
+import { StrapiComponent } from "../strapi";
 
 // Raw Strapi Type
-export interface StrapiAdvantagesSection {
+export interface StrapiAdvantagesSection extends StrapiComponent {
   __component: "sections.advantages";
-  id: number;
   title?: string | null;
   heading: string;
   description?: string | null;
@@ -15,9 +15,8 @@ export interface StrapiAdvantagesSection {
 }
 
 // Mapped Frontend Type
-export interface AdvantagesSectionData {
+export interface AdvantagesSectionData extends StrapiComponent {
   __component: "sections.advantages";
-  id: number;
   pretitle: string;
   title: string;
   description: string;
@@ -28,8 +27,7 @@ export function mapAdvantagesSection(
   section: StrapiAdvantagesSection
 ): AdvantagesSectionData {
   return {
-    __component: section.__component,
-    id: section.id,
+    ...section,
     pretitle: section.title ?? "",
     title: section.heading,
     description: section.description ?? "",

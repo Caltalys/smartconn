@@ -1,21 +1,21 @@
 // Định nghĩa tất cả các Strapi Shared Block types
-import { ImageBlock, mapImageBlock, StrapiImageBlock } from "../shared/image";
+import { ImageBlock, mapImageBlock, StrapiImage } from "../shared/image";
 import {
   ListItemBlock,
   mapListItemBlock,
-  StrapiListItemBlock,
+  StrapiListItem,
 } from "../shared/list-item";
-import { mapMediaBlock, MediaBlock, StrapiMediaBlock } from "../shared/media";
-import { mapQuoteBlock, QuoteBlock, StrapiQuoteBlock } from "../shared/quote";
+import { mapMediaBlock, MediaBlock, StrapiMedia } from "../shared/media";
+import { mapQuoteBlock, QuoteBlock, StrapiQuote } from "../shared/quote";
 import {
   mapRichTextBlock,
   RichTextBlock,
-  StrapiRichTextBlock,
+  StrapiRichText,
 } from "../shared/rich-text";
 import {
   mapRichtextImageBlock,
   RichtextImageBlock,
-  StrapiRichtextImageBlock,
+  StrapiRichtextImage,
 } from "../shared/richtext-image";
 import {
   mapRichtextVideoBlock,
@@ -28,37 +28,30 @@ import {
   StrapiSliderBlock,
 } from "../shared/slider";
 import { mapVideoBlock, StrapiVideoBlock, VideoBlock } from "../shared/video";
+import { StrapiBlock } from "../strapi";
 
 /**
  * Union type cho tất cả các shared block thô từ Strapi Dynamic Zone.
  * Đây là kiểu dữ liệu gốc mà API trả về trước khi mapping.
  */
-export type StrapiSharedBlock =
-  | StrapiQuoteBlock
-  | StrapiRichTextBlock
-  | StrapiImageBlock
+export type AnyStrapiContentBlock =
+  | StrapiQuote
+  | StrapiRichText
+  | StrapiImage
   | StrapiSliderBlock
   | StrapiVideoBlock
-  | StrapiMediaBlock
-  | StrapiListItemBlock
-  | StrapiRichtextImageBlock
+  | StrapiMedia
+  | StrapiListItem
+  | StrapiRichtextImage
   | StrapiRichtextVideoBlock;
 
-/**
- * Kiểu dự phòng cho các block chưa được định nghĩa.
- * Dùng trong trường hợp API trả về block mới mà frontend chưa hỗ trợ.
- */
-export interface UnknownStrapiBlock {
-  __component: string;
-  id: number;
-  [key: string]: unknown;
-}
+export interface UnknownStrapiContentBlock extends StrapiBlock {}
 
 /**
  * Union type cho tất cả các shared block đã được ánh xạ cho frontend.
  * Dùng trong BlockRenderer và PageRenderer để render UI.
  */
-export type AnySharedBlock =
+export type AnyContentBlock =
   | QuoteBlock
   | RichTextBlock
   | ImageBlock
@@ -72,39 +65,38 @@ export type AnySharedBlock =
 /**
  * Kiểu dự phòng cho các block chưa được hỗ trợ trong frontend.
  */
-export interface UnknownBlock {
-  __component: string;
-  id: number;
-}
+export interface UnknownBlock extends StrapiBlock {}
 
-export function mapBlocks(blocks: StrapiSharedBlock[]): AnySharedBlock[] {
+export function mapContentBlocks(
+  blocks: AnyStrapiContentBlock[]
+): AnyContentBlock[] {
   return blocks
     .map((block) => {
       switch (block.__component) {
         case "shared.quote":
-          return mapQuoteBlock(block as StrapiQuoteBlock);
+          return mapQuoteBlock(block as StrapiQuote);
         case "shared.rich-text":
-          return mapRichTextBlock(block as StrapiRichTextBlock);
+          return mapRichTextBlock(block as StrapiRichText);
         case "shared.image":
-          return mapImageBlock(block as StrapiImageBlock);
+          return mapImageBlock(block as StrapiImage);
         case "shared.slider":
           return mapSliderBlock(block as StrapiSliderBlock);
         case "shared.video":
           return mapVideoBlock(block as StrapiVideoBlock);
         case "shared.media":
-          return mapMediaBlock(block as StrapiMediaBlock);
+          return mapMediaBlock(block as StrapiMedia);
         case "shared.list-item":
-          return mapListItemBlock(block as StrapiListItemBlock);
+          return mapListItemBlock(block as StrapiListItem);
         case "shared.richtext-image":
-          return mapRichtextImageBlock(block as StrapiRichtextImageBlock);
+          return mapRichtextImageBlock(block as StrapiRichtextImage);
         case "shared.richtext-video":
           return mapRichtextVideoBlock(block as StrapiRichtextVideoBlock);
         default:
           console.warn(
-            `Unknown block type: ${(block as UnknownStrapiBlock).__component}`
+            `Unknown block type: ${(block as UnknownStrapiContentBlock).__component}`
           );
           return null;
       }
     })
-    .filter((block): block is AnySharedBlock => block !== null);
+    .filter((block): block is AnyContentBlock => block !== null);
 }

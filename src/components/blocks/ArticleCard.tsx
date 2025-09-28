@@ -1,8 +1,7 @@
+import { formatDate } from "@/lib/format-date";
+import { Article } from "@/types/strapi/collections/article";
 import Image from "next/image";
 import Link from "next/link";
-import { getStrapiMedia } from "@/lib/utils";
-import { Article } from "@/types/strapi/collections/article";
-import { formatDate } from "@/lib/format-date";
 
 interface ArticleCardProps {
     article: Article;
@@ -10,17 +9,16 @@ interface ArticleCardProps {
 }
 
 export default function ArticleCard({ article, locale }: ArticleCardProps) {
-    const imageUrl = getStrapiMedia(article.cover?.url);
     const articleUrl = `/${locale}/blogs/${article.slug}`;
 
     return (
         <Link href={articleUrl} className="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800">
             {/* Image container */}
             <div className="relative m-2.5 h-56 overflow-hidden rounded-md">
-                {imageUrl ? (
+                {article.coverUrl ? (
                     <Image
-                        src={imageUrl}
-                        alt={article.cover?.alternativeText || article.title}
+                        src={article.coverUrl}
+                        alt={article.coverAlt}
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

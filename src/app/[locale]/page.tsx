@@ -1,11 +1,11 @@
 import PageRenderer from '@/components/blocks/PageRenderer';
-import { fetchPageBySlug } from '@/lib/api/api-page';
-import { notFound } from 'next/navigation';
-import type { Metadata, ResolvingMetadata } from 'next';
-import { cache } from 'react';
 import { getAllArticles } from '@/lib/api';
-import { BlogSectionData } from '@/types/strapi/sections/blog';
+import { fetchPageBySlug } from '@/lib/api/api-page';
 import { AsyncBaseProps } from '@/types/global';
+import type { Metadata, ResolvingMetadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { cache } from 'react';
 
 // Bọc hàm fetch bằng React.cache để khử trùng lặp các yêu cầu trong một render.
 // Điều này đảm bảo `fetchPageBySlug` chỉ được gọi một lần ngay cả khi
@@ -22,8 +22,13 @@ export async function generateMetadata({ params }: AsyncBaseProps, parent: Resol
     if (!pageData) return {};
 
     return {
-        title: pageData.metaTitle || pageData.title,
+        title: pageData.metaTitle,
         description: pageData.metaDescription,
+        openGraph: {
+            title: pageData.metaTitle,
+            description: pageData.metaDescription,
+            images: pageData.metaImage
+        }
     };
 }
 
@@ -38,9 +43,10 @@ export async function generateMetadata({ params }: AsyncBaseProps, parent: Resol
  *
  * @param params - Chứa thông tin về route, bao gồm `locale`.
  */
-export default async function HomePage( {params} : AsyncBaseProps) {
+export default async function HomePage({ params }: AsyncBaseProps) {
     const { locale } = await params;
     const homeSlug = locale === 'vi' ? 'trang-chu' : 'home';
+    const t = await getTranslations({ locale, namespace: 'home' });
 
     // Tối ưu: Gọi song song cả dữ liệu trang và danh sách bài viết
     const [pageData, articlesResponse] = await Promise.all([
@@ -59,11 +65,11 @@ export default async function HomePage( {params} : AsyncBaseProps) {
     if (articlesResponse.data && articlesResponse.data.length > 0) {
         contentSections.push({
             __component: 'sections.blog',
-            id: Date.now(),
-            pretitle: 'Tin tức & Sự kiện',
-            title: 'Bài viết mới nhất',
+            id: Date.now(), // Sử dụng Date.now() là chấp nhận được ở đây vì nó chỉ chạy ở server-side mỗi lần render.
+            pretitle: t('blogSection.pretitle'),
+            title: t('blogSection.title'),
             articles: articlesResponse.data,
-            viewAllButtonLabel: 'Xem tất cả',
+            viewAllButtonLabel: t('blogSection.viewAllButton'),
         });
     }
 

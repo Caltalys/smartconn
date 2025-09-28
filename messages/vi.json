@@ -26,5 +26,12 @@
   },
   "navigation": {
     "home": "Trang chủ"
+  },
+  "home": {
+    "blogSection": {
+      "pretitle": "Tin tức & Sự kiện",
+      "title": "Bài viết mới nhất",
+      "viewAllButton": "Xem tất cả"
+    }
   }
 }

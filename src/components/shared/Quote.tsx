@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-const QuoteComponent = ({ quote, author }: { quote: string; author?: string }) => {
+const QuoteComponent = ({ pretitle, quote, author }: { pretitle: string, quote: string; author?: string }) => {
     return (
         <blockquote className="my-8 border-l-4 border-primary bg-muted/20 p-4 italic">
             <p className="mb-2 text-xl">{`"${quote}"`}</p>

@@ -1,7 +1,8 @@
+import { StrapiComponent } from "../strapi";
+
 // Raw Strapi Type
-export interface StrapiLink {
+export interface StrapiLink extends StrapiComponent {
   __component: "elements.link";
-  id: number;
   url: string;
   target: "_blank" | "_self" | "_parent" | "_top";
   text: string;
@@ -9,8 +10,7 @@ export interface StrapiLink {
 }
 
 // Mapped Frontend Type
-export interface Link {
-  id: number;
+export interface Link extends StrapiComponent {
   href: string;
   target: "_blank" | "_self" | "_parent" | "_top";
   label: string;
@@ -19,10 +19,8 @@ export interface Link {
 
 export function mapLink(strapiLink: StrapiLink): Link {
   return {
-    id: strapiLink.id,
+    ...strapiLink,
     href: strapiLink.url,
-    target: strapiLink.target,
     label: strapiLink.text,
-    isExternal: strapiLink.isExternal,
   };
 }

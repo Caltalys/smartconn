@@ -1,7 +1,7 @@
 import { getStrapiMedia } from "@/lib/utils";
 import React from "react";
 import { mapSeo, Seo, StrapiSeo } from "./strapi/shared/seo";
-import { StrapiMedia, StrapiResponse } from "./strapi/strapi";
+import { BaseMedia, StrapiResponse } from "./strapi/strapi";
 
 export interface BaseProps {
   params: { locale: string };
@@ -19,10 +19,10 @@ export type AsyncProps = {
 export interface StrapiGlobal {
   id: number;
   siteName: string;
-  favicon: StrapiMedia | null;
+  favicon: BaseMedia | null;
   siteDescription: string;
   defaultSeo: StrapiSeo;
-  logo: StrapiMedia | null;
+  logo: BaseMedia | null;
 }
 
 // Mapped for frontend

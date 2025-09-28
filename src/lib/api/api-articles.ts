@@ -1,63 +1,13 @@
-import { AnySharedBlock } from "@/types/strapi/blocks/shared";
-import { Article, StrapiArticle } from "@/types/strapi/collections/article";
-import { Author, StrapiAuthor } from "@/types/strapi/collections/author";
-import { Category, StrapiCategory } from "@/types/strapi/collections/category";
+import {
+  Article,
+  mapArticle,
+  StrapiArticle,
+} from "@/types/strapi/collections/article";
+import { mapAuthor } from "@/types/strapi/collections/author";
+import { mapCategory } from "@/types/strapi/collections/category";
 import { Meta, StrapiResponseCollection } from "@/types/strapi/strapi";
 import { strapiClient } from "../strapi-client";
 import { getStrapiMedia } from "../utils";
-import { mapContentSections } from "./api-page";
-
-// --- Mappers ---
-
-/**
- * Ánh xạ dữ liệu thô của một Author.
- */
-function mapAuthor(author: StrapiAuthor | null): Author | null {
-  if (!author) return null;
-  return {
-    id: author.id,
-    name: author.name,
-    avatarUrl: getStrapiMedia(author.avatar?.url),
-  };
-}
-
-/**
- * Ánh xạ dữ liệu thô của một Category.
- */
-function mapCategory(category: StrapiCategory | null): Category | null {
-  if (!category) return null;
-  return {
-    id: category.id,
-    name: category.name,
-    slug: category.slug,
-  };
-}
-
-/**
- * Ánh xạ dữ liệu thô của một Article từ Strapi sang cấu trúc dữ liệu sạch cho frontend.
- * Hàm này là async để xử lý việc ánh xạ các block trong dynamic zone.
- */
-export async function mapArticle(
-  article: StrapiArticle,
-  locale: string
-): Promise<Article> {
-  const mappedBlocks = article.blocks
-    ? await mapContentSections(article.blocks, locale)
-    : [];
-
-  return {
-    id: article.id,
-    title: article.title,
-    description: article.description,
-    slug: article.slug,
-    cover: article.cover,
-    author: mapAuthor(article.author),
-    category: mapCategory(article.category),
-    // Ép kiểu an toàn vì chúng ta giả định dynamic zone của Article chỉ chứa các shared block.
-    blocks: mappedBlocks as AnySharedBlock[],
-    publishedAt: article.publishedAt,
-  };
-}
 
 // --- API Fetchers ---
 
@@ -97,9 +47,10 @@ export async function getAllArticles(
     const articles: Article[] = response.data.map((article) => ({
       id: article.id,
       title: article.title,
-      description: article.description,
+      description: article.description ?? "",
       slug: article.slug,
-      cover: article.cover,
+      coverUrl: article.cover ? getStrapiMedia(article.cover.url) : null,
+      coverAlt: article.cover?.alternativeText ?? article.title,
       author: mapAuthor(article.author),
       category: mapCategory(article.category),
       blocks: [], // Trả về mảng rỗng cho trang danh sách để khớp với kiểu `Article`
@@ -165,7 +116,7 @@ export async function getArticleBySlug(
 
     if (!response.data || response.data.length === 0) return null;
 
-    return await mapArticle(response.data[0], locale);
+    return await mapArticle(response.data[0] ?? null);
   } catch (error) {
     console.error(
       `API Error: Could not fetch article with slug "${slug}".`,

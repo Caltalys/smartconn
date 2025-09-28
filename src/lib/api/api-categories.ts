@@ -1,17 +1,10 @@
-import { Category, StrapiCategory } from "@/types/strapi/collections/category";
+import {
+  Category,
+  mapCategory,
+  StrapiCategory,
+} from "@/types/strapi/collections/category";
 import { StrapiResponseCollection } from "@/types/strapi/strapi";
 import { strapiClient } from "../strapi-client";
-
-/**
- * Ánh xạ dữ liệu thô của một Category.
- */
-function mapCategory(category: StrapiCategory): Category {
-  return {
-    id: category.id,
-    name: category.name,
-    slug: category.slug,
-  };
-}
 
 type CategoriesResponse = StrapiResponseCollection<StrapiCategory>;
 
