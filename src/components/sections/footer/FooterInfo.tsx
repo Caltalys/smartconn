@@ -1,6 +1,6 @@
 import Social from "@/components/blocks/Social";
 import Logo from "@/components/elements/Logo";
-import { SocialLinksData } from "@/types/strapi/shared";
+import { SocialLinksData } from "@/types/strapi/strapi";
 
 type FooterInfoProps = {
     description: string | null;

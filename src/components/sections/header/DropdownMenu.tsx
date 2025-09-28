@@ -1,8 +1,8 @@
-import { NavbarItem } from "@/types/strapi/collections/navbar";
+import { MenuItem } from "@/types/strapi/collections/menu-item";
 import NavLink from "./NavLink";
 
 type DropdownMenuProps = {
-    items: NavbarItem[];
+    items: MenuItem[]
 };
 
 const DropdownMenu = ({ items }: DropdownMenuProps) => {

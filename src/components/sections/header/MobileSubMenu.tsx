@@ -1,12 +1,12 @@
 'use client';
 
 import { useActiveServiceDispatch } from "@/context/ServiceContext";
-import { NavbarItem } from "@/types/strapi/collections/navbar";
+import { MenuItem } from "@/types/strapi/collections/menu-item";
 import { motion } from "framer-motion";
 import NavLink from "./NavLink";
 
 type MobileSubMenuProps = {
-    items: NavbarItem[];
+    items: MenuItem[];
     closeSheet: () => void;
 };
 

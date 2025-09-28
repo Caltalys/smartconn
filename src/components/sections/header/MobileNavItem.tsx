@@ -1,13 +1,13 @@
 'use client';
 
-import { NavbarItem as NavbarItemType } from "@/types/strapi/collections/navbar";
+import { MenuItem } from "@/types/strapi/collections/menu-item";
 import { AnimatePresence } from "framer-motion";
 import { RiArrowDownSLine } from "react-icons/ri";
 import MobileSubMenu from "./MobileSubMenu";
 import NavLink from "./NavLink";
 
 type MobileNavItemProps = {
-    item: NavbarItemType;
+    item: MenuItem;
     isSubMenuOpen: boolean;
     onToggleSubMenu: () => void;
     closeSheet: () => void;
