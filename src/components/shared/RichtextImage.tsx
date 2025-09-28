@@ -20,8 +20,8 @@ const RichtextImageComponent = ({ data }: { data: RichtextImageBlock }) => {
                 {imageUrl && (
                     <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg">
                         <Image
-                            src={imageUrl}
-                            alt={image.url || title}
+                            src={image.url}
+                            alt={image.alt || title}
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 90vw, 45vw"
