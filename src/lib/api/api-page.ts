@@ -104,7 +104,7 @@ export async function fetchPageBySlug(
     }
 
     // Gọi phiên bản async của mapPage và truyền locale vào
-    return await mapPage(response.data[0] ?? null, locale);
+    return await mapPage(response.data[0] ?? null);
   } catch (error) {
     console.error(
       `API Error: Could not fetch page with slug "${slug}".`,

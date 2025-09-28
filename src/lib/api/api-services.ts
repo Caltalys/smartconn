@@ -6,6 +6,7 @@ import {
 } from "@/types/strapi/collections/service";
 import { StrapiResponseCollection } from "@/types/strapi/strapi";
 import { strapiClient } from "../strapi-client";
+import { getStrapiMedia } from "../utils";
 
 // --- API Fetchers ---
 
@@ -15,26 +16,37 @@ import { strapiClient } from "../strapi-client";
 export async function getAllServices(
   locale: string,
   params: { page?: number; pageSize?: number; query?: string } = {}
-): Promise<ServiceCollectionResponse> {
+): Promise<ServiceCollectionResponse | null> {
   const client = strapiClient(locale);
   const { page = 1, pageSize = 10, query = "" } = params;
 
   try {
     const response = (await client.collection("services").find({
       locale,
-      sort: "publishedAt:desc",
+      sort: "title:asc",
       pagination: { page, pageSize },
       filters: {
         ...(query && { title: { $containsi: query } }),
       },
       populate: ["cover"],
-    })) as unknown as StrapiResponseCollection<StrapiService>;
+    })) as unknown as ServiceCollectionResponse;
 
-    // Ánh xạ thủ công cho danh sách, không cần map `blocks` để tối ưu hiệu suất.
-    const services = response.data.map((service) => ({
-      ...service,
-      blocks: [], // Trả về mảng rỗng cho trang danh sách để khớp với kiểu `Service`
-    }));
+    if (!response.data) {
+      return null;
+    }
+
+    // Ánh xạ thủ công cho danh sách để tối ưu, không cần map `blocks`.
+    const services = response.data.map((service) => {
+      const strapiService = service as unknown as StrapiService;
+      return {
+        ...strapiService,
+        coverUrl: strapiService.cover
+          ? getStrapiMedia(strapiService.cover.url)
+          : null,
+        coverAlt: strapiService.cover?.alternativeText ?? strapiService.title,
+        blocks: [], // Trả về mảng rỗng cho trang danh sách để khớp với kiểu `Service`
+      };
+    });
 
     return { data: services, meta: response.meta };
   } catch (error) {
@@ -94,8 +106,8 @@ export async function getServiceBySlug(
       return null;
     }
 
-    // Gọi hàm mapService phiên bản async mới
-    return await mapService(response.data[0] ?? null, locale);
+    // mapService là hàm đồng bộ, không cần await
+    return mapService(response.data[0]);
   } catch (error) {
     console.error(
       `API Error: Could not fetch service with slug "${slug}".`,

@@ -1,12 +1,12 @@
 // src/components/Services.tsx
 'use client';
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import Pretitle from "../elements/Pretitle";
-import { ServicesSectionData } from "@/types/strapi/sections/services";
-import SmartButton from "../elements/SmartButton";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { ServicesSectionData } from "@/types/strapi/sections/services";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Pretitle from "../elements/Pretitle";
+import SmartButton from "../elements/SmartButton";
 
 const Services = ({ data }: { data: ServicesSectionData }) => {
   if (!data) {
@@ -26,7 +26,7 @@ const Services = ({ data }: { data: ServicesSectionData }) => {
     >
       <div className="container mx-auto px-6">
         <motion.div variants={fadeInUp} className="text-center mb-12">
-          <Pretitle text={pretitle} center/>
+          <Pretitle text={pretitle} center />
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-wide">{title}</h2>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -48,7 +48,7 @@ const Services = ({ data }: { data: ServicesSectionData }) => {
               <h3 className="text-xl font-bold mb-4">{item.title}</h3>
               <p className="text-justify text-muted-foreground mb-6 flex-grow">{item.description}</p>
               <div className="mt-auto">
-                <SmartButton text={item.cta.label} href={item.cta.href} />
+                <SmartButton text={item.cta?.label ?? ""} href={item.cta?.href ?? ""} />
               </div>
             </motion.div>
           ))}

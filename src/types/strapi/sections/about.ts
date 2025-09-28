@@ -8,8 +8,8 @@ export interface StrapiAboutSection extends StrapiComponent {
   title?: string | null;
   heading: string;
   description?: string | null;
-  ctas: StrapiLink[];
-  image: { data: BaseMedia };
+  ctas: StrapiLink[] | null;
+  image: BaseMedia;
 }
 
 // Mapped Frontend Type
@@ -23,13 +23,20 @@ export interface AboutSectionData extends StrapiComponent {
 }
 
 export function mapAboutSection(section: StrapiAboutSection): AboutSectionData {
+  // Tối ưu hóa việc mapping ctas:
+  // 1. Dùng `?? []` để xử lý trường hợp `section.ctas` là null.
+  // 2. Lọc ra các kết quả null từ `mapLink` để đảm bảo kiểu trả về là `Link[]`.
+  const ctas = (section.ctas ?? [])
+    .map(mapLink)
+    .filter((link): link is Link => link !== null);
+
   return {
     ...section,
     pretitle: section.title ?? "",
     title: section.heading,
     description: section.description ?? "",
-    ctas: (section.ctas ?? []).map(mapLink),
-    imageUrl: getStrapiMedia(section.image?.data?.url) ?? "/fallback-about.jpg",
-    imageAlt: section.image?.data?.alternativeText ?? section.heading,
+    ctas: ctas,
+    imageUrl: getStrapiMedia(section.image.url) ?? "/fallback-about.jpg",
+    imageAlt: section.image.alternativeText ?? section.heading,
   };
 }

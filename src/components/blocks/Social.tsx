@@ -1,4 +1,4 @@
-import { SocialLinksData } from "@/types/strapi/shared";
+import { SocialLinksData } from "@/types/strapi/strapi";
 import type { IconType } from "react-icons";
 import { RiFacebookFill, RiInstagramFill, RiLinkedinFill, RiTwitterFill } from "react-icons/ri";
 

@@ -1,9 +1,7 @@
 import PageRenderer from '@/components/blocks/PageRenderer';
-import { getAllArticles } from '@/lib/api';
 import { fetchPageBySlug } from '@/lib/api/api-page';
 import { AsyncBaseProps } from '@/types/global';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
@@ -24,9 +22,9 @@ export async function generateMetadata({ params }: AsyncBaseProps, parent: Resol
         title: pageData.metaTitle,
         description: pageData.metaDescription,
         openGraph: {
-            title: pageData.metaTitle,
-            description: pageData.metaDescription,
-            images: pageData.metaImage
+            title: pageData.metaTitle ?? "",
+            description: pageData.metaDescription ?? "",
+            images: pageData.metaImage ?? ""
         }
     };
 }
@@ -45,32 +43,13 @@ export async function generateMetadata({ params }: AsyncBaseProps, parent: Resol
 export default async function HomePage({ params }: AsyncBaseProps) {
     const { locale } = await params;
     const homeSlug = locale === 'vi' ? 'trang-chu' : 'home';
-    const t = await getTranslations({ locale, namespace: 'home' });
-
-    // Tối ưu: Gọi song song cả dữ liệu trang và danh sách bài viết
-    const [pageData, articlesResponse] = await Promise.all([
-        getPageData(homeSlug, locale),
-        getAllArticles(locale, { pageSize: 3 }), // Lấy 3 bài viết mới nhất
-    ]);
+    const pageData = await getPageData(homeSlug, locale);
 
     if (!pageData) {
         notFound();
     }
 
-    // Khởi tạo contentSections với các section từ pageData
-    const contentSections = [...pageData.contentSections];
-
-    // Chỉ thêm section bài viết mới nếu có ít nhất một bài viết
-    if (articlesResponse.data && articlesResponse.data.length > 0) {
-        contentSections.push({
-            __component: 'sections.blog',
-            id: Date.now(), // Sử dụng Date.now() là chấp nhận được ở đây vì nó chỉ chạy ở server-side mỗi lần render.
-            pretitle: t('blogSection.pretitle'),
-            title: t('blogSection.title'),
-            articles: articlesResponse.data,
-            viewAllButtonLabel: t('blogSection.viewAllButton'),
-        });
-    }
-
-    return <PageRenderer sections={contentSections} />;
+    // PageRenderer giờ đây đủ thông minh để xử lý tất cả các loại section,
+    // bao gồm cả việc fetch dữ liệu cho 'sections.blog' nếu nó được định nghĩa trong Strapi.
+    return <PageRenderer sections={pageData.contentSections} />;
 }

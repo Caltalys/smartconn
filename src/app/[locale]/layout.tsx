@@ -1,3 +1,5 @@
+import Footer from "@/components/sections/Footer";
+import Header from "@/components/sections/Header";
 import Topbar from "@/components/sections/Topbar";
 import { routing } from "@/i18n/routing";
 import { fetchGlobalLayoutData } from "@/lib/api";
@@ -50,11 +52,11 @@ export default async function RootLayout({ children, params }: AsyncProps) {
         <div className="relative flex flex-col min-h-screen">
           <NextIntlClientProvider messages={messages}>
             <Topbar data={layoutData.topbar} />
-            {/* <Header data={layoutData.navbar} />
+            <Header data={layoutData.navbar} />
             <main className="flex-grow">
               {children}
             </main>
-            <Footer data={layoutData.footer} /> */}
+            <Footer data={layoutData.footer} />
           </NextIntlClientProvider>
         </div>
       </body>

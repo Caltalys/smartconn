@@ -43,8 +43,8 @@ const Hero = ({ data }: { data: HeroSection }) => {
     return null;
   }
 
-  const heading = data.heading;
-  const subtitle = data.subheading;
+  const heading = data.title;
+  const subtitle = data.subtitle;
   const description = data.description;
   const imageUrl = data.mediaImage?.image?.url ? getStrapiMedia(data.mediaImage.image.url) : null;
   const imageAlt = data.mediaImage?.alternativeText || subtitle || heading || "Hero Image";

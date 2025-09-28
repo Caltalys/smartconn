@@ -1,17 +1,14 @@
 import {
   Article,
+  ArticleCollectionResponse,
   mapArticle,
   StrapiArticle,
 } from "@/types/strapi/collections/article";
-import { mapAuthor } from "@/types/strapi/collections/author";
-import { mapCategory } from "@/types/strapi/collections/category";
-import { Meta, StrapiResponseCollection } from "@/types/strapi/strapi";
+import {
+  StrapiResponse,
+  StrapiResponseCollection,
+} from "@/types/strapi/strapi";
 import { strapiClient } from "../strapi-client";
-import { getStrapiMedia } from "../utils";
-
-// --- API Fetchers ---
-
-type ArticlesResponse = StrapiResponseCollection<StrapiArticle>;
 
 /**
  * Lấy tất cả bài viết, hỗ trợ phân trang và tìm kiếm.
@@ -24,7 +21,7 @@ export async function getAllArticles(
     query?: string;
     categorySlug?: string;
   } = {}
-): Promise<{ data: Article[]; meta: Meta }> {
+): Promise<ArticleCollectionResponse | null> {
   const client = strapiClient(locale);
   const { page = 1, pageSize = 10, query = "", categorySlug = "" } = params;
 
@@ -41,31 +38,17 @@ export async function getAllArticles(
         ...(categorySlug && { category: { slug: { $eq: categorySlug } } }),
       },
       populate: ["cover", "category", "author", "author.avatar"],
-    })) as unknown as ArticlesResponse;
+    })) as unknown as StrapiResponseCollection<StrapiArticle>;
 
     // Ánh xạ thủ công cho danh sách, không cần map `blocks` để tối ưu hiệu suất.
-    const articles: Article[] = response.data.map((article) => ({
-      id: article.id,
-      title: article.title,
-      description: article.description ?? "",
-      slug: article.slug,
-      coverUrl: article.cover ? getStrapiMedia(article.cover.url) : null,
-      coverAlt: article.cover?.alternativeText ?? article.title,
-      author: mapAuthor(article.author),
-      category: mapCategory(article.category),
-      blocks: [], // Trả về mảng rỗng cho trang danh sách để khớp với kiểu `Article`
-      publishedAt: article.publishedAt,
-    }));
+    const articles: Article[] = response.data.map(mapArticle);
     return {
       data: articles,
       meta: response.meta,
     };
   } catch (error) {
     console.error("API Error: Could not fetch articles.", error);
-    return {
-      data: [],
-      meta: { pagination: { page: 1, pageSize, pageCount: 1, total: 0 } },
-    };
+    return null;
   }
 }
 
@@ -112,11 +95,12 @@ export async function getArticleBySlug(
           },
         },
       },
-    })) as unknown as StrapiResponseCollection<StrapiArticle>;
+    })) as unknown as StrapiResponse<StrapiArticle>;
 
-    if (!response.data || response.data.length === 0) return null;
+    if (!response.data) return null;
 
-    return await mapArticle(response.data[0] ?? null);
+    // mapArticle là hàm đồng bộ, không cần await
+    return mapArticle(response.data);
   } catch (error) {
     console.error(
       `API Error: Could not fetch article with slug "${slug}".`,

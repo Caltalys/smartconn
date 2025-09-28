@@ -28,6 +28,8 @@ export function mapPartnersSection(
     ...section,
     pretitle: section.title ?? "",
     title: section.heading,
-    items: (section.items ?? []).map(mapPartnerItem),
+    items: (section.items ?? [])
+      .map(mapPartnerItem)
+      .filter((item) => item !== null),
   };
 }

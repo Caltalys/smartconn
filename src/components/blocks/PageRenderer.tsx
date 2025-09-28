@@ -1,6 +1,7 @@
 "use client";
 
 import { AnyContentBlock } from "@/types/strapi/blocks/content-blocks";
+import { AnyDynamicBlock } from "@/types/strapi/blocks/dynamic-blocks";
 import {
     isAboutSection,
     isAdvantagesSection,
@@ -18,10 +19,10 @@ import ServicesSection from "../sections/Services";
 import ContentContainer from "./ContentContainer";
 
 // Union type for grouped sections
-type GroupedSection = { type: "section"; component: AnyContentBlock } | { type: "content"; blocks: AnyContentBlock[] };
+type GroupedSection = { type: "section"; component: AnyDynamicBlock } | { type: "shared"; blocks: AnyContentBlock[] };
 
 interface PageRendererProps {
-    sections: AnyContentBlock[];
+    sections: AnyDynamicBlock[];
 }
 
 export default function PageRenderer({ sections }: PageRendererProps) {
@@ -40,16 +41,21 @@ export default function PageRenderer({ sections }: PageRendererProps) {
     // Use useMemo to group sections only when the `sections` prop changes.
     const groupedSections = useMemo(() => {
         return sections.reduce<GroupedSection[]>((acc, section) => {
-            const isFullWidthSection = isHeroSection(section) || isAboutSection(section) || isServicesSection(section) || isAdvantagesSection(section) || isPartnersSection(section);
+            const isFullWidthSection =
+                isHeroSection(section) ||
+                isAboutSection(section) ||
+                isServicesSection(section) ||
+                isAdvantagesSection(section) ||
+                isPartnersSection(section);
 
             if (isFullWidthSection) {
                 acc.push({ type: "section", component: section });
             } else if (isContentBlock(section)) {
                 const lastElement = acc[acc.length - 1];
-                if (lastElement?.type === "content") {
+                if (lastElement?.type === "shared") {
                     lastElement.blocks.push(section);
                 } else {
-                    acc.push({ type: "content", blocks: [section] });
+                    acc.push({ type: "shared", blocks: [section] });
                 }
             }
             return acc;
@@ -66,7 +72,7 @@ export default function PageRenderer({ sections }: PageRendererProps) {
                     return Component ? <Component key={key} data={group.component} /> : null;
                 }
 
-                if (group.type === "content") {
+                if (group.type === "shared") {
                     return <ContentContainer key={`content-group-${index}`} blocks={group.blocks} />;
                 }
 

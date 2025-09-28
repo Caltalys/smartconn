@@ -17,7 +17,8 @@ export interface Link extends StrapiComponent {
   isExternal: boolean;
 }
 
-export function mapLink(strapiLink: StrapiLink): Link {
+export function mapLink(strapiLink: StrapiLink): Link | null {
+  if (!strapiLink) return null;
   return {
     ...strapiLink,
     href: strapiLink.url,

@@ -1,9 +1,9 @@
 'use client';
 
+import { SliderBlock } from '@/types/strapi/shared/slider';
 import useEmblaCarousel from 'embla-carousel-react';
 import NextImage from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
-import { SliderBlock } from './types';
 
 interface SliderProps {
   data: SliderBlock;
@@ -51,14 +51,14 @@ export default function Slider({ data }: SliderProps) {
           {data.slides.map((slide) => (
             <div className="embla__slide flex-[0_0_100%] min-w-0 relative aspect-video" key={slide.id}>
               <NextImage
-                src={slide.image.data.attributes.url}
-                alt={slide.image.data.attributes.alternativeText || slide.title || 'Slider Image'}
+                src={slide.image.url}
+                alt={slide.image.alt || slide.caption || 'Slider Image'}
                 fill
                 className="object-cover"
               />
-              {(slide.title || slide.caption) && (
+              {(slide.caption) && (
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
-                  {slide.title && <h3 className="text-xl font-bold">{slide.title}</h3>}
+                  {/* {slide.title && <h3 className="text-xl font-bold">{slide.title}</h3>} */}
                   {slide.caption && <p className="text-sm mt-1">{slide.caption}</p>}
                 </div>
               )}

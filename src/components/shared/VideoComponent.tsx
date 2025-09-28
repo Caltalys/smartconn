@@ -1,7 +1,7 @@
-import { SharedVideoBlock } from "@/types/strapi/blocks/shared";
+import { VideoBlock } from "@/types/strapi/shared/video";
 import { memo } from "react";
 
-const VideoComponent = ({ data }: { data: SharedVideoBlock }) => {
+const VideoComponent = ({ data }: { data: VideoBlock }) => {
     if (!data.youtubeId) return null;
 
     return (

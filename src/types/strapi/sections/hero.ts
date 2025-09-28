@@ -40,7 +40,12 @@ export function mapHeroSection(section: StrapiHeroSection): HeroSection {
     ...section,
     title: section.heading,
     subtitle: section.subheading ?? null,
-    ctas: (section.ctas ?? []).map(mapLink),
+    // Tối ưu hóa việc mapping ctas:
+    // 1. Dùng `?? []` để xử lý trường hợp `section.ctas` là null.
+    // 2. Lọc ra các kết quả null từ `mapLink` để đảm bảo kiểu trả về là `Link[]`.
+    ctas: (section.ctas ?? [])
+      .map(mapLink)
+      .filter((link): link is Link => link !== null),
     mediaImage: section.mediaImage ? mapImageBlock(section.mediaImage) : null,
     mediaVideo: section.mediaVideo ? mapVideoBlock(section.mediaVideo) : null,
     mediaSlider: section.mediaSlider

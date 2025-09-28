@@ -17,14 +17,15 @@ export interface PartnerItem extends StrapiComponent {
   href: string;
   logoUrl: string;
   title: string | null;
-  alt: string;
+  alt: string | null;
 }
 
 export function mapPartnerItem(item: StrapiPartnerItem): PartnerItem {
   return {
     ...item,
     name: item.heading,
+    href: item.href ?? "#",
     logoUrl: getStrapiMedia(item.image?.url) ?? "/placeholder.png",
-    alt: item.alt ?? item.heading,
+    alt: (item.alt ?? item.title) ? item.title : item.heading,
   };
 }

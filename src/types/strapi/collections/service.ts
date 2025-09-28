@@ -30,12 +30,12 @@ export interface Service extends StrapiEntity {
 }
 
 /** Lớp vỏ (wrapper) của Strapi cho một tài liệu đơn lẻ. */
-export type ServiceResponse = StrapiResponse<StrapiService>;
+export type ServiceResponse = StrapiResponse<Service>;
 
 /**
  * Lớp vỏ (wrapper) của Strapi cho một danh sách (collection) các tài liệu.
  */
-export type ServiceCollectionResponse = StrapiResponseCollection<StrapiService>;
+export type ServiceCollectionResponse = StrapiResponseCollection<Service>;
 
 export function mapService(service: StrapiService): Service {
   return {

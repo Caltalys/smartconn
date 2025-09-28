@@ -29,7 +29,7 @@ const SliderComponent = ({ slides }: { slides: Slide[] }) => {
                             <figure className="relative aspect-video">
                                 <Image
                                     src={getStrapiMedia(slide.image.url) || ""}
-                                    alt={slide.alternativeText || slide.image.alternativeText || "Slider image"}
+                                    alt={slide.alternativeText || slide.image.url || "Slider image"}
                                     fill
                                     className="object-contain rounded-lg"
                                     sizes="(max-width: 768px) 100vw, 800px"

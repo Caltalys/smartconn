@@ -1,9 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
-import { getStrapiMedia } from "@/lib/utils";
-import { Article } from "@/types/strapi/collections/article";
 import { formatDate } from "@/lib/format-date";
 import { Service } from "@/types/strapi/collections/service";
+import Image from "next/image";
+import Link from "next/link";
 
 interface ServiceCardProps {
     service: Service;
@@ -11,7 +9,7 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ service, locale }: ServiceCardProps) {
-    const imageUrl = getStrapiMedia(service.cover?.url);
+    const imageUrl = service.coverUrl;
     const serviceUrl = `/${locale}/services/${service.slug}`;
 
     return (
@@ -21,7 +19,7 @@ export default function ServiceCard({ service, locale }: ServiceCardProps) {
                 {imageUrl ? (
                     <Image
                         src={imageUrl}
-                        alt={service.cover?.alternativeText || service.title}
+                        alt={service.coverAlt}
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

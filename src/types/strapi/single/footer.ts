@@ -38,6 +38,8 @@ export function mapFooter(footer: StrapiFooterEntity | null): Footer | null {
 
   return {
     ...footer,
-    quickLinks: (footer.quickLinks ?? []).map(mapLink),
+    quickLinks: (footer.quickLinks ?? [])
+      .map(mapLink)
+      .filter((link): link is Link => link !== null),
   };
 }

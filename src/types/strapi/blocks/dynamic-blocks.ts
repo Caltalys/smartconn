@@ -80,7 +80,7 @@ export type AnyDynamicBlock =
   | AdvantagesSectionData
   | PartnersSectionData
   // | BlogSectionData
-  | AnyContentBlock; // ← AnySharedBlock đã là union của tất cả shared block
+  | AnyContentBlock;
 
 /**
  * Kiểu dự phòng cho các block chưa được hỗ trợ trong frontend.

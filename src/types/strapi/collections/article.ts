@@ -37,12 +37,12 @@ export interface Article extends StrapiEntity {
 }
 
 /** Lớp vỏ (wrapper) của Strapi cho một tài liệu đơn lẻ. */
-export type ArticleResponse = StrapiResponse<StrapiArticle>;
+export type ArticleResponse = StrapiResponse<Article>;
 
 /**
  * Lớp vỏ (wrapper) của Strapi cho một danh sách (collection) các tài liệu.
  */
-export type ArticleCollectionResponse = StrapiResponseCollection<StrapiArticle>;
+export type ArticleCollectionResponse = StrapiResponseCollection<Article>;
 
 export function mapArticle(article: StrapiArticle): Article {
   return {

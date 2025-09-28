@@ -1,10 +1,10 @@
-import { Topbar as TopbarData } from "@/types/strapi/sections/topbar";
-import { RiMailLine, RiPhoneLine } from "react-icons/ri";
-import Link from "next/link";
 import Social from "@/components/blocks/Social";
+import { Topbar as TopbarType } from "@/types/strapi/single/topbar";
+import Link from "next/link";
+import { RiMailLine, RiPhoneLine } from "react-icons/ri";
 
 type TopbarProps = {
-    data: TopbarData | null;
+    data: TopbarType | null;
 };
 
 const Topbar = ({ data }: TopbarProps) => {

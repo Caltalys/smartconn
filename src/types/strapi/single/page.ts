@@ -31,12 +31,12 @@ export interface Page extends StrapiEntity {
 }
 
 /** Lớp vỏ (wrapper) của Strapi cho một tài liệu đơn lẻ. */
-export type PageResponse = StrapiResponse<Page>;
+export type PageResponse = StrapiResponse<StrapiPage>;
 
 /**
  * Lớp vỏ (wrapper) của Strapi cho một danh sách (collection) các tài liệu.
  */
-export type PageCollectionResponse = StrapiResponseCollection<Page>;
+export type PageCollectionResponse = StrapiResponseCollection<StrapiPage>;
 
 export async function mapPage(page: StrapiPage | null): Promise<Page | null> {
   if (!page) return null;

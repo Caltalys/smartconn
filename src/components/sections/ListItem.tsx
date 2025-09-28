@@ -1,10 +1,10 @@
 import DynamicIcon from "@/components/elements/DynamicIcon";
 import Pretitle from "@/components/elements/Pretitle";
-import { SharedListItemBlock } from "@/types/strapi/blocks/shared";
+import { ListItemBlock } from "@/types/strapi/shared/list-item";
 import { motion } from "framer-motion";
 import { JSX, memo } from "react";
 
-const ListItemComponent = ({ data }: { data: SharedListItemBlock }): JSX.Element | null => {
+const ListItemComponent = ({ data }: { data: ListItemBlock }): JSX.Element | null => {
     const { pretitle, title, items } = data;
 
     if (!items || items.length === 0) {

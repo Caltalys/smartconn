@@ -20,7 +20,7 @@ export interface FeatureItem extends StrapiComponent {
   description?: string | null;
   imageUrl: string;
   imageAlt: string;
-  cta: Link;
+  cta: Link | null;
   icon: Icon | null;
 }
 

@@ -1,8 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
 import {
     Carousel,
     CarouselContent,
@@ -11,6 +8,9 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { PartnersSectionData } from '@/types/strapi/sections/partners';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
 import Pretitle from '../elements/Pretitle';
 
 const Partners = ({ data }: { data: PartnersSectionData }) => {
@@ -18,7 +18,7 @@ const Partners = ({ data }: { data: PartnersSectionData }) => {
         return null;
     }
     const { pretitle, title, items } = data;
-    
+
     return (
         <motion.section
             id="partners"
@@ -48,7 +48,7 @@ const Partners = ({ data }: { data: PartnersSectionData }) => {
                                     <Link href={partner.href} target="_blank" rel="noopener noreferrer" className="relative h-32 w-full flex items-center justify-center group">
                                         <Image
                                             src={partner.logoUrl}
-                                            alt={partner.name || partner.alt}
+                                            alt={partner.alt || partner.name || 'Partner Logo'}
                                             fill
                                             className="object-contain transition-transform duration-300 group-hover:scale-110"
                                             sizes="128px"
