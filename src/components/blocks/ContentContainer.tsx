@@ -11,7 +11,7 @@ const ContentContainer = ({ blocks }: ContentContainerProps) => {
     }
 
     return (
-        <section className="container mx-auto px-4 py-8 max-w-4xl">
+        <section className="container mx-auto px-6">
             <BlockRenderer blocks={blocks} />
         </section>
     );

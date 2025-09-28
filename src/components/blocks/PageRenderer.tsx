@@ -2,14 +2,7 @@
 
 import { AnyContentBlock } from "@/types/strapi/blocks/content-blocks";
 import { AnyDynamicBlock } from "@/types/strapi/blocks/dynamic-blocks";
-import {
-    isAboutSection,
-    isAdvantagesSection,
-    isContentBlock,
-    isHeroSection,
-    isPartnersSection,
-    isServicesSection,
-} from "@/utils/type-guards";
+import { isContentBlock, isSection } from "@/utils/type-guards";
 import { useMemo } from "react";
 import AboutSection from "../sections/About";
 import AdvantagesSection from "../sections/Advantages";
@@ -40,22 +33,17 @@ export default function PageRenderer({ sections }: PageRendererProps) {
 
     // Use useMemo to group sections only when the `sections` prop changes.
     const groupedSections = useMemo(() => {
-        return sections.reduce<GroupedSection[]>((acc, section) => {
-            const isFullWidthSection =
-                isHeroSection(section) ||
-                isAboutSection(section) ||
-                isServicesSection(section) ||
-                isAdvantagesSection(section) ||
-                isPartnersSection(section);
-
-            if (isFullWidthSection) {
-                acc.push({ type: "section", component: section });
-            } else if (isContentBlock(section)) {
+        return sections.reduce<GroupedSection[]>((acc, block) => {
+            // Sử dụng type guard cho dữ liệu thô từ Strapi
+            console.log(block);
+            if (isSection(block)) {
+                acc.push({ type: "section", component: block });
+            } else if (isContentBlock(block)) {
                 const lastElement = acc[acc.length - 1];
                 if (lastElement?.type === "shared") {
-                    lastElement.blocks.push(section);
+                    lastElement.blocks.push(block as AnyContentBlock);
                 } else {
-                    acc.push({ type: "shared", blocks: [section] });
+                    acc.push({ type: "shared", blocks: [block] });
                 }
             }
             return acc;
@@ -66,10 +54,12 @@ export default function PageRenderer({ sections }: PageRendererProps) {
         <main className="flex-grow">
             {groupedSections.map((group, index) => {
                 if (group.type === "section") {
-                    const Component = componentsMap[group.component.__component as keyof typeof componentsMap];
-                    const key = `${group.component.__component}-${group.component.id}`;
+                    const mappedComponent = group.component;
+                    if (!mappedComponent) return null;
+                    const Component = componentsMap[mappedComponent.__component as keyof typeof componentsMap];
+                    const key = `${mappedComponent.__component}-${mappedComponent.id}`;
                     // @ts-ignore - We know the data type matches the component
-                    return Component ? <Component key={key} data={group.component} /> : null;
+                    return Component ? <Component key={key} data={mappedComponent} /> : null;
                 }
 
                 if (group.type === "shared") {

@@ -1,9 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import Pretitle from '../elements/Pretitle';
 import { AdvantagesSectionData } from '@/types/strapi/sections/advantages';
+import { motion } from 'framer-motion';
 import DynamicIcon from '../elements/DynamicIcon';
+import Pretitle from '../elements/Pretitle';
 
 const Advantages = ({ data }: { data: AdvantagesSectionData }) => {
     if (!data) {
@@ -15,10 +15,10 @@ const Advantages = ({ data }: { data: AdvantagesSectionData }) => {
     if (!items || items.length === 0) {
         return null;
     }
-
+    const id = `${data.__component}-${data.id}`;
     return (
         <motion.section
-            id="advantages"
+            id={id}
             className="py-12 xl:py-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}

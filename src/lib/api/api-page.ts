@@ -1,8 +1,5 @@
-import {
-  Page,
-  PageCollectionResponse,
-  mapPage,
-} from "@/types/strapi/single/page";
+import { Page, StrapiPage, mapPage } from "@/types/strapi/single/page";
+import { StrapiResponseCollection } from "@/types/strapi/strapi";
 import { strapiClient } from "../strapi-client";
 
 // --- API Fetcher ---
@@ -72,6 +69,7 @@ export async function fetchPageBySlug(
                 },
               },
             },
+            "shared.quote": true,
             "shared.image": { populate: { image: true } },
             "shared.media": { populate: { file: true } },
             "shared.slider": {
@@ -98,7 +96,10 @@ export async function fetchPageBySlug(
         },
         metaImage: true,
       },
-    })) as unknown as PageCollectionResponse;
+    })) as unknown as StrapiResponseCollection<StrapiPage>;
+
+    console.log(response);
+
     if (!response.data || response.data.length === 0) {
       return null;
     }

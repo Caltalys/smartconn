@@ -1,10 +1,10 @@
 'use client';
 
-import Image from "next/image";
+import { AboutSectionData } from "@/types/strapi/sections/about";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Pretitle from "../elements/Pretitle";
 import SmartButton from "../elements/SmartButton";
-import { AboutSectionData } from "@/types/strapi/sections/about";
 
 const About = ({ data }: { data: AboutSectionData }) => {
   if (!data) {
@@ -12,10 +12,10 @@ const About = ({ data }: { data: AboutSectionData }) => {
   }
 
   const { pretitle, title, description, ctas, imageUrl, imageAlt } = data;
-
+  const id = `${data.__component}-${data.id}`;
   return (
     <motion.section
-      id="about"
+      id={id}
       className="py-12 xl:py-16"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -40,7 +40,7 @@ const About = ({ data }: { data: AboutSectionData }) => {
             <Pretitle text={pretitle} />
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-wide mb-6">{title}</h2>
             <p className="mb-8 text-muted-foreground max-w-2xl">{description}</p>
-            { 
+            {
               ctas && ctas.length > 0 && ctas.map((cta, index) => (
                 <SmartButton key={index} text={cta.label} href={cta.href} />
               ))

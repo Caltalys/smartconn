@@ -50,10 +50,11 @@ const Hero = ({ data }: { data: HeroSection }) => {
   const imageAlt = data.mediaImage?.alternativeText || subtitle || heading || "Hero Image";
   const youtubeId = data.mediaVideo?.youtubeId;
   const videoThumbnailUrl = youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : '';
+  const id = `${data.__component}-${data.id}`;
 
   return (
     <section
-      id="home"
+      id={id}
       className="relative py-16 xl:py-32 flex items-center overflow-hidden"
     >
       {/* Tối ưu hóa 1: Sử dụng next/image cho ảnh nền */}

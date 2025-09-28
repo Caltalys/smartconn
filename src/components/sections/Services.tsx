@@ -14,10 +14,11 @@ const Services = ({ data }: { data: ServicesSectionData }) => {
   }
 
   const { pretitle, title, services } = data;
+  const id = `${data.__component}-${data.id}`;
 
   return (
     <motion.section
-      id="services"
+      id={id}
       className="py-12 xl:py-16 bg-primary/10"
       variants={staggerContainer}
       initial="hidden"

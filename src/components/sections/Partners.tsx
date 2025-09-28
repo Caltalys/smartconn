@@ -18,10 +18,10 @@ const Partners = ({ data }: { data: PartnersSectionData }) => {
         return null;
     }
     const { pretitle, title, items } = data;
-
+    const id = `${data.__component}-${data.id}`;
     return (
         <motion.section
-            id="partners"
+            id={id}
             className="py-12 xl:py-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}

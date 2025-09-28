@@ -1,5 +1,8 @@
 import { AnyContentBlock } from "@/types/strapi/blocks/content-blocks";
-import { AnyDynamicBlock } from "@/types/strapi/blocks/dynamic-blocks";
+import {
+  AnyDynamicBlock,
+  AnyStrapiDynamicBlock,
+} from "@/types/strapi/blocks/dynamic-blocks";
 import {
   AboutSectionData,
   StrapiAboutSection,
@@ -114,58 +117,34 @@ export function isStrapiListItemBlock(block: unknown): block is StrapiListItem {
 export function isStrapiRichtextImageBlock(
   block: unknown
 ): block is StrapiRichtextImage {
-  return (
-    hasComponent(block, "shared.richtext-image") &&
-    isObject(block) &&
-    "image" in block &&
-    "content" in block
-  );
+  return hasComponent(block, "shared.richtext-image") && isObject(block);
 }
 
 export function isStrapiRichtextVideoBlock(
   block: unknown
 ): block is StrapiRichtextVideoBlock {
-  return (
-    hasComponent(block, "shared.richtext-video") &&
-    isObject(block) &&
-    "video" in block &&
-    "content" in block
-  );
+  return hasComponent(block, "shared.richtext-video") && isObject(block);
 }
 
 /**
  * Kiểm tra xem block có phải là QuoteBlock không.
  */
 export function isQuoteBlock(block: unknown): block is QuoteBlock {
-  return (
-    hasComponent(block, "shared.quote") &&
-    isObject(block) &&
-    "quote" in block &&
-    "author" in block
-  );
+  return hasComponent(block, "shared.quote") && isObject(block);
 }
 
 /**
  * Kiểm tra xem block có phải là RichTextBlock không.
  */
 export function isRichTextBlock(block: unknown): block is RichTextBlock {
-  return (
-    hasComponent(block, "shared.rich-text") &&
-    isObject(block) &&
-    "body" in block
-  );
+  return hasComponent(block, "shared.rich-text") && isObject(block);
 }
 
 /**
  * Kiểm tra xem block có phải là ImageBlock không.
  */
 export function isImageBlock(block: unknown): block is ImageBlock {
-  return (
-    hasComponent(block, "shared.image") &&
-    isObject(block) &&
-    "image" in block &&
-    "layout" in block
-  );
+  return hasComponent(block, "shared.image") && isObject(block);
 }
 
 /**
@@ -184,12 +163,7 @@ export function isSliderBlock(block: unknown): block is SliderBlock {
  * Kiểm tra xem block có phải là VideoBlock không.
  */
 export function isVideoBlock(block: unknown): block is VideoBlock {
-  return (
-    hasComponent(block, "shared.video") &&
-    isObject(block) &&
-    "youtubeId" in block &&
-    "layout" in block
-  );
+  return hasComponent(block, "shared.video") && isObject(block);
 }
 
 /**
@@ -219,12 +193,7 @@ export function isListItemBlock(block: unknown): block is ListItemBlock {
 export function isRichtextImageBlock(
   block: unknown
 ): block is RichtextImageBlock {
-  return (
-    hasComponent(block, "shared.richtext-image") &&
-    isObject(block) &&
-    "image" in block &&
-    "content" in block
-  );
+  return hasComponent(block, "shared.richtext-image") && isObject(block);
 }
 
 /**
@@ -233,12 +202,7 @@ export function isRichtextImageBlock(
 export function isRichtextVideoBlock(
   block: unknown
 ): block is RichtextVideoBlock {
-  return (
-    hasComponent(block, "shared.richtext-video") &&
-    isObject(block) &&
-    "video" in block &&
-    "content" in block
-  );
+  return hasComponent(block, "shared.richtext-video") && isObject(block);
 }
 
 /**
@@ -271,6 +235,22 @@ export function isSection(block: unknown): block is AnyDynamicBlock {
     isAdvantagesSection(block) ||
     isPartnersSection(block)
     // Thêm isBlogSection(block) ở đây nếu cần
+  );
+}
+
+/**
+ * Kiểm tra xem một block có phải là một trong các loại "section" thô từ Strapi hay không.
+ */
+export function isStrapiSection(
+  block: unknown
+): block is AnyStrapiDynamicBlock {
+  return (
+    isStrapiHeroSection(block) ||
+    isStrapiAboutSection(block) ||
+    isStrapiServicesSection(block) ||
+    isStrapiAdvantagesSection(block) ||
+    isStrapiPartnersSection(block) ||
+    isStrapiBlogSection(block)
   );
 }
 

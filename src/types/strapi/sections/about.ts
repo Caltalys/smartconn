@@ -37,6 +37,6 @@ export function mapAboutSection(section: StrapiAboutSection): AboutSectionData {
     description: section.description ?? "",
     ctas: ctas,
     imageUrl: getStrapiMedia(section.image.url) ?? "/fallback-about.jpg",
-    imageAlt: section.image.alternativeText ?? section.heading,
+    imageAlt: section.image.alternativeText ?? section.title ?? section.heading,
   };
 }
