@@ -23,6 +23,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "cms-demo.smartcomsolutions.vn",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
         hostname: "i.ytimg.com",
         pathname: "/**",
       },
