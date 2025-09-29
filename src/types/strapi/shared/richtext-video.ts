@@ -4,43 +4,33 @@ import { mapVideoBlock, StrapiVideoBlock, VideoBlock } from "./video";
 // Raw Strapi Type
 export interface StrapiRichtextVideoBlock extends StrapiComponent {
   __component: "shared.richtext-video";
-  title: string;
-  heading: string;
-  body: string; // Strapi Blocks
+  title?: string | null;
+  heading?: string | null;
+  body: string;
   video: StrapiVideoBlock;
+  layout?: "video-left" | "video-right" | null;
 }
 
 // Mapped Frontend Type
 export interface RichtextVideoBlock extends StrapiComponent {
-  pretitle: string;
   title: string;
-  body: string; // Markdown or HTML
+  heading: string;
+  body: string;
   video: VideoBlock;
+  layout: "video-left" | "video-right";
 }
 
 export function mapRichtextVideoBlock(
   block: StrapiRichtextVideoBlock
 ): RichtextVideoBlock | null {
-  try {
-    const mappedVideo = mapVideoBlock(block.video);
-    if (!mappedVideo) {
-      console.warn(
-        `[mapRichtextVideoBlock] Video is missing or invalid for block id: ${block.id}`
-      );
-      return null;
-    }
+  const mappedVideo = mapVideoBlock(block.video);
+  if (!mappedVideo) return null;
 
-    return {
-      ...block,
-      pretitle: block.title,
-      title: block.heading,
-      video: mappedVideo,
-    };
-  } catch (error) {
-    console.error(
-      `[mapRichtextVideoBlock] Error mapping block id: ${block.id}`,
-      error
-    );
-    return null;
-  }
+  return {
+    ...block,
+    title: block.title ?? "",
+    heading: block.heading ?? "",
+    video: mappedVideo,
+    layout: block.layout ?? "video-right", // Mặc định video bên phải
+  };
 }

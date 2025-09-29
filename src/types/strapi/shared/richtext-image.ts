@@ -4,37 +4,37 @@ import { BaseMedia, StrapiComponent } from "../strapi";
 // Raw Strapi Type
 export interface StrapiRichtextImage extends StrapiComponent {
   __component: "shared.richtext-image";
-  title: string;
-  heading: string;
-  body: string; // Strapi Blocks (Rich Text)
+  title?: string | null;
+  heading?: string | null;
+  body: string;
   image: BaseMedia;
+  layout?: "image-left" | "image-right" | null;
 }
 
 // Mapped Frontend Type
 export interface RichtextImageBlock extends StrapiComponent {
   title: string;
   heading: string;
-  body: string; // Markdown or HTML
+  body: string;
   image: {
     url: string;
     alt: string;
-    width: number;
-    height: number;
   };
+  layout: "image-left" | "image-right";
 }
 
 export function mapRichtextImageBlock(
   block: StrapiRichtextImage
 ): RichtextImageBlock {
-  const img = block.image;
-
   return {
     ...block,
+    title: block.title ?? "",
+    heading: block.heading ?? "",
+    body: block.body,
     image: {
-      url: getStrapiMedia(img?.url) ?? "",
-      alt: img?.alternativeText ?? block.heading,
-      width: img?.width ?? 0,
-      height: img?.height ?? 0,
+      url: getStrapiMedia(block.image.url) ?? "",
+      alt: block.image.alternativeText ?? block.title ?? "",
     },
+    layout: block.layout ?? "image-right", // Mặc định ảnh bên phải
   };
 }
