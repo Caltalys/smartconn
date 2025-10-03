@@ -4,7 +4,7 @@ import {
   StrapiCategory,
 } from "@/types/strapi/collections/category";
 import { StrapiResponseCollection } from "@/types/strapi/strapi";
-import { strapiClient } from "../strapi-client";
+import { strapiClient } from "../custom-strapi-client";
 
 type CategoriesResponse = StrapiResponseCollection<StrapiCategory>;
 

@@ -3,7 +3,7 @@ import {
   FooterResponse,
   mapFooter,
 } from "@/types/strapi/single/footer";
-import { strapiClient } from "../strapi-client";
+import { strapiClient } from "../custom-strapi-client";
 
 export async function fetchFooter(locale: string): Promise<Footer | null> {
   const client = strapiClient(locale);

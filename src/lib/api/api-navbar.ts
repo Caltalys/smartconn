@@ -5,7 +5,7 @@ import type {
   StrapiNavbar,
 } from "@/types/strapi/collections/navbar";
 import { mapNavbar } from "@/types/strapi/collections/navbar";
-import { strapiClient } from "../strapi-client";
+import { strapiClient } from "../custom-strapi-client";
 
 /**
  * --------------------------

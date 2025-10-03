@@ -5,7 +5,7 @@ import {
   StrapiArticle,
 } from "@/types/strapi/collections/article";
 import { StrapiResponseCollection } from "@/types/strapi/strapi";
-import { strapiClient } from "../strapi-client";
+import { strapiClient } from "../custom-strapi-client";
 
 /**
  * Lấy tất cả bài viết, hỗ trợ phân trang và tìm kiếm.

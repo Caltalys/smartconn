@@ -3,7 +3,7 @@ import {
   Topbar,
   TopbarResponse,
 } from "@/types/strapi/single/topbar";
-import { strapiClient } from "../strapi-client";
+import { strapiClient } from "../custom-strapi-client";
 
 export async function fetchTopbar(locale: string): Promise<Topbar | null> {
   const client = strapiClient(locale);

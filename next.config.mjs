@@ -14,6 +14,7 @@ const nextConfig = {
     // newer `turbopack` key, which isn't recognized in our Next.js version.
     turbo: {},
   },
+  disableRouterCache: true,
   images: {
     remotePatterns: [
       {

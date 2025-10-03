@@ -3,7 +3,7 @@ import {
   AboutPageResponse,
   mapAboutPage,
 } from "@/types/strapi/single/about";
-import { strapiClient } from "../strapi-client";
+import { strapiClient } from "../custom-strapi-client";
 
 /**
  * Lấy dữ liệu cho trang "About".
@@ -19,7 +19,54 @@ export async function fetchAboutPage(
       populate: {
         blocks: {
           on: {
-            // Populate for shared components with nested relations
+            "sections.hero": {
+              populate: {
+                ctas: true,
+                mediaImage: { populate: { image: true } },
+                mediaVideo: true,
+                mediaSlider: {
+                  populate: { slides: { populate: { image: true } } },
+                },
+              },
+            },
+            "sections.about": {
+              populate: { ctas: true, image: true },
+            },
+            "sections.services": {
+              populate: {
+                services: {
+                  populate: {
+                    image: true,
+                    cta: true,
+                  },
+                },
+              },
+            },
+            "sections.advantages": {
+              populate: {
+                items: {
+                  populate: {
+                    image: true,
+                    cta: true,
+                    icon: {
+                      populate: {
+                        iconImage: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            "sections.partners": {
+              populate: {
+                items: {
+                  populate: {
+                    image: true,
+                  },
+                },
+              },
+            },
+            "shared.quote": true,
             "shared.image": { populate: { image: true } },
             "shared.media": { populate: { file: true } },
             "shared.slider": {
@@ -42,7 +89,7 @@ export async function fetchAboutPage(
         },
       },
     })) as unknown as AboutPageResponse;
-
+    console.log(response);
     return await mapAboutPage(response.data);
   } catch (error) {
     console.error("API Error: Could not fetch about page data.", error);

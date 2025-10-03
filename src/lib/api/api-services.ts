@@ -5,7 +5,7 @@ import {
   mapService,
 } from "@/types/strapi/collections/service";
 import { StrapiResponseCollection } from "@/types/strapi/strapi";
-import { strapiClient } from "../strapi-client";
+import { strapiClient } from "../custom-strapi-client";
 
 // --- API Fetchers ---
 

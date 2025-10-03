@@ -1,6 +1,6 @@
 import { Page, StrapiPage, mapPage } from "@/types/strapi/single/page";
 import { StrapiResponseCollection } from "@/types/strapi/strapi";
-import { strapiClient } from "../strapi-client";
+import { strapiClient } from "../custom-strapi-client";
 
 // --- API Fetcher ---
 
