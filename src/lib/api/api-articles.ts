@@ -19,7 +19,9 @@ export async function getAllArticles(
     categorySlug?: string;
   } = {}
 ): Promise<ArticleCollectionResponse | null> {
-  const client = strapiClient(locale);
+  const client = strapiClient(locale, {
+    next: { revalidate: 60 },
+  });
   const { page = 1, pageSize = 10, query = "", categorySlug = "" } = params;
 
   try {
@@ -58,7 +60,9 @@ export async function getArticleBySlug(
   slug: string,
   locale: string
 ): Promise<Article | null> {
-  const client = strapiClient(locale);
+  const client = strapiClient(locale, {
+    next: { revalidate: 60 },
+  });
   try {
     const response = (await client.collection("articles").find({
       locale,

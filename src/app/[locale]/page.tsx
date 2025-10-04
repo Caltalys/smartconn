@@ -5,6 +5,9 @@ import type { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
+// Ép buộc trang này phải được render động (SSR)
+export const dynamic = "force-dynamic";
+
 // Bọc hàm fetch bằng React.cache để khử trùng lặp các yêu cầu trong một render.
 // Điều này đảm bảo `fetchPageBySlug` chỉ được gọi một lần ngay cả khi
 // `generateMetadata` và `HomePage` đều gọi nó.

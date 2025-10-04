@@ -12,7 +12,9 @@ type CategoriesResponse = StrapiResponseCollection<StrapiCategory>;
  * Lấy tất cả các danh mục bài viết.
  */
 export async function getAllCategories(locale: string): Promise<Category[]> {
-  const client = strapiClient(locale);
+  const client = strapiClient(locale, {
+    next: { revalidate: 60 },
+  });
   try {
     const response = (await client.collection("categories").find({
       locale,

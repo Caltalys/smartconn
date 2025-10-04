@@ -6,7 +6,9 @@ import {
 import { strapiClient } from "../custom-strapi-client";
 
 export async function fetchFooter(locale: string): Promise<Footer | null> {
-  const client = strapiClient(locale);
+  const client = strapiClient(locale, {
+    next: { revalidate: 60 },
+  });
   try {
     // Việc chỉ định `populate` một cách tường minh (`quickLinks: true`) là một thực hành tốt.
     // Nó giúp tránh việc fetch thừa dữ liệu không cần thiết.

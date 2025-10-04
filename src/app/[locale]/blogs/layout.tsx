@@ -1,7 +1,10 @@
-import Pretitle from '@/components/elements/Pretitle';
 import ListPageLayout from '@/components/layouts/ListPageLayout';
-import { AsyncProps, BaseProps } from '@/types/global';
+import { AsyncProps } from '@/types/global';
 import { getTranslations } from 'next-intl/server';
+
+// Ép buộc render động cho toàn bộ layout và các trang con.
+// Điều này đảm bảo mọi request sẽ fetch dữ liệu mới nhất từ Strapi.
+//xport const dynamic = "force-dynamic";
 
 export default async function BlogLayout({ params, children }: AsyncProps) {
     const { locale } = await params;

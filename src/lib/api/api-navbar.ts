@@ -19,8 +19,9 @@ import { strapiClient } from "../custom-strapi-client";
  * @returns Một mảng các đối tượng `Navbar` đã được ánh xạ.
  */
 export async function fetchAllNavbars(locale: string): Promise<Navbar[]> {
-  const client = strapiClient(locale);
-
+  const client = strapiClient(locale, {
+    next: { revalidate: 60 },
+  });
   try {
     const resp = (await client.collection("navbars").find({
       ...(locale && { locale }),
@@ -56,8 +57,9 @@ export async function fetchNavbar(
   id: string,
   locale: string
 ): Promise<Navbar | null> {
-  const client = strapiClient(locale);
-
+  const client = strapiClient(locale, {
+    next: { revalidate: 60 },
+  });
   try {
     const resp = (await client.collection("navbars").findOne(id, {
       ...(locale && { locale }),

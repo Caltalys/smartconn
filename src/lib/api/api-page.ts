@@ -14,7 +14,9 @@ export async function fetchPageBySlug(
   slug: string,
   locale: string
 ): Promise<Page | null> {
-  const client = strapiClient(locale);
+  const client = strapiClient(locale, {
+    next: { revalidate: 30 },
+  });
   try {
     const response = (await client.collection("pages").find({
       filters: { slug: { $eq: slug } },

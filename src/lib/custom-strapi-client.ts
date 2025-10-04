@@ -21,13 +21,16 @@ interface CustomStrapiConfig extends Config {
  * @param locale - Ngôn ngữ tùy chọn để thêm vào header.
  * @returns Một instance của StrapiClient.
  */
-export const strapiClient = (locale?: string): StrapiClient => {
+export const strapiClient = (
+  locale?: string,
+  fetchOptions: RequestInit = {}
+): StrapiClient => {
   // Tạo một hàm fetch tùy chỉnh để thêm các tùy chọn vô hiệu hóa cache.
   // `cache: 'no-store'` là cách mạnh mẽ nhất để đảm bảo dữ liệu luôn mới.
   const customFetch: typeof fetch = (input, init) => {
     return fetch(input, {
       ...init,
-      cache: "no-store",
+      ...fetchOptions, // Áp dụng các tùy chọn cache được truyền vào
     });
   };
 

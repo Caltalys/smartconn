@@ -11,6 +11,10 @@ import { Lato, Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
 import "./globals.css";
 
+// Ép buộc render động cho toàn bộ layout và các trang con.
+// Điều này đảm bảo mọi request sẽ fetch dữ liệu mới nhất từ Strapi.
+//export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
