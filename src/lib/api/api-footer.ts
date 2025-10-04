@@ -7,7 +7,7 @@ import { strapiClient } from "../custom-strapi-client";
 
 export async function fetchFooter(locale: string): Promise<Footer | null> {
   const client = strapiClient(locale, {
-    next: { revalidate: 60 },
+    next: { revalidate: 30 },
   });
   try {
     // Việc chỉ định `populate` một cách tường minh (`quickLinks: true`) là một thực hành tốt.

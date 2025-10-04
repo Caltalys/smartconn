@@ -13,7 +13,7 @@ const QuickLinksList = ({ title, links, listClassName, listItemClassName, linkCl
     return (
         <div className="flex flex-col gap-6 items-center md:items-start">
             {title && <h4 className="font-semibold text-lg">{title}</h4>}
-            <ul className={listClassName || "flex flex-col gap-3 items-center md:items-start"}>
+            <ul className={listClassName || "flex flex-col gap-2 items-center md:items-start"}>
                 {links.map((link) => (
                     <li key={link.id} className={listItemClassName}>
                         <NavLink

@@ -20,7 +20,7 @@ import { strapiClient } from "../custom-strapi-client";
  */
 export async function fetchAllNavbars(locale: string): Promise<Navbar[]> {
   const client = strapiClient(locale, {
-    next: { revalidate: 60 },
+    next: { revalidate: 30 },
   });
   try {
     const resp = (await client.collection("navbars").find({
@@ -58,7 +58,7 @@ export async function fetchNavbar(
   locale: string
 ): Promise<Navbar | null> {
   const client = strapiClient(locale, {
-    next: { revalidate: 60 },
+    next: { revalidate: 30 },
   });
   try {
     const resp = (await client.collection("navbars").findOne(id, {

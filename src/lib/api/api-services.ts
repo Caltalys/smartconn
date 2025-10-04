@@ -17,7 +17,7 @@ export async function getAllServices(
   params: { page?: number; pageSize?: number; query?: string } = {}
 ): Promise<ServiceCollectionResponse | null> {
   const client = strapiClient(locale, {
-    next: { revalidate: 60 },
+    next: { revalidate: 30 },
   });
   const { page = 1, pageSize = 10, query = "" } = params;
 
@@ -62,7 +62,7 @@ export async function getServiceBySlug(
   // Sử dụng ISR: cache dữ liệu trong 60 giây.
   // Next.js sẽ tự động fetch lại dữ liệu trong nền sau 60 giây.
   const client = strapiClient(locale, {
-    next: { revalidate: 60 },
+    next: { revalidate: 30 },
   });
 
   try {

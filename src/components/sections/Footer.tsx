@@ -47,7 +47,7 @@ const Footer = ({ data }: FooterProps) => {
     // --- Rendering ---
     return (
         <footer id="footer" className="text-primary bg-primary/10">
-            <div className="container mx-auto py-6 z-10">
+            <div className="container mx-auto py-4 z-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <FooterInfo description={data.description} socialData={data} />
 

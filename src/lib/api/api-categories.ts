@@ -13,7 +13,7 @@ type CategoriesResponse = StrapiResponseCollection<StrapiCategory>;
  */
 export async function getAllCategories(locale: string): Promise<Category[]> {
   const client = strapiClient(locale, {
-    next: { revalidate: 60 },
+    next: { revalidate: 30 },
   });
   try {
     const response = (await client.collection("categories").find({

@@ -11,12 +11,13 @@
     "contact_info": "Contact Info"
   },
   "blog": {
-    "title": "Blogs",
-    "subtitle": "All articles",
+    "title": "News & Articles",
+    "subtitle": "Stay updated with the latest news and articles",
     "noArticlesFound": "No articles found",
     "searchPlaceholder": "Search articles",
     "allCategories": "All Categories",
-    "back_to_blog": "Back to blog"
+    "back_to_blog": "Back to blog",
+    "viewAllArticles": "View All Articles"
   },
   "services": {
     "title": "Services",

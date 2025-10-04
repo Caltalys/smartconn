@@ -1,4 +1,6 @@
 import PageRenderer from '@/components/blocks/PageRenderer';
+import Blog from '@/components/sections/Blog';
+import { getAllArticles } from '@/lib/api';
 import { fetchPageBySlug } from '@/lib/api/api-page';
 import { AsyncBaseProps } from '@/types/global';
 import type { Metadata, ResolvingMetadata } from 'next';
@@ -47,6 +49,14 @@ export default async function HomePage({ params }: AsyncBaseProps) {
     const { locale } = await params;
     const homeSlug = locale === 'vi' ? 'trang-chu' : 'home';
     const pageData = await getPageData(homeSlug, locale);
+    const articlesPerPage = 4;
+    const articlesResponse = await getAllArticles(locale, {
+        page: 1,
+        pageSize: articlesPerPage
+    });
+
+    const articles = articlesResponse?.data;
+    const hasArticles = articles && articles.length > 0;
 
     if (!pageData) {
         notFound();
@@ -54,5 +64,12 @@ export default async function HomePage({ params }: AsyncBaseProps) {
 
     // PageRenderer giờ đây đủ thông minh để xử lý tất cả các loại section,
     // bao gồm cả việc fetch dữ liệu cho 'sections.blog' nếu nó được định nghĩa trong Strapi.
-    return <PageRenderer sections={pageData.contentSections} />;
+    return (
+        <>
+            <PageRenderer sections={pageData.contentSections} />
+            {hasArticles && (
+                <Blog data={articles} />
+            )}
+        </>
+    );
 }

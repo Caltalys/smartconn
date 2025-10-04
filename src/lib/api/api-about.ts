@@ -13,7 +13,7 @@ export async function fetchAboutPage(
   locale: string
 ): Promise<AboutPage | null> {
   const client = strapiClient(locale, {
-    next: { revalidate: 60 },
+    next: { revalidate: 30 },
   });
   try {
     const response = (await client.single("about").find({

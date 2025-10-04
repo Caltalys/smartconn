@@ -11,12 +11,13 @@
     "contact_info": "Thông tin liên hệ"
   },
   "blog": {
-    "title": "Bài viết",
-    "subtitle": "Tất cả bài viết",
+    "title": "Tin tức & Bài viết",
+    "subtitle": "Cập nhật tin tức mới nhất cùng chúng tôi",
     "noArticlesFound": "Không tìm thấy bài viết nào",
     "searchPlaceholder": "Tìm kiếm bài viết",
     "allCategories": "Tất cả danh mục",
-    "back_to_blog": "Trở về trang bài viết"
+    "back_to_blog": "Trở về trang bài viết",
+    "viewAllArticles": "Xem tất cả bài viết"
   },
   "services": {
     "title": "Dịch vụ",

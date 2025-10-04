@@ -1,20 +1,18 @@
 'use client';
 
+import { Article } from '@/types/strapi/collections/article';
+import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
+import ArticleCard from '../blocks/ArticleCard';
 import Pretitle from '../elements/Pretitle';
 import { Button } from '../ui/button';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { BlogSectionData } from '@/types/strapi/sections/blog';
-import ArticleCard from '../blocks/ArticleCard';
 
-const Blog = ({ data }: { data: BlogSectionData }) => {
+const Blog = ({ data }: { data: Article[] }) => {
     const t = useTranslations('blog');
     const locale = useLocale();
     if (!data) return null;
 
-    const { pretitle, title, articles, viewAllButtonLabel } = data;
-    
     return (
         <motion.section
             id="blog"
@@ -26,22 +24,22 @@ const Blog = ({ data }: { data: BlogSectionData }) => {
             <div className="container mx-auto px-6">
                 {/* Title */}
                 <div className="text-center mb-12">
-                    <Pretitle text={pretitle} center={true} />
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-wide mb-4">{title}</h2>
+                    <Pretitle text={t('title')} center={true} />
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-wide mb-4">{t('subtitle')}</h2>
                 </div>
 
                 {/* Blog Grid */}
-                {articles && articles.length > 0 ? (
+                {data && data.length > 0 ? (
                     <>
                         {/* Tái sử dụng ArticleCard và điều chỉnh layout grid để hợp lý hơn */}
                         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                            {articles.map((article) => (
+                            {data.map((article) => (
                                 <ArticleCard key={article.id} article={article} locale={locale} />
                             ))}
                         </div>
                         <div className="text-center mt-12">
                             <Link href="/blogs">
-                                <Button variant="default">{viewAllButtonLabel || t('viewAllArticles')}</Button>
+                                <Button variant="default">{t('viewAllArticles')}</Button>
                             </Link>
                         </div>
                     </>
