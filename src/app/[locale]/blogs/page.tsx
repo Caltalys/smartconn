@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 
 // Ép buộc render động cho toàn bộ layout và các trang con.
 // Điều này đảm bảo mọi request sẽ fetch dữ liệu mới nhất từ Strapi.
-//export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 interface BlogPageProps {
     params: { locale: string };

@@ -5,7 +5,7 @@ import { AsyncBaseProps } from "@/types/global";
 import { notFound } from "next/navigation";
 
 // Ép buộc trang này phải được render động (SSR)
-//export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export default async function AboutPage(params: AsyncBaseProps) {
   // Lấy dữ liệu từ Strapi trên server

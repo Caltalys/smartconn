@@ -6,7 +6,9 @@ import {
 import { strapiClient } from "../custom-strapi-client";
 
 export async function fetchTopbar(locale: string): Promise<Topbar | null> {
-  const client = strapiClient(locale);
+  const client = strapiClient(locale, {
+    next: { revalidate: 60 },
+  });
   try {
     const response = (await client.single("topbar").find({
       ...(locale && { locale }),

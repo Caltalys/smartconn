@@ -10,6 +10,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { RiArrowLeftLine } from 'react-icons/ri';
 
+export const dynamic = "force-dynamic";
+
 interface ArticleDetailPageProps {
   params: Promise<{ locale: string, slug: string }>;
 }

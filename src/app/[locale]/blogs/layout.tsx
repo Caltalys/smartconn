@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server';
 
 // Ép buộc render động cho toàn bộ layout và các trang con.
 // Điều này đảm bảo mọi request sẽ fetch dữ liệu mới nhất từ Strapi.
-//xport const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export default async function BlogLayout({ params, children }: AsyncProps) {
     const { locale } = await params;

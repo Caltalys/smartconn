@@ -4,6 +4,8 @@ import { getAllServices } from '@/lib/api/api-services';
 import { Service } from '@/types/strapi/collections/service';
 import { getTranslations } from 'next-intl/server';
 
+export const dynamic = "force-dynamic";
+
 interface ServicePageProps {
     params: Promise<{ locale: string, page?: string; query?: string }>;
 }
