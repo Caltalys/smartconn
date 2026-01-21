@@ -6,14 +6,22 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getStrapiMedia(url: string | undefined): string | null {
-  if (url === undefined || url === null) {
+  if (url == null) {
     return null;
   }
-  if (url.startsWith("http")) {
+
+  // Return data URIs or absolute URLs as is
+  if (url.startsWith("data:") || url.startsWith("http") || url.startsWith("//")) {
     return url;
   }
-  const baseUrl =
-    process.env.NEXT_PUBLIC_STRAPI_URL?.replace("/api", "") ||
-    "http://localhost:1337";
-  return `${baseUrl}${url}`;
+
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_FILE_URL || "http://localhost:1337";
+  
+  // Ensure clean Base URL (remove trailing slash)
+  const cleanBaseUrl = baseUrl.replace(/\/$/, "");
+  
+  // Ensure clean URL (add leading slash if missing)
+  const cleanUrl = url.startsWith("/") ? url : `/${url}`;
+
+  return `${cleanBaseUrl}${cleanUrl}`;
 }
