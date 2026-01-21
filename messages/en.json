@@ -34,5 +34,10 @@
       "title": "Latest Articles",
       "viewAllButton": "View All"
     }
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "description": "Sorry, we couldn't find the page you're looking for.",
+    "backToHome": "Back to Home"
   }
 }

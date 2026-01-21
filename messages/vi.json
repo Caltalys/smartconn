@@ -34,5 +34,10 @@
       "title": "Bài viết mới nhất",
       "viewAllButton": "Xem tất cả"
     }
+  },
+  "NotFound": {
+    "title": "Không tìm thấy trang",
+    "description": "Xin lỗi, chúng tôi không thể tìm thấy trang bạn đang tìm kiếm.",
+    "backToHome": "Quay về trang chủ"
   }
 }
