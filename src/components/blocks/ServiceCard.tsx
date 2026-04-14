@@ -1,7 +1,7 @@
 import { formatDate } from "@/lib/format-date";
 import { Service } from "@/types/strapi/collections/service";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 interface ServiceCardProps {
     service: Service;
@@ -10,7 +10,7 @@ interface ServiceCardProps {
 
 export default function ServiceCard({ service, locale }: ServiceCardProps) {
     const imageUrl = service.coverUrl;
-    const serviceUrl = `/${locale}/services/${service.slug}`;
+    const serviceUrl = `/services/${service.slug}`;
 
     return (
         <Link href={serviceUrl} className="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800">

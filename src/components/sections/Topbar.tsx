@@ -1,6 +1,6 @@
 import Social from "@/components/blocks/Social";
 import { Topbar as TopbarType } from "@/types/strapi/single/topbar";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { RiMailLine, RiPhoneLine } from "react-icons/ri";
 
 type TopbarProps = {

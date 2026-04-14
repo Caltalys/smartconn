@@ -3,7 +3,7 @@
 import { Article } from '@/types/strapi/collections/article';
 import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import ArticleCard from '../blocks/ArticleCard';
 import Pretitle from '../elements/Pretitle';
 import { Button } from '../ui/button';

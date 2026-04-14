@@ -10,12 +10,12 @@ import { Suspense } from 'react';
 export const dynamic = "force-dynamic";
 
 interface BlogPageProps {
-    params: { locale: string };
-    searchParams: { page?: string; query?: string, category?: string };
+    params: Promise<{ locale: string }>;
+    searchParams: Promise<{ page?: string; query?: string, category?: string }>;
 }
 
 export async function generateMetadata({ params }: BlogPageProps) {
-    const { locale } = params;
+    const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'blog' });
     return {
         title: t('title'),
@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: BlogPageProps) {
 }
 
 export default async function BlogPage({ params, searchParams }: BlogPageProps) {
-    const { locale } = params;
-    const { page, query, category } = searchParams;
+    const { locale } = await params;
+    const { page, query, category } = await searchParams;
     const currentPage = Number(page) || 1;
     const articlesPerPage = 10;
 

@@ -1,7 +1,7 @@
 import { formatDate } from "@/lib/format-date";
 import { Article } from "@/types/strapi/collections/article";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 interface ArticleCardProps {
     article: Article;
@@ -9,7 +9,7 @@ interface ArticleCardProps {
 }
 
 export default function ArticleCard({ article, locale }: ArticleCardProps) {
-    const articleUrl = `/${locale}/blogs/${article.slug}`;
+    const articleUrl = `/blogs/${article.slug}`;
 
     return (
         <Link href={articleUrl} className="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800">

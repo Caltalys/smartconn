@@ -10,6 +10,9 @@ export default createMiddleware({
 
   // Không thêm tiền tố ngôn ngữ cho URL của ngôn ngữ mặc định
   localePrefix: "as-needed",
+  
+  // Tắt tự động phát hiện ngôn ngữ để cưỡng ép sử dụng locale hiện tại
+  localeDetection: false,
 });
 
 export const config = {

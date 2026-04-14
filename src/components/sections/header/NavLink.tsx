@@ -1,5 +1,4 @@
-import { usePathname } from "@/i18n/navigation";
-import Link from "next/link";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Link as ScrollLink } from "react-scroll";
 
 type NavLinkProps = {
