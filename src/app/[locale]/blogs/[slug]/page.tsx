@@ -51,8 +51,8 @@ export default async function ArticlePage({ params }: ArticleDetailPageProps) {
   }
 
   const breadcrumbItems = [
-    { label: tNav('home'), href: `/${locale}` },
-    { label: t('title'), href: `/${locale}/blogs` },
+    { label: tNav('home'), href: `/` },
+    { label: t('title'), href: `/blogs` },
     { label: article.title }
   ];
 
@@ -97,7 +97,7 @@ export default async function ArticlePage({ params }: ArticleDetailPageProps) {
           </div>
 
           <div className="mt-12 text-center">
-            <Link href={`/${locale}/blogs`}>
+            <Link href={`/blogs`}>
               <Button variant="outline">
                 <RiArrowLeftLine className="mr-2 h-4 w-4" />
                 {t('back_to_blog')}

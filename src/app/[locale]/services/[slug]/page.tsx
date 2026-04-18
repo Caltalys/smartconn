@@ -54,8 +54,8 @@ export default async function ServicePage({ params }: PageProps<"/[locale]/servi
     const imageUrl = service.coverUrl;
 
     const breadcrumbItems = [
-        { label: tNav('home'), href: `/${locale}` },
-        { label: t('title'), href: `/${locale}/services` },
+        { label: tNav('home'), href: `/` },
+        { label: t('title'), href: `/services` },
         { label: service.title }
     ];
 
@@ -90,7 +90,7 @@ export default async function ServicePage({ params }: PageProps<"/[locale]/servi
                     </div>
 
                     <div className="mt-12 text-center">
-                        <Link href={`/${locale}/services`}>
+                        <Link href={`/services`}>
                             <Button variant="outline">
                                 <RiArrowLeftLine className="mr-2 h-4 w-4" />
                                 {t('backToServices')}

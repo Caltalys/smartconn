@@ -1,6 +1,7 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 
